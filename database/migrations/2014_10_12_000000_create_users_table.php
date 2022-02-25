@@ -15,7 +15,7 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('uuid')->unique();
+            $table->string('uuid', 36)->unique();
             $table->string('first_name');
             $table->string('last_name');
             $table->boolean('is_admin')->default(false);
