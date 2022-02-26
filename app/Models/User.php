@@ -21,11 +21,16 @@ class User extends Authenticatable
         'uuid',
         'first_name',
         'last_name',
-        'is_admin',
         'avatar',
         'is_marketing',
+        'address',
+        'phone_number',
         'email',
         'password',
+    ];
+
+    protected $guarded = [
+        'is_admin',
     ];
 
     /**

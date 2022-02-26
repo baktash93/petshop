@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\AccountController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,14 +16,15 @@ use App\Http\Controllers\UserController;
 |
 */
 
-
-Route::post('/login', [UserController::class, 'login']);
-Route::get('/logout', [UserController::class, 'logout']);
-Route::post('/create', [UserController::class, 'create']);
-Route::get('/forgot-password', [UserController::class, 'forgotPassword']);
-Route::get('/reset-password-token', [UserController::class, 'resetPasswordToken']);
-
-Route::group(['middleware' => [], 'prefix' => 'v1'], function () {
+Route::group(['prefix' => 'v1'], function () {
+    Route::group(['prefix' => 'user'], function () {
+        Route::post('/login', [AccountController::class, 'login']);
+        Route::get('/logout', [AccountController::class, 'logout']);
+        Route::post('/create', [AccountController::class, 'create']);
+        Route::get('/forgot-password', [AccountController::class, 'forgotPassword']);
+        Route::get('/reset-password-token', [AccountController::class, 'resetPasswordToken']);
+    });
+    
     /** User endpoint */
     Route::group(['prefix' => 'user'], function () {
         Route::get('/', [UserController::class, 'show']);
@@ -55,13 +57,13 @@ Route::group(['middleware' => [], 'prefix' => 'v1'], function () {
     });
 
     /** Order status endpoint */
-    Route::get('order-statuses', [OrderStatusController::class, 'index'])
-    Route::group(['prefix' => 'order-status', function () {
+    Route::get('order-statuses', [OrderStatusController::class, 'index']);
+    Route::group(['prefix' => 'order-status'], function () {
         Route::post('create', [OrderStatusController::class, 'create']);
         Route::get('{uuid}', [OrderStatusController::class, 'show']);
         Route::put('{uuid}', [OrderStatusController::class, 'update']);
         Route::delete('{uuid}', [OrderStatusController::class, 'delete']);
-    }]);
+    });
 });
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
