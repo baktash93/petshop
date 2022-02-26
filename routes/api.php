@@ -32,7 +32,6 @@ Route::group(['middleware' => [], 'prefix' => 'v1'], function () {
         Route::put('/edit', [UserController::class, 'edit']);
     }); 
 
-
     /** Payment endpoint */
     Route::get('payments', [PaymentController::class, 'index']);
     Route::group(['prefix' => 'payment'], function () {
@@ -41,6 +40,15 @@ Route::group(['middleware' => [], 'prefix' => 'v1'], function () {
         Route::put('{uuid}', [PaymentController::class, 'update']);
         Route::delete('{uuid}', [PaymentController::class, 'delete']);
     });
+
+    /** Order status endpoint */
+    Route::get('order-statuses', [OrderStatusController::class, 'index'])
+    Route::group(['prefix' => 'order-status', function () {
+        Route::post('create', [OrderStatusController::class, 'create']);
+        Route::get('{uuid}', [OrderStatusController::class, 'show']);
+        Route::put('{uuid}', [OrderStatusController::class, 'update']);
+        Route::delete('{uuid}', [OrderStatusController::class, 'delete']);
+    }]);
 });
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
