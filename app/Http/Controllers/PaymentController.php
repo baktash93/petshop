@@ -3,15 +3,53 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use App\Models\Payment;
 
 class PaymentController extends Controller {
-    function index() {}
+    function index() {
+        $payments = Payment::where('1=1')
+            ->skip($request->query('page'))
+            ->take($request->query('limit'))
+            ->orderBy($request->query('sortBy'), !empty($request->query('desc')))
+            ->get();
+        return response()->json($payments, 200);
+    }
 
-    function create() {}
+    function create(Request $request) {
+        try {
+            Payment::create([
+                'type' => $request->post('type'),
+                'details' => $request->post('details')
+            ]);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
     
-    function show() {}
-    
-    function update() {}
-    
-    function delete() {}
+    function show($uuid) {
+        return Payment::where('uuid', $uuid)->first();
+    }
+
+    function update($uuid, Request $request) {
+        try {
+            Payment::where('uuid', $uuid)
+                ->update($request->post);
+            return response(null, 204);
+        } catch (\Throwable $th) {
+            //throw $th;
+            return response(null, 500);
+        }
+    }
+
+    function delete($uuid, Request $request) {
+        try {
+            Payment::where('uuid', $uuid)
+                ->delete();
+            return response(null, 204);
+        } catch (\Throwable $th) {
+            //throw $th;
+            return response(null, 500);
+        }
+    }
 }
