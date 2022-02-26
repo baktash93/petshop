@@ -24,13 +24,26 @@ Route::get('/reset-password-token', [UserController::class, 'resetPasswordToken'
 
 Route::group(['middleware' => [], 'prefix' => 'v1'], function () {
     /** User endpoint */
-
     Route::group(['prefix' => 'user'], function () {
         Route::get('/', [UserController::class, 'show']);
         Route::delete('/', [UserController::class, 'delete']);
         // Route::get('/orders', [UserController::class, 'listOrders']);
         Route::put('/edit', [UserController::class, 'edit']);
     }); 
+
+
+    /** Order endpoint */
+    Route::get('orders', [OrderController::class, 'index']);
+    Route::get('orders/shipment-locator', [OrderController::class, 'shipmentLocator']);
+    Route::get('orders/dashboard', [OrderController::class, 'dashboard']);
+    Route::group(['prefix' => 'order'], function () {
+        Route::post('create', [OrderController::class, 'create']);
+        Route::get('{uuid}', [OrderController::class, 'show']);
+        Route::put('{uuid}', [OrderController::class, 'update']);
+        Route::delete('{uuid}', [OrderController::class, 'delete']);
+        Route::get('{uuid}/download', [OrderController::class, 'download']);
+    });
+
 
     /** Payment endpoint */
     Route::get('payments', [PaymentController::class, 'index']);
