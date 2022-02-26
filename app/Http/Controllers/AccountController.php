@@ -5,9 +5,40 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Lcobucci\JWT\Builder;
+use Lcobucci\JWT\Configuration;
+use Lcobucci\JWT\Signer\Hmac\Sha256;
+use Lcobucci\JWT\Signer\Key\InMemory;
 
 class AccountController extends Controller {
-    function login() {}
+    function login(Request $request) {
+        try {
+            if(User::where('email', $request->post('email'))->count() === 0) {
+                return response('', 404);
+            }
+    
+            $cfg = Configuration::forSymmetricSigner(
+            // You may use any HMAC variations (256, 384, and 512)
+                new Sha256(),
+                // replace the value below with a key of your own!
+                InMemory::base64Encoded('aGVsbG8=')
+                // You may also override the JOSE encoder/decoder if needed by providing extra arguments here
+            );
+            $token = $cfg
+            ->builder()
+            ->issuedBy(config('values.APP_URL'))
+            ->withClaim('uid', 1)
+            // Configures a new header, called "foo"
+            ->withHeader('foo', 'bar')
+            ->getToken($cfg->signer(), $cfg->signingKey());
+            \Log::info($token->toString());
+
+            return response($token->toString(), 200);
+        } catch (\Throwable $th) {
+            throw $th;
+            response('', 500);
+        }
+    }
 
     function logout() {}
 
