@@ -1,6 +1,7 @@
 <?php
 
 return [
-    'APP_URL' => env('APP_URL')
+    'APP_URL' => env('APP_URL'),
+    'TIMEZONE' => env('TIMEZONE'),
 ];
 
