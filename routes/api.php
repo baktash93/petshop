@@ -4,6 +4,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AccountController;
+use App\Middleware\Authenticate;
+use App\Middleware\TokenVerify;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,11 +18,11 @@ use App\Http\Controllers\AccountController;
 |
 */
 
-Route::group(['prefix' => 'v1'], function () {
+Route::group(['prefix' => 'v1', 'middleware' => [TokenVerify::class]], function () {
     Route::group(['prefix' => 'user'], function () {
+        Route::post('/create', [AccountController::class, 'create']);
         Route::post('/login', [AccountController::class, 'login']);
         Route::get('/logout', [AccountController::class, 'logout']);
-        Route::post('/create', [AccountController::class, 'create']);
         Route::get('/forgot-password', [AccountController::class, 'forgotPassword']);
         Route::get('/reset-password-token', [AccountController::class, 'resetPasswordToken']);
     });
