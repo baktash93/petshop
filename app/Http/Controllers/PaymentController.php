@@ -18,10 +18,14 @@ class PaymentController extends Controller {
 
     function create(Request $request) {
         try {
-            Payment::create([
-                'type' => $request->post('type'),
-                'details' => $request->post('details')
-            ]);
+            $payload = $request->post();
+            $payload['uuid'] = \Illuminate\Support\Str::uuid();
+            Payment::create(Arr::only($payload, [
+                    'type',
+                    'details',
+                    'uuid'
+                ])
+            );
         } catch (\Throwable $th) {
             throw $th;
         }
@@ -34,7 +38,10 @@ class PaymentController extends Controller {
     function update($uuid, Request $request) {
         try {
             Payment::where('uuid', $uuid)
-                ->update($request->post);
+                ->update(Arr::only($request->post(), [
+                    'type',
+                    'details'
+                ]));
             return response(null, 204);
         } catch (\Throwable $th) {
             //throw $th;

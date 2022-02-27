@@ -32,6 +32,7 @@ class Payment extends Model
 
     protected $fillable = [
         'type',
-        'details'
+        'details',
+        'uuid'
     ];
 }
