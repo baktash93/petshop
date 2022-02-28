@@ -35,6 +35,7 @@ class JWTAuthTokenService implements IAuthTokenService {
             new \Lcobucci\JWT\Validation\Constraint\SignedWith($this->config->signer(), $this->config->verificationKey()),
             new \Lcobucci\JWT\Validation\Constraint\LooseValidAt($this->getSystemClock(config('values.TIMEZONE')))
         ];
+        $this->config->setValidationConstraints(...$this->constraints);
     }
 
     private function getSystemClock($timezone): SystemClock {
@@ -51,8 +52,13 @@ class JWTAuthTokenService implements IAuthTokenService {
                 ->toString();
     }
 
-    function verify() {
-        return $this->config->validator()->validate($token, ...$this->config->validationConstraints());
+    function verify($token): bool {
+        $parsedToken = $this
+            ->config
+            ->parser()
+            ->parse($token);
+            // \Log::info([$parsedToken]);
+        return $this->config->validator()->validate($parsedToken, ...$this->config->validationConstraints());
     }
 
     function getToken(): String {
