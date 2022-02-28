@@ -16,6 +16,7 @@ class AccountController extends Controller {
     
             $user = User::where('email', $request->post('email'))->first();
             $auth->sign('user_uuid', $user->uuid, '+ 1hour');
+            
             return response($auth->getToken(), 200);
         } catch (\Throwable $th) {
             throw $th;

@@ -28,7 +28,8 @@ class Authenticate extends Middleware
     }
 
     public function handle($request, Closure $next, ...$guards) {
-        if (!$this->authService->verify(explode(' ', $request->header('authorization'))[1])) {
+        if (empty($request->header('authorization'))
+            || !$this->authService->verify(explode(' ', $request->header('authorization'))[1])) {
             return response('', 401);
         }
         return $next($request);
