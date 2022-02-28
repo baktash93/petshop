@@ -83,8 +83,7 @@ class PaymentController extends Controller {
             if ($payment->count() === 0){
                 return response(null, 404);
             }
-            Payment::where('uuid', $uuid)
-                ->delete();
+            $payment->delete();
             return response(null, 204);
         } catch (\Throwable $th) {
             //throw $th;
