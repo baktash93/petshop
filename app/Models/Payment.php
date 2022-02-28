@@ -35,4 +35,8 @@ class Payment extends Model
         'details',
         'uuid'
     ];
+
+    protected $casts = [
+        'details' => 'array'
+    ];
 }
