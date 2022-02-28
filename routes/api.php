@@ -6,6 +6,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\OrderStatusController;
+use App\Http\Controllers\OrderController;
 use App\Http\Middleware\Authenticate;
 
 /*

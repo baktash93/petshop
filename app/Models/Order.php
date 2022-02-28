@@ -20,4 +20,9 @@ class Order extends Model
         'amount',
         'shipped_at'
     ];
+
+    protected $cast = [
+        'products' => 'array',
+        'address' => 'array'
+    ];
 }

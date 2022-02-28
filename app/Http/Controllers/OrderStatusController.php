@@ -34,7 +34,8 @@ class OrderStatusController extends Controller {
         try {
             $payload = $request->post();
             $payload['uuid'] = \Illuminate\Support\Str::uuid()->toString();
-                OrderStatus::create(Arr::only($payload, [
+            OrderStatus::create(Arr::only(
+                $payload, [
                     'uuid',
                     'title'
                 ])
@@ -81,8 +82,7 @@ class OrderStatusController extends Controller {
             if ($status->count() === 0){
                 return response(null, 404);
             }
-            OrderStatus::where('uuid', $uuid)
-                ->delete();
+            $status->delete();
             return response(null, 204);
         } catch (\Throwable $th) {
             //throw $th;

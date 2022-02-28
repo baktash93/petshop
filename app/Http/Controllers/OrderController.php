@@ -6,11 +6,32 @@ use App\Http\Controllers\Controller;
 use App\Models\Payment;
 use App\Models\Order;
 use App\Models\OrderStatus;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 
 class OrderController extends Controller {
-    function index() {}
+    function index(Request $request) {
+        try {
+            $orders = Order::whereRaw('1=1')
+                ->orderBy(
+                    empty($request->query('sortBy')) ? 'id' : $request->query('sortBy'),
+                    !empty($request->query('desc')) ? 'desc' : 'asc'
+                );
+            
+            if (!empty($request->query('page'))) {
+                $orders->skip($request->query('page'));
+            }
+            
+            if (!empty($request->query('limit'))) {
+                $orders->take($request->query('limit'));
+            }
+            return response()->json($orders->get(), 200);
+        } catch (\Throwable $th) {
+            //throw $th;
+            return response(null, 500);
+        }
+    }
 
     function shipmentLocator() {}
 
@@ -19,17 +40,19 @@ class OrderController extends Controller {
     function create(Request $request) {
         try {
             $payload = $request->post();
-            $payload['uuid'] = \Illuminate\Support\Str::uuid();
-            $payload['user_id'] = 1; // @todo
+            $payload['uuid'] = \Illuminate\Support\Str::uuid()->toString();
+            $payload['user_id'] = User::where('uuid', $request->input('user_uuid'))->value('id');
             $payload['order_status_id'] = OrderStatus::where('uuid', $payload['order_status_uuid'])->value('id');
             $payload['payment_id'] = Payment::where('uuid', $payload['payment_uuid'])->value('id');
+            \Log::info($payload);
             Order::create(Arr::only(
                 $payload,
                 [
+                    'uuid',
                     'user_id',
                     'order_status_id',
                     'payment_id',
-                    'products',
+                    // 'products',
                     'address',
                     'delivery_fee',
                     'amount',
@@ -39,22 +62,35 @@ class OrderController extends Controller {
             return response(null, 200);
         } catch (\Throwable $th) {
             //throw $th;
+            return response($th->getMessage(), 500);
+        }
+    }
+    
+    function show(Request $request, $uuid) {
+        try {
+            $order = Order::where('uuid', $uuid)->first();
+            if (empty($order)) {
+                return response(null, 404);
+            }
+            return response()->json($order, 200);
+        } catch (\Throwable $th) {
+            //throw $th;
             return response(null, 500);
         }
     }
     
-    function show($uuid) {
-        $order = Order::where('uuid', $uuid)->first();
-        return response()->json($order, 200);
-    }
-    
     function update($uuid, Request $request) {
         try {
+            $order = Order::where('uuid', $uuid);
+            if ($order->count() === 0){
+                return response(null, 404);
+            }
+
             $payload = $request->post();
-            $payload['user_id'] = 1; // @todo
+            $payload['user_id'] = User::where('uuid', $request->input('user_uuid'))->value('id');
             $payload['order_status_id'] = OrderStatus::where('uuid', $payload['order_status_uuid'])->value('id');
             $payload['payment_id'] = Payment::where('uuid', $payload['payment_uuid'])->value('id');
-            Order::where('uuid', $uuid)
+            $order
                 ->update(
                     Arr::only($request->post(), [
                         'user_id',
@@ -77,8 +113,11 @@ class OrderController extends Controller {
     
     function delete($uuid) {
         try {
-            Order::where('uuid', $uuid)
-                ->delete();
+            $order = Order::where('uuid', $uuid);
+            if ($order->count() === 0){
+                return response(null, 404);
+            }
+            $order->delete();
         } catch (\Throwable $th) {
             //throw $th;
             return response(null, 500);
