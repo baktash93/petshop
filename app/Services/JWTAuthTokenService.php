@@ -53,12 +53,14 @@ class JWTAuthTokenService implements IAuthTokenService {
     }
 
     function verify($token): bool {
-        $parsedToken = $this
+        return $this->config->validator()->validate($this->parse($token), ...$this->config->validationConstraints());
+    }
+
+    function parse($strToken) {
+        return $this
             ->config
             ->parser()
-            ->parse($token);
-            // \Log::info([$parsedToken]);
-        return $this->config->validator()->validate($parsedToken, ...$this->config->validationConstraints());
+            ->parse($strToken);
     }
 
     function getToken(): String {

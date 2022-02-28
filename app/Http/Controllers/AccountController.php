@@ -15,12 +15,14 @@ class AccountController extends Controller {
             }
     
             $user = User::where('email', $request->post('email'))->first();
-            $auth->sign('user_uuid', $user->uuid, '+ 1hour');
-            
-            return response($auth->getToken(), 200);
+            if ($user->password === md5($request->post('password'))) {
+                $auth->sign('user_uuid', $user->uuid, '+ 1hour');    
+                return response($auth->getToken(), 200);
+            }
+            return response(null, 401);
         } catch (\Throwable $th) {
             throw $th;
-            response('', 500);
+            response(null, 500);
         }
     }
 

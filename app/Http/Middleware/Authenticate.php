@@ -32,6 +32,12 @@ class Authenticate extends Middleware
             || !$this->authService->verify(explode(' ', $request->header('authorization'))[1])) {
             return response('', 401);
         }
+
+        $token = explode(' ', $request->header('authorization'))[1];
+        $input = $request->all();
+        $input['user_uuid'] = $this->authService->parse($token)->claims()->get('user_uuid');
+        $request->replace($input);
+
         return $next($request);
     }
 }
