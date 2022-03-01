@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Casts\AsArrayObject;
+use App\Models\OrderStatus;
 
 class Order extends Model
 {
@@ -26,4 +26,8 @@ class Order extends Model
         'products' => 'array',
         'address' => 'array'
     ];
+
+    public function orderStatus() {
+        return $this->hasOne(OrderStatus::class);
+    }
 }
