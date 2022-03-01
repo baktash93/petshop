@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
         ]);
         User::factory()
             ->count(10)
-            ->has(Order::factory()->count(rand(1, 5)))
+            ->has(Order::factory()->count(rand(5, 10)))
             ->create();
     }
 }
