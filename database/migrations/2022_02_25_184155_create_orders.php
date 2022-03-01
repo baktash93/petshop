@@ -17,7 +17,7 @@ class CreateOrders extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('order_status_id');
-            $table->unsignedBigInteger('payment_id');
+            $table->unsignedBigInteger('payment_id')->nullable();
             $table->foreign('user_id', 'fk_order_user')
                 ->references('id')
                 ->on('users')
