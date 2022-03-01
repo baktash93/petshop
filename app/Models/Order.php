@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Casts\AsArrayObject;
 
 class Order extends Model
 {
@@ -21,7 +22,7 @@ class Order extends Model
         'shipped_at'
     ];
 
-    protected $cast = [
+    protected $casts = [
         'products' => 'array',
         'address' => 'array'
     ];

@@ -44,7 +44,6 @@ class OrderController extends Controller {
             $payload['user_id'] = User::where('uuid', $request->input('user_uuid'))->value('id');
             $payload['order_status_id'] = OrderStatus::where('uuid', $payload['order_status_uuid'])->value('id');
             $payload['payment_id'] = Payment::where('uuid', $payload['payment_uuid'])->value('id');
-            \Log::info($payload);
             Order::create(Arr::only(
                 $payload,
                 [
@@ -52,14 +51,14 @@ class OrderController extends Controller {
                     'user_id',
                     'order_status_id',
                     'payment_id',
-                    // 'products',
+                    'products',
                     'address',
                     'delivery_fee',
                     'amount',
                     'shipped_at'
                 ])
             );
-            return response(null, 200);
+            return response(null, 201);
         } catch (\Throwable $th) {
             //throw $th;
             return response($th->getMessage(), 500);
@@ -72,7 +71,7 @@ class OrderController extends Controller {
             if (empty($order)) {
                 return response(null, 404);
             }
-            return response()->json($order, 200);
+            return response()->json($order, 201);
         } catch (\Throwable $th) {
             //throw $th;
             return response(null, 500);
@@ -104,7 +103,7 @@ class OrderController extends Controller {
                         'shipped_at'
                     ])
                 );
-            return response(null, 200);
+            return response(null, 204);
         } catch (\Throwable $th) {
             //throw $th;
             return response(null, 500);
@@ -118,6 +117,7 @@ class OrderController extends Controller {
                 return response(null, 404);
             }
             $order->delete();
+            return response(null, 204);
         } catch (\Throwable $th) {
             //throw $th;
             return response(null, 500);
