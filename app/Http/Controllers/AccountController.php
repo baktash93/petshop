@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Interfaces\IAuthTokenService;
+use Illuminate\Support\Arr;
+use Carbon\Carbon;
 
 class AccountController extends Controller {
     function login(Request $request, IAuthTokenService $auth) {
@@ -13,10 +15,11 @@ class AccountController extends Controller {
             if(User::where('email', $request->post('email'))->count() === 0) {
                 return response('', 404);
             }
-    
             $user = User::where('email', $request->post('email'))->first();
-            if ($user->password === md5($request->post('password'))) {
-                $auth->sign('user_uuid', $user->uuid, '+ 1hour');    
+            if (\Hash::check($request->post('password'), $user->password)){
+                $auth->sign('user_uuid', $user->uuid, config('values.SESSION_MAX_AGE'));
+                User::where('email', $request->post('email'))
+                    ->update(['last_login_at' => Carbon::now()]);
                 return response($auth->getToken(), 200);
             }
             return response(null, 401);
@@ -35,7 +38,7 @@ class AccountController extends Controller {
             }
             $payload = $request->post();
             $payload['uuid'] = \Illuminate\Support\Str::uuid();
-            $payload['password'] = md5($request->post('password'));
+            $payload['password'] = bcrypt($request->post('password'));
             User::create(Arr::only($payload, [
                     'uuid',
                     'first_name',
