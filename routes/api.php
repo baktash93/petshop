@@ -22,7 +22,7 @@ use App\Http\Middleware\Authenticate;
 
 Route::group(['prefix' => 'v1', 'middleware' => [Authenticate::class]], function () {
     Route::group(['prefix' => 'user'], function () {
-        Route::post('/create', [AccountController::class, 'create']);
+        Route::post('/create', [AccountController::class, 'create'])->withoutMiddleware([Authenticate::class]);
         Route::post('/login', [AccountController::class, 'login'])->withoutMiddleware([Authenticate::class]);
         Route::get('/logout', [AccountController::class, 'logout']);
         Route::get('/forgot-password', [AccountController::class, 'forgotPassword'])->withoutMiddleware([Authenticate::class]);

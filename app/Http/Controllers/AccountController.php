@@ -51,9 +51,9 @@ class AccountController extends Controller {
                     'is_marketing'
                 ])
             );
-            return response('', 200);
+            return response(null, 201);
         } catch (\Throwable $th) {
-            return response('', 500);
+            return response(null, 500);
         }
     }
 
