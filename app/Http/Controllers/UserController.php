@@ -3,11 +3,36 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Order;
 use App\Models\User;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 
 class UserController extends Controller {
+
+    function listOrders(Request $request) {
+        try {
+            $orders = Order::where(
+                    'user_id',
+                    User::where('uuid', $request->input('user_uuid'))->value('id')
+                )->orderBy(
+                    empty($request->query('sortBy')) ? 'id' : $request->query('sortBy'),
+                    !empty($request->query('desc')) ? 'desc' : 'asc'
+                );
+            
+            if (!empty($request->query('page'))) {
+                $orders->skip($request->query('page'));
+            }
+            
+            if (!empty($request->query('limit'))) {
+                $orders->take($request->query('limit'));
+            }
+            return response()->json($orders->get(), 200);
+        } catch (\Throwable $th) {
+            //throw $th;
+            return response(null, 500);
+        }
+    }
     function show(Request $request) {
         try {
             $user = User::where('uuid', $request->input('user_uuid'))->first();

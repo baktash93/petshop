@@ -33,7 +33,7 @@ Route::group(['prefix' => 'v1', 'middleware' => [Authenticate::class]], function
     Route::group(['prefix' => 'user'], function () {
         Route::get('/', [UserController::class, 'show']);
         Route::delete('/', [UserController::class, 'delete']);
-        // Route::get('/orders', [UserController::class, 'listOrders']);
+        Route::get('/orders', [UserController::class, 'listOrders']);
         Route::put('/edit', [UserController::class, 'edit']);
     }); 
 
