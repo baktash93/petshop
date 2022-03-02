@@ -4,11 +4,6 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Database\Seeders\OrderStatusSeeder;
-use App\Models\Payment;
-use App\Models\User;
-use App\Models\Order;
-use App\Models\OrderStatus;
-use Illuminate\Support\Str;
 
 class DatabaseSeeder extends Seeder
 {
@@ -21,10 +16,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             OrderStatusSeeder::class,
+            UserOrderSeeder::class
         ]);
-        User::factory()
-            ->count(10)
-            ->has(Order::factory()->count(rand(5, 10)))
-            ->create();
     }
 }
