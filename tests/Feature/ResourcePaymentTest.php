@@ -42,4 +42,30 @@ class ResourcePaymentTest extends TestCase
                 ]
             ]);
     }
+
+    public function test_get_payment() {
+        $payment = Payment::factory()->create();
+        User::factory()->state([
+            'email' => $email = $this->faker->safeEmail(),
+            'password' => bcrypt($password = $this->faker->words(4, true))
+        ])->has(Order::factory()->state([
+                'payment_id' => Payment::factory()->create()->id
+            ]))
+        ->create();
+        $token = $this->post('/api/v1/user/login', [
+            'email' => $email,
+            'password' => $password
+        ])->getOriginalContent();
+        $response = $this->get('/api/v1/payment/' . $payment->uuid, ['authorization' => 'Bearer ' . $token]);
+        $response
+            ->assertStatus(200)
+            ->assertJsonStructure([
+                'type',
+                'details',
+                'uuid'
+            ])
+            ->assertJsonPath('type', $payment->type)
+            ->assertJsonPath('details', $payment->details)
+            ->assertJsonPath('uuid', $payment->uuid);
+    }
 }
