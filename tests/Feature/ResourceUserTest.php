@@ -18,7 +18,7 @@ class ResourceUserTest extends TestCase
      */
     public function test_get_current_user()
     {
-        User::factory()->state([
+        $user = User::factory()->state([
             'email' => $email = $this->faker->safeEmail(),
             'password' => bcrypt($password = $this->faker->words(4, true))
         ])->create();
@@ -27,14 +27,20 @@ class ResourceUserTest extends TestCase
             'password' => $password
         ])->getOriginalContent();
         $response = $this->get('/api/v1/user', ['authorization' => 'Bearer ' . $token]);
-        $response->assertStatus(200);
-        $response->assertJsonStructure([
-            'email',
-            'first_name',
-            'last_name',
-            'is_marketing',
-            'phone_number'
-        ]);
+        $response
+            ->assertStatus(200)
+            ->assertJsonStructure([
+                'email',
+                'first_name',
+                'last_name',
+                'is_marketing',
+                'phone_number'
+            ])
+            ->assertJsonPath('uuid', $user->uuid)
+            ->assertJsonPath('email', $user->email)
+            ->assertJsonPath('first_name', $user->first_name)
+            ->assertJsonPath('last_name', $user->last_name)
+            ->assertJsonPath('phone_number', $user->phone_number);
     }
 
 
