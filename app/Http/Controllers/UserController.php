@@ -20,6 +20,9 @@ class UserController extends Controller {
 
     function delete(Request $request) {
         try {
+            if (User::where('uuid', $request->input('user_uuid'))->count() === 0) {
+                return response(null, 404);
+            }
             User::where('uuid', $request->input('user_uuid'))->delete();
             return response(null, 204);
         } catch (\Throwable $th) {
