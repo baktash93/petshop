@@ -44,7 +44,8 @@ class PaymentController extends Controller {
             );
             return response('', 201);
         } catch (\Throwable $th) {
-            throw $th;
+            // throw $th;
+            return response(null, 500);
         }
     }
     
