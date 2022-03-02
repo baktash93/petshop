@@ -35,4 +35,28 @@ class LoginUserTest extends TestCase
         ]);
         $response->assertStatus(404);
     }
+
+    public function test_login_nonexistent_email () {
+        User::factory()->state([
+            'email' => $email = $this->faker->safeEmail(),
+            'password' => bcrypt($password = $this->faker->words(3, true))
+        ])->create();
+        $response = $this->post('/api/v1/user/login', [
+            'email' => $this->faker->safeEmail(),
+            'password' => $password
+        ]);
+        $response->assertStatus(404);
+    }
+    
+    public function test_login_incorrect_password () {
+        User::factory()->state([
+            'email' => $email = $this->faker->safeEmail(),
+            'password' => bcrypt($this->faker->words(3, true))
+        ])->create();
+        $response = $this->post('/api/v1/user/login', [
+            'email' => $email,
+            'password' => $this->faker->words(2, true)
+        ]);
+        $response->assertStatus(401);
+    }
 }
