@@ -2,13 +2,14 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class CreateUserTest extends TestCase
 {
     use WithFaker;
+    use DatabaseTransactions;
     /**
      * Create user with correct data.
      *
@@ -51,6 +52,6 @@ class CreateUserTest extends TestCase
             'password' => $password,
             'confirm_password' => $password
         ]);
-        $response->assertStatus(422);
+        $response->assertStatus(500);
     }
 }
