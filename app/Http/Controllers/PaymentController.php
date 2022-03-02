@@ -6,15 +6,17 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use App\Models\Payment;
+use App\Models\User;
 
 class PaymentController extends Controller {
     function index(Request $request) {
         try {
-            $payments = Payment::whereRaw('1=1')
-                ->orderBy(
-                    empty($request->query('sortBy')) ? 'id' : $request->query('sortBy'),
-                    !empty($request->query('desc')) ? 'desc' : 'asc'
-                );
+            $payments = Payment::whereHas('order', function ($query) use($request) {
+                return $query->where('user_id', User::where('uuid', $request->input('user_uuid'))->value('id'));
+            })->orderBy(
+                empty($request->query('sortBy')) ? 'id' : $request->query('sortBy'),
+                !empty($request->query('desc')) ? 'desc' : 'asc'
+            );
             
             if (!empty($request->query('page'))) {
                 $payments->skip($request->query('page'));
