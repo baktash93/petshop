@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\OrderStatus;
+use App\Models\Payment;
 
 class Order extends Model
 {
@@ -29,5 +30,9 @@ class Order extends Model
 
     public function orderStatus() {
         return $this->hasOne(OrderStatus::class);
+    }
+
+    public function payment() {
+        return $this->hasOne(Payment::class);
     }
 }
