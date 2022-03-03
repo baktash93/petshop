@@ -2,8 +2,6 @@
 
 namespace App\Services;
 use App\Interfaces\IAuthTokenService;
-
-use Lcobucci\JWT\Builder;
 use Lcobucci\JWT\Configuration;
 use Lcobucci\JWT\Signer\Hmac\Sha256;
 use Lcobucci\JWT\Signer\Key\InMemory;
@@ -14,18 +12,14 @@ class JWTAuthTokenService implements IAuthTokenService {
     private $constraints;
 
     function __construct() {
-        $this->init();
+        $this->init(new AsymmetricKeyGenerator());
         $this->setConstraints();
     }
 
-    private function init() {
-        $base64Secret = 'hello world';
+    private function init($gen) {
         $this->config = Configuration::forSymmetricSigner(
-            // You may use any HMAC variations (256, 384, and 512)
             new Sha256(),
-            // replace the value below with a key of your own!
-            InMemory::plainText($base64Secret)
-            // You may also override the JOSE encoder/decoder if needed by providing extra arguments here
+            InMemory::file($gen->getPath())
         );
     }
 
