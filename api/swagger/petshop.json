@@ -8,7 +8,7 @@
        }
     ],
     "info": {
-       "version": 1,
+       "version": "1.0.0",
        "title": "Petshop (Buckhill test)",
        "description": "",
        "termsOfService": "",
@@ -698,6 +698,110 @@
                    "format": "date-time"
                 },
                 "last_login_at": {
+                   "type": "string",
+                   "format": "date-time"
+                },
+                "created_at": {
+                   "type": "string",
+                   "format": "date-time"
+                },
+                "updated_at": {
+                   "type": "string",
+                   "format": "date-time"
+                }
+             }
+          },
+          "Payment": {
+             "type": "object",
+             "properties": {
+                "id": {
+                   "type": "integer"
+                },
+                "uuid": {
+                   "type": "string"
+                },
+                "type": {
+                   "type": "string",
+                   "enum": [
+                      "credit_card",
+                      "cash_on_delivery",
+                      "bank_transfer"
+                   ]
+                },
+                "details": {
+                   "type": "object"
+                },
+                "created_at": {
+                   "type": "string",
+                   "format": "date-time"
+                },
+                "updated_at": {
+                   "type": "string",
+                   "format": "date-time"
+                }
+             }
+          },
+          "OrderStatus": {
+             "type": "object",
+             "properties": {
+                "id": {
+                   "type": "integer"
+                },
+                "uuid": {
+                   "type": "string"
+                },
+                "title": {
+                   "type": "string"
+                },
+                "created_at": {
+                   "type": "string",
+                   "format": "date-time"
+                },
+                "updated_at": {
+                   "type": "string",
+                   "format": "date-time"
+                }
+             }
+          },
+          "Order": {
+             "type": "object",
+             "properties": {
+                "id": {
+                   "type": "integer"
+                },
+                "uuid": {
+                   "type": "string"
+                },
+                "user_id": {
+                   "type": "integer"
+                },
+                "payment_id": {
+                   "type": "integer"
+                },
+                "order_status_id": {
+                   "type": "integer"
+                },
+                "products": {
+                   "type": "object"
+                },
+                "address": {
+                   "type": "object"
+                },
+                "delivery_fee": {
+                   "type": "integer"
+                },
+                "amount": {
+                   "type": "integer"
+                },
+                "shipped_at": {
+                   "type": "string",
+                   "format": "date-time"
+                },
+                "created_at": {
+                   "type": "string",
+                   "format": "date-time"
+                },
+                "updated_at": {
                    "type": "string",
                    "format": "date-time"
                 }
