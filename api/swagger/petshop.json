@@ -1,0 +1,805 @@
+{
+    "openapi": "3.0.0",
+    "servers": [
+       {
+          "url": "http://localhost:8001",
+          "description": "",
+          "variables": {}
+       }
+    ],
+    "info": {
+       "version": 1,
+       "title": "Petshop (Buckhill test)",
+       "description": "",
+       "termsOfService": "",
+       "contact": {},
+       "license": {
+          "name": ""
+       }
+    },
+    "paths": {
+       "/api/v1/user/create": {
+          "post": {
+             "summary": "Create user",
+             "operationId": "Createuser",
+             "parameters": [
+                {
+                   "name": "Content-Type",
+                   "in": "header",
+                   "required": true,
+                   "style": "simple",
+                   "schema": {
+                      "type": "string",
+                      "example": "application/json"
+                   }
+                }
+             ],
+             "responses": {
+                "200": {
+                   "description": "",
+                   "headers": {}
+                }
+             },
+             "requestBody": {
+                "required": true,
+                "content": {
+                   "application/json": {
+                      "schema": {
+                         "type": "string",
+                         "example": {
+                            "first_name": "Ali",
+                            "last_name": "Sissoko",
+                            "avatar": "...",
+                            "phone_number": "+93784057250",
+                            "address": "KP3",
+                            "is_marketing": false,
+                            "email": "baktash93@gmail.com",
+                            "password": "12345",
+                            "confirm_password": "12345"
+                         }
+                      },
+                      "example": "{\n    \"first_name\": \"Ali\",\n    \"last_name\": \"Sissoko\",\n    \"avatar\": \"...\",\n    \"phone_number\": \"+93784057250\",\n    \"address\": \"KP3\",\n    \"is_marketing\": false,\n    \"email\": \"baktash93@gmail.com\",\n    \"password\": \"12345\",\n    \"confirm_password\": \"12345\"\n}"
+                   }
+                }
+             },
+             "tags": [
+                "User"
+             ]
+          }
+       },
+       "/api/v1/user": {
+          "delete": {
+             "summary": "Delete user",
+             "operationId": "Deleteuser",
+             "parameters": [],
+             "responses": {
+                "200": {
+                   "description": "",
+                   "headers": {}
+                }
+             },
+             "tags": [
+                "User"
+             ]
+          }
+       },
+       "/api/v1/user/login": {
+          "post": {
+             "summary": "Login",
+             "operationId": "Login",
+             "parameters": [
+                {
+                   "name": "Content-Type",
+                   "in": "header",
+                   "required": true,
+                   "style": "simple",
+                   "schema": {
+                      "type": "string",
+                      "example": "application/json"
+                   }
+                }
+             ],
+             "responses": {
+                "200": {
+                   "description": "",
+                   "headers": {}
+                }
+             },
+             "requestBody": {
+                "required": true,
+                "content": {
+                   "application/json": {
+                      "schema": {
+                         "type": "string",
+                         "example": {
+                            "email": "nlowe@example.org",
+                            "password": "12345"
+                         }
+                      },
+                      "example": "{\n\t\"email\": \"nlowe@example.org\",\n\t\"password\": \"12345\"\n}"
+                   }
+                }
+             },
+             "tags": [
+                "User"
+             ]
+          }
+       },
+       "/api/v1/user/orders": {
+          "get": {
+             "summary": "List user orders",
+             "operationId": "Listuserorders",
+             "parameters": [
+                {
+                   "name": "Content-Type",
+                   "in": "header",
+                   "required": true,
+                   "style": "simple",
+                   "schema": {
+                      "type": "string",
+                      "example": "application/json"
+                   }
+                }
+             ],
+             "responses": {
+                "200": {
+                   "description": "",
+                   "headers": {}
+                }
+             },
+             "tags": [
+                "User"
+             ]
+          },
+          "/api/v1/payments": null
+       },
+       "/api/v1/payment/{uuid}": {
+          "get": {
+             "summary": "View payment",
+             "operationId": "Viewpayment",
+             "parameters": [
+                {
+                   "in": "path",
+                   "name": "uuid",
+                   "schema": {
+                      "type": "string"
+                   },
+                   "required": true,
+                   "description": "UUID of the payment to get"
+                }
+             ],
+             "responses": {
+                "200": {
+                   "description": "",
+                   "headers": {}
+                }
+             },
+             "tags": [
+                "Payment"
+             ]
+          },
+          "put": {
+             "summary": "Edit payment",
+             "operationId": "Editpayment",
+             "parameters": [
+                {
+                   "in": "path",
+                   "name": "uuid",
+                   "schema": {
+                      "type": "string"
+                   },
+                   "required": true,
+                   "description": "UUID of the payment to edit"
+                },
+                {
+                   "name": "Content-Type",
+                   "in": "header",
+                   "required": true,
+                   "style": "simple",
+                   "schema": {
+                      "type": "string",
+                      "example": "application/json"
+                   }
+                }
+             ],
+             "responses": {
+                "200": {
+                   "description": "",
+                   "headers": {}
+                }
+             },
+             "requestBody": {
+                "required": true,
+                "content": {
+                   "application/json": {
+                      "schema": {
+                         "type": "string",
+                         "example": {
+                            "type": "bank_transfer"
+                         }
+                      },
+                      "example": "{\n\t\"type\": \"bank_transfer\"\n}"
+                   }
+                }
+             },
+             "tags": [
+                "Payment"
+             ]
+          },
+          "delete": {
+             "summary": "Delete payment",
+             "operationId": "Deletepayment",
+             "parameters": [
+                {
+                   "in": "path",
+                   "name": "uuid",
+                   "schema": {
+                      "type": "string"
+                   },
+                   "required": true,
+                   "description": "UUID of the payment to delete"
+                },
+                {
+                   "name": "Content-Type",
+                   "in": "header",
+                   "required": true,
+                   "style": "simple",
+                   "schema": {
+                      "type": "string",
+                      "example": "application/json"
+                   }
+                }
+             ],
+             "responses": {
+                "200": {
+                   "description": "",
+                   "headers": {}
+                }
+             },
+             "tags": [
+                "Payment"
+             ]
+          }
+       },
+       "/api/v1/payment/create": {
+          "post": {
+             "summary": "Create payment",
+             "operationId": "Createpayment",
+             "parameters": [
+                {
+                   "name": "Content-Type",
+                   "in": "header",
+                   "required": true,
+                   "style": "simple",
+                   "schema": {
+                      "type": "string",
+                      "example": "application/json"
+                   }
+                },
+                {
+                   "name": "Authorization",
+                   "in": "header",
+                   "required": true,
+                   "style": "simple",
+                   "schema": {
+                      "type": "string",
+                      "example": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0IiwiZXhwIjoxNjQ2MDYxNjYxLjYwMjg4NSwidXNlcl91dWlkIjoiODI3NGVjMjUtMTkwNC00ZTk3LTlmYzMtNTA4N2QwMzhhNDM2In0.ZAIRfR2hkP7cjpAjK-XCMhc6OycagUrATojz0oQ4qI8"
+                   }
+                }
+             ],
+             "responses": {
+                "200": {
+                   "description": "",
+                   "headers": {}
+                }
+             },
+             "requestBody": {
+                "required": true,
+                "content": {
+                   "application/json": {
+                      "schema": {
+                         "type": "string",
+                         "example": {
+                            "type": "cash_on_delivery",
+                            "details": {
+                               "first_name": "Alex",
+                               "last_name": "Arnold",
+                               "address": "Lv., st# 18"
+                            }
+                         }
+                      },
+                      "example": "{\n\t\"type\": \"cash_on_delivery\",\n\t\"details\": {\n\t  \"first_name\": \"Alex\",\n\t  \"last_name\": \"Arnold\",\n\t  \"address\": \"Lv., st# 18\"\n\t}\n}"
+                   }
+                }
+             },
+             "tags": [
+                "Payment"
+             ]
+          }
+       },
+       "/api/v1/order-statuses": {
+          "get": {
+             "summary": "List order statuses",
+             "operationId": "Listorderstatuses",
+             "parameters": [],
+             "responses": {
+                "200": {
+                   "description": "",
+                   "headers": {}
+                }
+             },
+             "tags": [
+                "Order Status"
+             ]
+          }
+       },
+       "/api/v1/order-status/create": {
+          "post": {
+             "summary": "Create order status",
+             "operationId": "Createorderstatus",
+             "parameters": [
+                {
+                   "name": "Content-Type",
+                   "in": "header",
+                   "required": true,
+                   "style": "simple",
+                   "schema": {
+                      "type": "string",
+                      "example": "application/json"
+                   }
+                }
+             ],
+             "responses": {
+                "200": {
+                   "description": "",
+                   "headers": {}
+                }
+             },
+             "requestBody": {
+                "required": true,
+                "content": {
+                   "application/json": {
+                      "schema": {
+                         "type": "string",
+                         "example": {
+                            "title": "Ordered"
+                         }
+                      },
+                      "example": "{\n\t\"title\": \"Ordered\"\n}"
+                   }
+                }
+             },
+             "tags": [
+                "Order Status"
+             ]
+          }
+       },
+       "/api/v1/order-status/{uuid}": {
+          "get": {
+             "summary": "View order status",
+             "operationId": "Vieworderstatus",
+             "parameters": [
+                {
+                   "in": "path",
+                   "name": "uuid",
+                   "schema": {
+                      "type": "string"
+                   },
+                   "required": true,
+                   "description": "UUID of the order status to get"
+                }
+             ],
+             "responses": {
+                "200": {
+                   "description": "",
+                   "headers": {}
+                }
+             },
+             "tags": [
+                "Order Status"
+             ]
+          },
+          "put": {
+             "summary": "Edit order status",
+             "operationId": "Editorderstatus",
+             "parameters": [
+                {
+                   "name": "Content-Type",
+                   "in": "header",
+                   "required": true,
+                   "style": "simple",
+                   "schema": {
+                      "type": "string",
+                      "example": "application/json"
+                   }
+                }
+             ],
+             "responses": {
+                "200": {
+                   "description": "",
+                   "headers": {}
+                }
+             },
+             "requestBody": {
+                "required": true,
+                "content": {
+                   "application/json": {
+                      "schema": {
+                         "type": "string",
+                         "example": {
+                            "title": "Due"
+                         }
+                      },
+                      "example": "{\n\t\"title\": \"Due\"\n}"
+                   }
+                }
+             },
+             "tags": [
+                "Order Status"
+             ]
+          },
+          "delete": {
+             "summary": "Delete order status",
+             "operationId": "Deleteorderstatus",
+             "parameters": [
+                {
+                   "in": "path",
+                   "name": "uuid",
+                   "schema": {
+                      "type": "string"
+                   },
+                   "required": true,
+                   "description": "UUID of the order status to delete"
+                }
+             ],
+             "responses": {
+                "200": {
+                   "description": "",
+                   "headers": {}
+                }
+             },
+             "tags": [
+                "Order Status"
+             ]
+          }
+       },
+       "/api/v1/orders": {
+          "get": {
+             "summary": "List all orders",
+             "operationId": "Listallorders",
+             "parameters": [],
+             "responses": {
+                "200": {
+                   "description": "",
+                   "headers": {}
+                }
+             },
+             "tags": [
+                "Order"
+             ]
+          }
+       },
+       "/api/v1/order/create": {
+          "post": {
+             "summary": "Create order",
+             "operationId": "Createorder",
+             "parameters": [
+                {
+                   "name": "Content-Type",
+                   "in": "header",
+                   "required": true,
+                   "style": "simple",
+                   "schema": {
+                      "type": "string",
+                      "example": "application/json"
+                   }
+                }
+             ],
+             "responses": {
+                "200": {
+                   "description": "",
+                   "headers": {}
+                }
+             },
+             "requestBody": {
+                "required": true,
+                "content": {
+                   "application/json": {
+                      "schema": {
+                         "type": "string",
+                         "example": {
+                            "order_status_uuid": "ec8d29cf-1602-4a5e-a633-e0e63e3c9ab4",
+                            "payment_uuid": "f40cd6d5-ff17-4d80-a3c5-5a1ab90c3c65",
+                            "products": [
+                               {
+                                  "product": "sfssffs",
+                                  "quantity": 15
+                               }
+                            ],
+                            "address": {
+                               "billing": "para",
+                               "shipping": "que"
+                            },
+                            "delivery_fee": 900,
+                            "amount": 10,
+                            "shipped_at": null
+                         }
+                      },
+                      "example": "{\n    \"order_status_uuid\": \"ec8d29cf-1602-4a5e-a633-e0e63e3c9ab4\",\n    \"payment_uuid\": \"f40cd6d5-ff17-4d80-a3c5-5a1ab90c3c65\",\n    \"products\": [\n        {\n            \"product\": \"sfssffs\",\n            \"quantity\": 15\n        }\n    ],\n    \"address\": {\n        \"billing\": \"para\",\n        \"shipping\": \"que\"\n    },\n    \"delivery_fee\": 900,\n    \"amount\": 10,\n    \"shipped_at\": null\n}"
+                   }
+                }
+             },
+             "tags": [
+                "Order"
+             ]
+          }
+       },
+       "/api/v1/order/{uuid}": {
+          "get": {
+             "summary": "View order",
+             "operationId": "Vieworder",
+             "parameters": [
+                {
+                   "in": "path",
+                   "name": "uuid",
+                   "schema": {
+                      "type": "string"
+                   },
+                   "required": true,
+                   "description": "UUID of the order to get"
+                },
+                {
+                   "name": "Content-Type",
+                   "in": "header",
+                   "required": true,
+                   "style": "simple",
+                   "schema": {
+                      "type": "string",
+                      "example": "application/json"
+                   }
+                }
+             ],
+             "responses": {
+                "200": {
+                   "description": "",
+                   "headers": {}
+                }
+             },
+             "tags": [
+                "Order"
+             ]
+          },
+          "delete": {
+             "summary": "Delete order",
+             "operationId": "Deleteorder",
+             "parameters": [
+                {
+                   "name": "Content-Type",
+                   "in": "header",
+                   "required": true,
+                   "style": "simple",
+                   "schema": {
+                      "type": "string",
+                      "example": "application/json"
+                   }
+                }
+             ],
+             "responses": {
+                "200": {
+                   "description": "",
+                   "headers": {}
+                }
+             },
+             "tags": [
+                "Order"
+             ]
+          },
+          "put": {
+             "summary": "Edit order",
+             "operationId": "Editorder",
+             "parameters": [
+                {
+                   "in": "path",
+                   "name": "uuid",
+                   "schema": {
+                      "type": "string"
+                   },
+                   "required": true,
+                   "description": "UUID of the order to edit"
+                },
+                {
+                   "name": "Content-Type",
+                   "in": "header",
+                   "required": true,
+                   "style": "simple",
+                   "schema": {
+                      "type": "string",
+                      "example": "application/json"
+                   }
+                }
+             ],
+             "responses": {
+                "200": {
+                   "description": "",
+                   "headers": {}
+                }
+             },
+             "requestBody": {
+                "required": true,
+                "content": {
+                   "application/json": {
+                      "schema": {
+                         "type": "string",
+                         "example": {
+                            "order_status_uuid": "ec8d29cf-1602-4a5e-a633-e0e63e3c9ab4",
+                            "payment_uuid": "f40cd6d5-ff17-4d80-a3c5-5a1ab90c3c65",
+                            "products": [
+                               {
+                                  "product": "hello world",
+                                  "quantity": 365
+                               }
+                            ],
+                            "address": {
+                               "billing": "para",
+                               "shipping": "que"
+                            },
+                            "delivery_fee": 1200,
+                            "amount": 130,
+                            "shipped_at": null
+                         }
+                      },
+                      "example": "{\n    \"order_status_uuid\": \"ec8d29cf-1602-4a5e-a633-e0e63e3c9ab4\",\n    \"payment_uuid\": \"f40cd6d5-ff17-4d80-a3c5-5a1ab90c3c65\",\n    \"products\": [\n        {\n            \"product\": \"hello world\",\n            \"quantity\": 365\n        }\n    ],\n    \"address\": {\n        \"billing\": \"para\",\n        \"shipping\": \"que\"\n    },\n    \"delivery_fee\": 1200,\n    \"amount\": 130,\n    \"shipped_at\": null\n}"
+                   }
+                }
+             },
+             "tags": [
+                "Order"
+             ]
+          }
+       }
+    },
+    "components": {
+       "schemas": {
+          "User": {
+             "type": "object",
+             "properties": {
+                "id": {
+                   "type": "integer"
+                },
+                "uuid": {
+                   "type": "string"
+                },
+                "first_name": {
+                   "type": "string"
+                },
+                "avatar": {
+                   "type": "string"
+                },
+                "last_name": {
+                   "type": "string"
+                },
+                "email": {
+                   "type": "string"
+                },
+                "phone_number": {
+                   "type": "string"
+                },
+                "address": {
+                   "type": "string"
+                },
+                "is_admin": {
+                   "type": "boolean"
+                },
+                "is_marketing": {
+                   "type": "boolean"
+                },
+                "email_verified_at": {
+                   "type": "string",
+                   "format": "date-time"
+                },
+                "last_login_at": {
+                   "type": "string",
+                   "format": "date-time"
+                }
+             }
+          }
+       },
+       "securitySchemes": {
+          "bearer": {
+             "type": "http",
+             "scheme": "bearer"
+          }
+       },
+       "parameters": {
+          "sortBy": {
+             "name": "sortBy",
+             "in": "query",
+             "required": true,
+             "style": "form",
+             "schema": {
+                "type": "string",
+                "example": "uuid"
+             }
+          },
+          "Content-Type": {
+             "name": "Content-Type",
+             "in": "header",
+             "required": true,
+             "style": "simple",
+             "schema": {
+                "type": "string",
+                "example": "application/json"
+             }
+          },
+          "Authorization": {
+             "name": "Authorization",
+             "in": "header",
+             "required": true,
+             "style": "simple",
+             "schema": {
+                "type": "string",
+                "example": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0IiwiZXhwIjoxNjQ2MDYxNjYxLjYwMjg4NSwidXNlcl91dWlkIjoiODI3NGVjMjUtMTkwNC00ZTk3LTlmYzMtNTA4N2QwMzhhNDM2In0.ZAIRfR2hkP7cjpAjK-XCMhc6OycagUrATojz0oQ4qI8"
+             }
+          }
+       }
+    },
+    "security": [
+       {
+          "bearer": []
+       },
+       {
+          "bearer": []
+       },
+       {
+          "bearer": []
+       },
+       {
+          "bearer": []
+       },
+       {
+          "bearer": []
+       },
+       {
+          "bearer": []
+       },
+       {
+          "bearer": []
+       },
+       {
+          "bearer": []
+       },
+       {
+          "bearer": []
+       },
+       {
+          "bearer": []
+       },
+       {
+          "bearer": []
+       },
+       {
+          "bearer": []
+       },
+       {
+          "bearer": []
+       },
+       {
+          "bearer": []
+       },
+       {
+          "bearer": []
+       },
+       {
+          "bearer": []
+       },
+       {
+          "bearer": []
+       }
+    ],
+    "tags": [],
+    "externalDocs": {
+       "url": "",
+       "description": ""
+    },
+    "warnings": []
+ }
