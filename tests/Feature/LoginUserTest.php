@@ -59,4 +59,36 @@ class LoginUserTest extends TestCase
         ]);
         $response->assertStatus(401);
     }
+    
+    public function test_logout () {
+        User::factory()->state([
+            'email' => $email = $this->faker->safeEmail(),
+            'password' => bcrypt($password = $this->faker->words(3, true))
+        ])->create();
+        $token = $this->post('/api/v1/user/login', [
+            'email' => $email,
+            'password' => $password
+        ])->getOriginalContent();
+        $response = $this->get('/api/v1/user/logout', [
+            'authorization' => 'Bearer ' . $token
+        ]);
+        $response->assertStatus(200);
+    }
+
+    
+    public function test_logout_confirm_resource_inaccessable () {
+        User::factory()->state([
+            'email' => $email = $this->faker->safeEmail(),
+            'password' => bcrypt($password = $this->faker->words(3, true))
+        ])->create();
+        $token = $this->post('/api/v1/user/login', [
+            'email' => $email,
+            'password' => $password
+        ])->getOriginalContent();
+        $this->get('/api/v1/user/logout', [
+            'authorization' => 'Bearer ' . $token
+        ]);
+        $response = $this->get('/api/v1/payments', ['authorization' => 'Bearer ' . $token]);
+        $response->assertStatus(401);
+    }
 }
