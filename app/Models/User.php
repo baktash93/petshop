@@ -99,11 +99,13 @@ class User extends Authenticatable
         'is_marketing' => 'boolean'
     ];
 
-    public function orders() {
+    public function orders()
+    {
         return $this->hasMany(Order::class);
     }
 
-    public static function boot() {
+    public static function boot()
+    {
         parent::boot();
 
         User::saving(function ($model) {

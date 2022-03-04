@@ -47,7 +47,8 @@ class ResourceOrderTest extends TestCase
             ]);
     }
 
-    public function test_get_order() {
+    public function test_get_order()
+    {
         $user = User::factory()->state([
             'email' => $email = $this->faker->safeEmail(),
             'password' => bcrypt($password = $this->faker->words(4, true))
@@ -75,7 +76,8 @@ class ResourceOrderTest extends TestCase
             ]);
     }
 
-    public function test_edit_order() {
+    public function test_edit_order()
+    {
         $user = User::factory()->state([
             'email' => $email = $this->faker->safeEmail(),
             'password' => bcrypt($password = $this->faker->words(4, true))
@@ -101,7 +103,8 @@ class ResourceOrderTest extends TestCase
         $response->assertStatus(204);
     }
     
-    public function test_delete_order() {
+    public function test_delete_order()
+    {
         $user = User::factory()->state([
             'email' => $email = $this->faker->safeEmail(),
             'password' => bcrypt($password = $this->faker->words(4, true))

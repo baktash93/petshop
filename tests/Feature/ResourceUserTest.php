@@ -44,7 +44,8 @@ class ResourceUserTest extends TestCase
     }
 
 
-    public function test_delete_current_user() {
+    public function test_delete_current_user()
+    {
         User::factory()->state([
             'email' => $email = $this->faker->safeEmail(),
             'password' => bcrypt($password = $this->faker->words(4, true))
@@ -59,7 +60,8 @@ class ResourceUserTest extends TestCase
         $response->assertStatus(404);
     }
 
-    public function test_edit_current_user() {
+    public function test_edit_current_user()
+    {
         User::factory()->state([
             'email' => $email = $this->faker->safeEmail(),
             'password' => bcrypt($password = $this->faker->words(4, true))

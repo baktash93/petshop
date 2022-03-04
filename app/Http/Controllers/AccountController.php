@@ -12,7 +12,8 @@ use Carbon\Carbon;
 
 class AccountController extends Controller
 {
-    function login(Request $request, IAuthTokenService $auth, ITokenStoreService $store) {
+    function login(Request $request, IAuthTokenService $auth, ITokenStoreService $store)
+    {
         try {
             if(User::where('email', $request->post('email'))->count() === 0) {
                 return response('', 404);
@@ -38,7 +39,8 @@ class AccountController extends Controller
         }
     }
 
-    function logout(Request $request, ITokenStoreService $store) {
+    function logout(Request $request, ITokenStoreService $store)
+    {
         try {
             $store->invalidate(
                 User::where('uuid', $request->input('user_uuid'))->value('id'),
@@ -50,7 +52,8 @@ class AccountController extends Controller
         }
     }
 
-    function create(Request $request) {
+    function create(Request $request)
+    {
         try {
             if ($request->post('password') !== $request->post('confirm_password')) {
                 return response(null, 422);
@@ -80,7 +83,9 @@ class AccountController extends Controller
         }
     }
 
-    function forgotPassword() {}
+    function forgotPassword()
+    {}
 
-    function resetPasswordToken() {}
+    function resetPasswordToken()
+    {}
 }

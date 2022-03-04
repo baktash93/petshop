@@ -9,7 +9,8 @@ use App\Models\OrderStatus;
 
 class OrderStatusController extends Controller
 {
-    function index(Request $request) {
+    function index(Request $request)
+    {
         try {
             $statuses = OrderStatus::whereRaw('1=1')
                 ->orderBy(
@@ -31,7 +32,8 @@ class OrderStatusController extends Controller
         }
     }
 
-    function create(Request $request) {
+    function create(Request $request)
+    {
         try {
             $payload = $request->post();
             $payload['uuid'] = \Illuminate\Support\Str::uuid()->toString();
@@ -47,7 +49,8 @@ class OrderStatusController extends Controller
         }
     }
     
-    function show(Request $request, $uuid) {
+    function show(Request $request, $uuid)
+    {
         try {
             $status = OrderStatus::where('uuid', $uuid)->first();
             if (empty($status)) {
@@ -60,7 +63,8 @@ class OrderStatusController extends Controller
         }
     }
     
-    function update(Request $request, $uuid) {
+    function update(Request $request, $uuid)
+    {
         try {
             $status = OrderStatus::where('uuid', $uuid);
             if ($status->count() === 0){
@@ -77,7 +81,8 @@ class OrderStatusController extends Controller
         }
     }
     
-    function delete($uuid, Request $request) {
+    function delete($uuid, Request $request)
+    {
         try {
             $status = OrderStatus::where('uuid', $uuid);
             if ($status->count() === 0){

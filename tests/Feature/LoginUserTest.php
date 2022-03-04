@@ -28,7 +28,8 @@ class LoginUserTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function test_login_user_incorrect_email() {
+    public function test_login_user_incorrect_email()
+    {
         $response = $this->post('/api/v1/user/login', [
             'email' => $this->faker->email(),
             'password' => $this->faker->words(2, true)
@@ -36,7 +37,8 @@ class LoginUserTest extends TestCase
         $response->assertStatus(404);
     }
 
-    public function test_login_nonexistent_email () {
+    public function test_login_nonexistent_email ()
+    {
         User::factory()->state([
             'email' => $email = $this->faker->safeEmail(),
             'password' => bcrypt($password = $this->faker->words(3, true))
@@ -48,7 +50,8 @@ class LoginUserTest extends TestCase
         $response->assertStatus(404);
     }
     
-    public function test_login_incorrect_password () {
+    public function test_login_incorrect_password ()
+    {
         User::factory()->state([
             'email' => $email = $this->faker->safeEmail(),
             'password' => bcrypt($this->faker->words(3, true))
@@ -60,7 +63,8 @@ class LoginUserTest extends TestCase
         $response->assertStatus(401);
     }
     
-    public function test_logout () {
+    public function test_logout ()
+    {
         User::factory()->state([
             'email' => $email = $this->faker->safeEmail(),
             'password' => bcrypt($password = $this->faker->words(3, true))
@@ -76,7 +80,8 @@ class LoginUserTest extends TestCase
     }
 
     
-    public function test_logout_confirm_resource_inaccessable () {
+    public function test_logout_confirm_resource_inaccessable ()
+    {
         User::factory()->state([
             'email' => $email = $this->faker->safeEmail(),
             'password' => bcrypt($password = $this->faker->words(3, true))

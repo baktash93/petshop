@@ -12,7 +12,8 @@ use Illuminate\Support\Arr;
 
 class OrderController extends Controller
 {
-    function index(Request $request) {
+    function index(Request $request)
+    {
         try {
             $orders = Order::whereRaw('1=1')
                 ->orderBy(
@@ -34,11 +35,14 @@ class OrderController extends Controller
         }
     }
 
-    function shipmentLocator() {}
+    function shipmentLocator()
+    {}
 
-    function dashboard() {}
+    function dashboard()
+    {}
 
-    function create(Request $request) {
+    function create(Request $request)
+    {
         try {
             $payload = $request->post();
             $payload['uuid'] = \Illuminate\Support\Str::uuid()->toString();
@@ -66,7 +70,8 @@ class OrderController extends Controller
         }
     }
     
-    function show(Request $request, $uuid) {
+    function show(Request $request, $uuid)
+    {
         try {
             $order = Order::where('uuid', $uuid)->first();
             if (empty($order)) {
@@ -79,7 +84,8 @@ class OrderController extends Controller
         }
     }
     
-    function update($uuid, Request $request) {
+    function update($uuid, Request $request)
+    {
         try {
             $order = Order::where('uuid', $uuid);
             if ($order->count() === 0){
@@ -112,7 +118,8 @@ class OrderController extends Controller
         }
     }
     
-    function delete($uuid) {
+    function delete($uuid)
+    {
         try {
             $order = Order::where('uuid', $uuid);
             if ($order->count() === 0){
@@ -126,5 +133,6 @@ class OrderController extends Controller
         }
     }
 
-    function download() {}
+    function download()
+    {}
 }

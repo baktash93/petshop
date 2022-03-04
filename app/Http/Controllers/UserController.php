@@ -11,7 +11,8 @@ use Illuminate\Http\Request;
 class UserController extends Controller
 {
 
-    function listOrders(Request $request) {
+    function listOrders(Request $request)
+    {
         try {
             $orders = Order::where(
                     'user_id',
@@ -34,7 +35,9 @@ class UserController extends Controller
             return response(null, 500);
         }
     }
-    function show(Request $request) {
+
+    function show(Request $request)
+    {
         try {
             $user = User::where('uuid', $request->input('user_uuid'))->first();
             return response()->json($user, 200);
@@ -44,7 +47,8 @@ class UserController extends Controller
         }
     }
 
-    function delete(Request $request) {
+    function delete(Request $request)
+    {
         try {
             if (User::where('uuid', $request->input('user_uuid'))->count() === 0) {
                 return response(null, 404);
@@ -57,7 +61,8 @@ class UserController extends Controller
         }
     }
 
-    function edit(Request $request) {
+    function edit(Request $request)
+    {
         try {
             $payload = $request->post();
             User::where('uuid', $request->input('user_uuid'))

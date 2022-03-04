@@ -13,12 +13,14 @@ class Authenticate extends Middleware
     private $authService;
     private $tokenStore;
 
-    public function __construct(IAuthTokenService $auth, ITokenStoreService $tokenStore) {
+    public function __construct(IAuthTokenService $auth, ITokenStoreService $tokenStore)
+    {
         $this->authService = $auth;
         $this->tokenStore = $tokenStore;
     }
 
-    public function handle($request, Closure $next, ...$guards) {
+    public function handle($request, Closure $next, ...$guards)
+    {
         if (empty($request->header('authorization'))
             || !$this->authService->verify(explode(' ', $request->header('authorization'))[1])) {
             return response(null, 401);

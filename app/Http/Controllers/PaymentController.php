@@ -10,7 +10,8 @@ use App\Models\User;
 
 class PaymentController extends Controller 
 {
-    function index(Request $request) {
+    function index(Request $request)
+    {
         try {
             $payments = Payment::whereHas('order', function ($query) use($request) {
                 return $query->where('user_id', User::where('uuid', $request->input('user_uuid'))->value('id'));
@@ -33,7 +34,8 @@ class PaymentController extends Controller
         }
     }
 
-    function create(Request $request) {
+    function create(Request $request)
+    {
         try {
             $payload = $request->post();
             $payload['uuid'] = \Illuminate\Support\Str::uuid()->toString();
@@ -50,7 +52,8 @@ class PaymentController extends Controller
         }
     }
     
-    function show($uuid) {
+    function show($uuid)
+    {
         try {
             $payment = Payment::where('uuid', $uuid)->first();
             if (empty($payment)) {
@@ -63,7 +66,8 @@ class PaymentController extends Controller
         }
     }
 
-    function update($uuid, Request $request) {
+    function update($uuid, Request $request)
+    {
         try {
             $payment = Payment::where('uuid', $uuid);
             if ($payment->count() === 0){
@@ -81,7 +85,8 @@ class PaymentController extends Controller
         }
     }
 
-    function delete($uuid, Request $request) {
+    function delete($uuid, Request $request)
+    {
         try {
             $payment = Payment::where('uuid', $uuid);
             if ($payment->count() === 0){

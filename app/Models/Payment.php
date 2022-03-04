@@ -41,7 +41,8 @@ class Payment extends Model
         'details' => 'array'
     ];
 
-    public function order() {
+    public function order()
+    {
         return $this->hasOne(Order::class);
     }
 }

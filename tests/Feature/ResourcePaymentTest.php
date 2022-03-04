@@ -43,7 +43,8 @@ class ResourcePaymentTest extends TestCase
             ]);
     }
 
-    public function test_get_payment() {
+    public function test_get_payment()
+    {
         $payment = Payment::factory()->create();
         User::factory()->state([
             'email' => $email = $this->faker->safeEmail(),
@@ -69,7 +70,8 @@ class ResourcePaymentTest extends TestCase
             ->assertJsonPath('uuid', $payment->uuid);
     }
 
-    public function test_edit_payment() {
+    public function test_edit_payment()
+    {
         $payment = Payment::factory()->state([
             'type' => 'credit_card'
         ])->create();
@@ -93,7 +95,8 @@ class ResourcePaymentTest extends TestCase
             ->assertStatus(204);
     }
     
-    public function test_delete_payment() {
+    public function test_delete_payment()
+    {
         $payment = Payment::factory()->state([
             'type' => 'credit_card'
         ])->create();
