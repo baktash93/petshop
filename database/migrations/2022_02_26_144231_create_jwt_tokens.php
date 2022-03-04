@@ -23,12 +23,11 @@ class CreateJWTTokens extends Migration
                 ->onUpdate('cascade');
             $table->text('unique_id');
             $table->string('token_title');
-            $table->json('restrictions');
-            $table->json('permissions');
+            $table->json('restrictions')->nullable();
+            $table->json('permissions')->nullable();
             $table->timestamp('expires_at')->nullable();
             $table->timestamp('last_used_at')->nullable();
             $table->timestamp('refreshed_at')->nullable();
-            $table->float('amount');
             $table->timestamps();
         });
     }

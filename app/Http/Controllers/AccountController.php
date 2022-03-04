@@ -6,11 +6,13 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Interfaces\IAuthTokenService;
+use App\Interfaces\ITokenStoreService;
+use App\Models\JwtToken;
 use Illuminate\Support\Arr;
 use Carbon\Carbon;
 
 class AccountController extends Controller {
-    function login(Request $request, IAuthTokenService $auth) {
+    function login(Request $request, IAuthTokenService $auth, ITokenStoreService $store) {
         try {
             if(User::where('email', $request->post('email'))->count() === 0) {
                 return response('', 404);
@@ -19,7 +21,14 @@ class AccountController extends Controller {
             if (\Hash::check($request->post('password'), $user->password)){
                 $auth->sign('user_uuid', $user->uuid, config('values.SESSION_MAX_AGE'));
                 User::where('email', $request->post('email'))
-                    ->update(['last_login_at' => Carbon::now()]);
+                    ->update(['last_login_at' => $now = Carbon::now()]);
+                
+                $store->store($user->id,  [
+                    'unique_id' => $auth->getToken(),
+                    'token_title' => $user->uuid,
+                    'refreshed_at' => JwtToken::where('user_id', $user->id)->count() === 0 ? null : Carbon::now(),
+                    'expires_at' => $now->add(config('values.SESSION_MAX_AGE'))
+                ]);
                 return response($auth->getToken(), 200);
             }
             return response(null, 401);
@@ -29,7 +38,17 @@ class AccountController extends Controller {
         }
     }
 
-    function logout() {}
+    function logout(Request $request, ITokenStoreService $store) {
+        try {
+            $store->invalidate(
+                User::where('uuid', $request->input('user_uuid'))->value('id'),
+                Carbon::now()
+            );
+            return response(null, 200);
+        } catch (\Throwable $th) {
+            return response(null, 500);
+        }
+    }
 
     function create(Request $request) {
         try {

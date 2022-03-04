@@ -16,6 +16,9 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(\App\Interfaces\IAuthTokenService::class, function ($app) {
             return new \App\Services\JWTAuthTokenService();
         });
+        $this->app->singleton(\App\Interfaces\ITokenStoreService::class, function ($app) {
+            return new \App\Services\JwtTokenStoreProviderService();
+        });
     }
 
     /**
