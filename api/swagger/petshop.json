@@ -58,6 +58,53 @@
                    "application/json": {
                       "schema": {
                          "type": "object",
+                         "required": [
+                            "first_name",
+                            "last_name",
+                            "email",
+                            "password",
+                            "confirm_password",
+                            "address",
+                            "phone_number"
+                         ],
+                         "properties": {
+                            "first_name": {
+                               "type": "string",
+                               "description": "User firstname"
+                            },
+                            "last_name": {
+                               "type": "string",
+                               "description": "User lastname"
+                            },
+                            "email": {
+                               "type": "string",
+                               "description": "User email"
+                            },
+                            "password": {
+                               "type": "string",
+                               "description": "User password"
+                            },
+                            "confirm_password": {
+                               "type": "string",
+                               "description": "User password"
+                            },
+                            "avatar": {
+                               "type": "string",
+                               "description": "Avatar image UUID"
+                            },
+                            "address": {
+                               "type": "string",
+                               "description": "User main address"
+                            },
+                            "phone_number": {
+                               "type": "string",
+                               "description": "User main phone number"
+                            },
+                            "is_marketing": {
+                               "type": "string",
+                               "description": "User marketing preferences"
+                            }
+                         },
                          "example": {
                             "first_name": "Ali",
                             "last_name": "Sissoko",
@@ -131,6 +178,20 @@
                          "example": {
                             "email": "nlowe@example.org",
                             "password": "12345"
+                         },
+                         "required": [
+                            "email",
+                            "password"
+                         ],
+                         "properties": {
+                            "email": {
+                               "type": "string",
+                               "description": "User email"
+                            },
+                            "password": {
+                               "type": "string",
+                               "description": "User password"
+                            }
                          }
                       },
                       "example": "{\n  \"email\": \"nlowe@example.org\",\n  \"password\": \"12345\"\n}"
@@ -216,7 +277,7 @@
              "parameters": [],
              "responses": {
                 "204": {
-                   "description": "No content",
+                   "description": "Delete successful - No content",
                    "headers": {}
                 },
                 "404": {
@@ -368,12 +429,27 @@
                 "content": {
                    "application/json": {
                       "schema": {
-                         "type": "object",
-                         "example": {
-                            "type": "object"
+                         "required": [
+                            "type",
+                            "details"
+                         ],
+                         "properties": {
+                            "type": {
+                               "type": "string",
+                               "enum": [
+                                  "credit_card",
+                                  "cash_on_delivery",
+                                  "bank_transfer"
+                               ],
+                               "description": "Payment type"
+                            },
+                            "details": {
+                               "type": "object",
+                               "description": "Review documentation for the payment type JSON format"
+                            }
                          }
                       },
-                      "example": "{\n  \"type\": \"credit_card\"\n}"
+                      "example": "{\n  \"type\": \"credit_card\",\n  \"details\": {\n      \"holder_name\": \"Ms. Ardella Lind II\",\n      \"number\": 77599,\n      \"ccv\": 27610,\n      \"expire_date\": {\n          \"date\": \"1997-04-16 07:30:02.000000\",\n          \"timezone_type\": 3,\n          \"timezone\": \"UTC\"\n      }\n  }\n}"
                    }
                 }
              },
@@ -463,7 +539,26 @@
                 "content": {
                    "application/json": {
                       "schema": {
-                         "type": "object"
+                         "type": "object",
+                         "required": [
+                            "type",
+                            "details"
+                         ],
+                         "properties": {
+                            "type": {
+                               "type": "string",
+                               "enum": [
+                                  "credit_card",
+                                  "cash_on_delivery",
+                                  "bank_transfer"
+                               ],
+                               "description": "Payment type"
+                            },
+                            "details": {
+                               "type": "object",
+                               "description": "Review documentation for the payment type JSON format"
+                            }
+                         }
                       },
                       "example": "{\n  \"type\": \"cash_on_delivery\",\n  \"details\": {\n    \"first_name\": \"Alex\",\n    \"last_name\": \"Arnold\",\n    \"address\": \"Lv., st# 18\"\n  }\n}"
                    }
@@ -504,10 +599,6 @@
                 },
                 "401": {
                    "description": "Unauthorized",
-                   "headers": {}
-                },
-                "404": {
-                   "description": "Not found",
                    "headers": {}
                 },
                 "500": {
@@ -555,6 +646,15 @@
                 "content": {
                    "application/json": {
                       "schema": {
+                         "required": [
+                            "title"
+                         ],
+                         "properties": {
+                            "title": {
+                               "type": "string",
+                               "description": "Order status title"
+                            }
+                         },
                          "type": "object"
                       },
                       "example": "{\n  \"title\": \"ordered\"\n}"
@@ -646,9 +746,18 @@
                 "content": {
                    "application/json": {
                       "schema": {
+                         "required": [
+                            "title"
+                         ],
+                         "properties": {
+                            "title": {
+                               "type": "string",
+                               "description": "Order status title"
+                            }
+                         },
                          "type": "object"
                       },
-                      "example": "{\n  \"title\": \"Due\"\n}"
+                      "example": "{\n  \"title\": \"due\"\n}"
                    }
                 }
              },
@@ -770,23 +879,50 @@
                 "content": {
                    "application/json": {
                       "schema": {
-                         "type": "object",
-                         "example": {
-                            "order_status_uuid": "string",
-                            "payment_uuid": "string",
-                            "products": [
-                               {
-                                  "product": "string",
-                                  "quantity": "integer"
-                               }
-                            ],
-                            "address": {
-                               "billing": "string",
-                               "shipping": "string"
+                         "required": [
+                            "order_status_uuid",
+                            "payment_uuid",
+                            "products",
+                            "address"
+                         ],
+                         "properties": {
+                            "order_status_uuid": {
+                               "type": "string",
+                               "description": "Order status UUID"
                             },
-                            "delivery_fee": "integer",
-                            "amount": "integer",
-                            "shipped_at": "string"
+                            "payment_uuid": {
+                               "type": "string",
+                               "description": "Payment UUID"
+                            },
+                            "products": {
+                               "type": "array",
+                               "items": {
+                                  "type": "object",
+                                  "properties": {
+                                     "uuid": {
+                                        "type": "string",
+                                        "description": "Product UUID"
+                                     },
+                                     "quantity": {
+                                        "type": "integer",
+                                        "description": "Product quantity"
+                                     }
+                                  }
+                               },
+                               "description": "Array of objects with product uuid and quantity"
+                            },
+                            "address": {
+                               "type": "object",
+                               "properties": {
+                                  "billing": {
+                                     "type": "string"
+                                  },
+                                  "shipping": {
+                                     "type": "string"
+                                  }
+                               },
+                               "description": "Billing and Shipping address"
+                            }
                          }
                       },
                       "example": "{\n    \"order_status_uuid\": \"ec8d29cf-1602-4a5e-a633-e0e63e3c9ab4\",\n    \"payment_uuid\": \"f40cd6d5-ff17-4d80-a3c5-5a1ab90c3c65\",\n    \"products\": [\n        {\n            \"product\": \"sfssffs\",\n            \"quantity\": 15\n        }\n    ],\n    \"address\": {\n        \"billing\": \"76 5th Ave., Mountain View, LA\",\n        \"shipping\": \"76 5th Ave., Mountain View, LA\"\n    },\n    \"delivery_fee\": 900,\n    \"amount\": 10,\n    \"shipped_at\": null\n}"
@@ -934,23 +1070,50 @@
                 "content": {
                    "application/json": {
                       "schema": {
-                         "type": "object",
-                         "example": {
-                            "order_status_uuid": "string",
-                            "payment_uuid": "string",
-                            "products": [
-                               {
-                                  "product": "string",
-                                  "quantity": "integer"
-                               }
-                            ],
-                            "address": {
-                               "billing": "string",
-                               "shipping": "string"
+                         "required": [
+                            "order_status_uuid",
+                            "payment_uuid",
+                            "products",
+                            "address"
+                         ],
+                         "properties": {
+                            "order_status_uuid": {
+                               "type": "string",
+                               "description": "Order status UUID"
                             },
-                            "delivery_fee": "integer",
-                            "amount": "integer",
-                            "shipped_at": "string"
+                            "payment_uuid": {
+                               "type": "string",
+                               "description": "Payment UUID"
+                            },
+                            "products": {
+                               "type": "array",
+                               "items": {
+                                  "type": "object",
+                                  "properties": {
+                                     "uuid": {
+                                        "type": "string",
+                                        "description": "Product UUID"
+                                     },
+                                     "quantity": {
+                                        "type": "integer",
+                                        "description": "Product quantity"
+                                     }
+                                  }
+                               },
+                               "description": "Array of objects with product uuid and quantity"
+                            },
+                            "address": {
+                               "type": "object",
+                               "properties": {
+                                  "billing": {
+                                     "type": "string"
+                                  },
+                                  "shipping": {
+                                     "type": "string"
+                                  }
+                               },
+                               "description": "Billing and Shipping address"
+                            }
                          }
                       },
                       "example": "{\n    \"order_status_uuid\": \"ec8d29cf-1602-4a5e-a633-e0e63e3c9ab4\",\n    \"payment_uuid\": \"f40cd6d5-ff17-4d80-a3c5-5a1ab90c3c65\",\n    \"products\": [\n        {\n            \"product\": \"c81ec5ff-6010-30ca-9040-ddab94f61ca6\",\n            \"quantity\": 365\n        }\n    ],\n    \"address\": {\n        \"billing\": \"Voluptas.\",\n        \"shipping\": \"Lorem ipsum.\"\n    },\n    \"delivery_fee\": 1200,\n    \"amount\": 130,\n    \"shipped_at\": null\n}"
