@@ -35,4 +35,16 @@ class Order extends Model
     public function payment() {
         return $this->belongsTo(Payment::class);
     }
+
+    protected static function boot()
+    {
+        parent::boot();
+        Order::saving(function ($model) {
+            if ($model->amount > 500) {
+                $model->delivery_fee = 0;
+            } else {
+                $model->delivery_fee = 15;
+            }
+        });
+    }
 }
