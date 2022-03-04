@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Interfaces\IAuthTokenService;
 use App\Interfaces\ITokenStoreService;
-use App\Models\JwtToken;
 use Illuminate\Support\Arr;
 use Carbon\Carbon;
 
@@ -26,7 +25,7 @@ class AccountController extends Controller {
                 $store->store($user->id,  [
                     'unique_id' => $auth->getToken(),
                     'token_title' => $user->uuid,
-                    'refreshed_at' => JwtToken::where('user_id', $user->id)->count() === 0 ? null : Carbon::now(),
+                    'refreshed_at' => empty($store->getItem($user->id)) ? null : Carbon::now(),
                     'expires_at' => $now->add(config('values.SESSION_MAX_AGE'))
                 ]);
                 return response($auth->getToken(), 200);
