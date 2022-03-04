@@ -1,1478 +1,1489 @@
 {
-    "openapi": "3.0.0",
-    "servers": [
-       {
-          "url": "http://localhost:8001",
-          "description": "",
-          "variables": {}
-       }
-    ],
-    "info": {
-       "version": "1.0.0",
-       "title": "Petshop (Buckhill test)",
-       "description": "",
-       "termsOfService": "",
-       "contact": {},
-       "license": {
-          "name": ""
-       }
-    },
-    "paths": {
-       "/api/v1/user/create": {
-          "post": {
-             "summary": "Create user",
-             "operationId": "Createuser",
-             "parameters": [
-                {
-                   "name": "Content-Type",
-                   "in": "header",
-                   "required": true,
-                   "style": "simple",
-                   "schema": {
-                      "type": "string",
-                      "example": "application/json"
-                   }
-                }
-             ],
-             "responses": {
-                "201": {
-                   "description": "Created",
-                   "headers": {}
-                },
-                "409": {
-                   "description": "Conflict - email already taken",
-                   "headers": {}
-                },
-                "422": {
-                   "description": "Unprocessable entity",
-                   "headers": {}
-                },
-                "500": {
-                   "description": "Internal server error",
-                   "headers": {}
-                }
-             },
-             "requestBody": {
-                "required": true,
-                "content": {
-                   "application/json": {
-                      "schema": {
-                         "type": "object",
-                         "required": [
-                            "first_name",
-                            "last_name",
-                            "email",
-                            "password",
-                            "confirm_password",
-                            "address",
-                            "phone_number"
-                         ],
-                         "properties": {
-                            "first_name": {
-                               "type": "string",
-                               "description": "User firstname"
-                            },
-                            "last_name": {
-                               "type": "string",
-                               "description": "User lastname"
-                            },
-                            "email": {
-                               "type": "string",
-                               "description": "User email"
-                            },
-                            "password": {
-                               "type": "string",
-                               "description": "User password"
-                            },
-                            "confirm_password": {
-                               "type": "string",
-                               "description": "User password"
-                            },
-                            "avatar": {
-                               "type": "string",
-                               "description": "Avatar image UUID"
-                            },
-                            "address": {
-                               "type": "string",
-                               "description": "User main address"
-                            },
-                            "phone_number": {
-                               "type": "string",
-                               "description": "User main phone number"
-                            },
-                            "is_marketing": {
-                               "type": "string",
-                               "description": "User marketing preferences"
-                            }
-                         },
-                         "example": {
-                            "first_name": "Ali",
-                            "last_name": "Sissoko",
-                            "avatar": "...",
-                            "phone_number": "+93784057250",
-                            "address": "KP3",
-                            "is_marketing": false,
-                            "email": "baktash93@gmail.com",
-                            "password": "12345",
-                            "confirm_password": "12345"
-                         }
-                      },
-                      "example": "{\n  \"first_name\": \"Ali\",\n  \"last_name\": \"Sissoko\",\n  \"avatar\": \"...\",\n  \"phone_number\": \"+93784057250\",\n  \"address\": \"KP3\",\n  \"is_marketing\": false,\n  \"email\": \"baktash93@gmail.com\",\n  \"password\": \"12345\",\n  \"confirm_password\": \"12345\"\n}"
-                   }
-                }
-             },
-             "security": [],
-             "tags": [
-                "User"
-             ]
-          }
-       },
-       "/api/v1/user/login": {
-          "post": {
-             "summary": "Login",
-             "operationId": "Login",
-             "parameters": [
-                {
-                   "name": "Content-Type",
-                   "in": "header",
-                   "required": true,
-                   "style": "simple",
-                   "schema": {
-                      "type": "string",
-                      "example": "application/json"
-                   }
-                }
-             ],
-             "responses": {
-                "200": {
-                   "description": "Ok",
-                   "headers": {},
-                   "content": {
-                      "text/plain": {
-                         "schema": {
-                            "type": "string",
-                            "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0IiwiZXhwIjoxNjQ2MzQ1OTc0LjQ2MjMwMywidXNlcl91dWlkIjoiZjNkZTQzNWYtY2Q5OS0zNDYyLWFhYTUtNjQwZTgyZTUyZjc3In0.LoeQ3Vst68QzPE4ux2mN0MTRjdX_Ma75r0ds19yjnUk"
-                         }
-                      }
-                   }
-                },
-                "401": {
-                   "description": "Unauthorized",
-                   "headers": {}
-                },
-                "404": {
-                   "description": "Not found",
-                   "headers": {}
-                },
-                "500": {
-                   "description": "Internal server error",
-                   "headers": {}
-                }
-             },
-             "requestBody": {
-                "required": true,
-                "content": {
-                   "application/json": {
-                      "schema": {
-                         "type": "object",
-                         "example": {
-                            "email": "nlowe@example.org",
-                            "password": "12345"
-                         },
-                         "required": [
-                            "email",
-                            "password"
-                         ],
-                         "properties": {
-                            "email": {
-                               "type": "string",
-                               "description": "User email"
-                            },
-                            "password": {
-                               "type": "string",
-                               "description": "User password"
-                            }
-                         }
-                      },
-                      "example": "{\n  \"email\": \"nlowe@example.org\",\n  \"password\": \"12345\"\n}"
-                   }
-                }
-             },
-             "security": [],
-             "tags": [
-                "User"
-             ]
-          }
-       },
-       "/api/v1/user/": {
-          "get": {
-             "summary": "View (self) user",
-             "operationId": "Viewuser",
-             "responses": {
-                "200": {
-                   "description": "Ok",
-                   "headers": {},
-                   "content": {
-                      "application/json": {
-                         "example": "{\n    \"id\": 2,\n    \"uuid\": \"f3de435f-cd99-3462-aaa5-640e82e52f77\",\n    \"first_name\": \"Enola\",\n    \"last_name\": \"Kassulke\",\n    \"is_admin\": 0,\n    \"email\": \"zion.lind@example.net\",\n    \"email_verified_at\": \"2022-03-02T11:00:40.000000Z\",\n    \"avatar\": null,\n    \"address\": \"Et officia dolores et quia molestiae.\",\n    \"phone_number\": \"202.755.9362\",\n    \"is_marketing\": 0,\n    \"last_login_at\": \"2022-03-04 07:57:50\",\n    \"created_at\": \"2022-03-02T11:00:41.000000Z\",\n    \"updated_at\": \"2022-03-04T07:57:50.000000Z\"\n}"
-                      }
-                   }
-                },
-                "500": {
-                   "description": "Internal server error",
-                   "headers": {}
-                }
-             },
-             "tags": [
-                "User"
-             ]
-          }
-       },
-       "/api/v1/user/orders": {
-          "get": {
-             "summary": "List user orders",
-             "operationId": "Listuserorders",
-             "parameters": [
-                {
-                   "$ref": "#/components/parameters/sortBy"
-                },
-                {
-                   "$ref": "#/components/parameters/page"
-                },
-                {
-                   "$ref": "#/components/parameters/limit"
-                },
-                {
-                   "$ref": "#/components/parameters/desc"
-                }
-             ],
-             "responses": {
-                "200": {
-                   "description": "",
-                   "headers": {},
-                   "content": {
-                      "application/json": {
-                         "example": "[\n  {\n      \"id\": 9,\n      \"user_id\": 2,\n      \"order_status_id\": 3,\n      \"payment_id\": 2,\n      \"uuid\": \"eca465db-2f96-376f-aefd-fcb1f1d2ca8c\",\n      \"products\": [\n          {\n              \"product\": \"da59d7ba-ad14-3bf5-ba86-a5dd8a8577a9\",\n              \"quantity\": 54\n          }\n      ],\n      \"address\": {\n          \"billing\": \"Inventore.\",\n          \"shipping\": \"Qui nisi.\"\n      },\n      \"delivery_fee\": 5002,\n      \"amount\": 81187,\n      \"created_at\": \"2022-03-02T11:00:41.000000Z\",\n      \"updated_at\": \"2022-03-02T11:00:41.000000Z\",\n      \"shipped_at\": null\n  },\n  {\n      \"id\": 10,\n      \"user_id\": 2,\n      \"order_status_id\": 1,\n      \"payment_id\": null,\n      \"uuid\": \"c7692df4-aca6-3524-a067-7a90f5182f56\",\n      \"products\": [\n          {\n              \"product\": \"3a016b79-6794-396e-8019-fdfd44c90f75\",\n              \"quantity\": 29\n          }\n      ],\n      \"address\": {\n          \"billing\": \"Ut.\",\n          \"shipping\": \"Quaerat.\"\n      },\n      \"delivery_fee\": 4028,\n      \"amount\": 77635,\n      \"created_at\": \"2022-03-02T11:00:41.000000Z\",\n      \"updated_at\": \"2022-03-02T11:00:41.000000Z\",\n      \"shipped_at\": null\n  }\n]"
-                      }
-                   }
-                },
-                "401": {
-                   "description": "Unauthorized",
-                   "headers": {}
-                },
-                "500": {
-                   "description": "Internal server error",
-                   "headers": {}
-                }
-             },
-             "tags": [
-                "User"
-             ]
-          }
-       },
-       "/api/v1/user": {
-          "delete": {
-             "summary": "Delete (self) user",
-             "operationId": "Deleteuser",
-             "parameters": [],
-             "responses": {
-                "204": {
-                   "description": "Delete successful - No content",
-                   "headers": {}
-                },
-                "404": {
-                   "description": "Not found",
-                   "headers": {}
-                },
-                "500": {
-                   "description": "Internal server error",
-                   "headers": {}
-                }
-             },
-             "tags": [
-                "User"
-             ]
-          }
-       },
-       "/api/v1/payments": {
-          "get": {
-             "summary": "List payments",
-             "operationId": "Listpayments",
-             "parameters": [
-                {
-                   "$ref": "#/components/parameters/sortBy"
-                },
-                {
-                   "$ref": "#/components/parameters/page"
-                },
-                {
-                   "$ref": "#/components/parameters/limit"
-                },
-                {
-                   "$ref": "#/components/parameters/desc"
-                }
-             ],
-             "responses": {
-                "200": {
-                   "description": "Ok",
-                   "headers": {},
-                   "content": {
-                      "application/json": {
-                         "example": "[\n    {\n        \"id\": 4,\n        \"uuid\": \"1123be8a-2134-3cc6-97a2-e93119169d86\",\n        \"type\": \"bank_transfer\",\n        \"details\": {\n            \"first_name\": \"Rogers\",\n            \"last_name\": \"Hoppe\",\n            \"address\": \"Blanditiis sapiente cum veniam tenetur et.\"\n        },\n        \"created_at\": \"2022-03-02T11:00:41.000000Z\",\n        \"updated_at\": \"2022-03-02T11:00:41.000000Z\"\n    },\n    {\n        \"id\": 5,\n        \"uuid\": \"450bcffc-0d6a-39b3-84dc-0a5aa70d57e0\",\n        \"type\": \"cash_on_delivery\",\n        \"details\": {\n            \"holder_name\": \"Ike Monahan\",\n            \"number\": 99400,\n            \"ccv\": 70230,\n            \"expire_date\": {\n                \"date\": \"1988-02-07 05:47:44.000000\",\n                \"timezone_type\": 3,\n                \"timezone\": \"UTC\"\n            }\n        },\n        \"created_at\": \"2022-03-02T11:00:41.000000Z\",\n        \"updated_at\": \"2022-03-02T11:00:41.000000Z\"\n    }\n]"
-                      }
-                   }
-                },
-                "401": {
-                   "description": "Unauthorized",
-                   "headers": {}
-                },
-                "404": {
-                   "description": "Not found",
-                   "headers": {}
-                },
-                "500": {
-                   "description": "Internal server error",
-                   "headers": {}
-                }
-             },
-             "tags": [
-                "Payment"
-             ]
-          }
-       },
-       "/api/v1/payment/{uuid}": {
-          "get": {
-             "summary": "View payment",
-             "operationId": "Viewpayment",
-             "parameters": [
-                {
-                   "in": "path",
-                   "name": "uuid",
-                   "schema": {
-                      "type": "string"
-                   },
-                   "required": true,
-                   "description": "UUID of the payment to get"
-                }
-             ],
-             "responses": {
-                "200": {
-                   "description": "Requested payment details",
-                   "headers": {},
-                   "content": {
-                      "application/json": {
-                         "example": "{\n    \"id\": 31,\n    \"uuid\": \"77601e83-cee1-37e6-be6f-765d9f10fbe5\",\n    \"type\": \"cash_on_delivery\",\n    \"details\": {\n        \"holder_name\": \"Ms. Ardella Lind II\",\n        \"number\": 77599,\n        \"ccv\": 27610,\n        \"expire_date\": {\n            \"date\": \"1997-04-16 07:30:02.000000\",\n            \"timezone_type\": 3,\n            \"timezone\": \"UTC\"\n        }\n    },\n    \"created_at\": \"2022-03-02T11:00:42.000000Z\",\n    \"updated_at\": \"2022-03-02T11:00:42.000000Z\"\n}"
-                      }
-                   }
-                },
-                "401": {
-                   "description": "Unauthorized",
-                   "headers": {}
-                },
-                "404": {
-                   "description": "Not found",
-                   "headers": {}
-                },
-                "500": {
-                   "description": "Internal server error",
-                   "headers": {}
-                }
-             },
-             "tags": [
-                "Payment"
-             ]
-          },
-          "put": {
-             "summary": "Edit payment",
-             "operationId": "Editpayment",
-             "parameters": [
-                {
-                   "in": "path",
-                   "name": "uuid",
-                   "schema": {
-                      "type": "string"
-                   },
-                   "required": true,
-                   "description": "UUID of the payment to edit"
-                },
-                {
-                   "name": "Content-Type",
-                   "in": "header",
-                   "required": true,
-                   "style": "simple",
-                   "schema": {
-                      "type": "string",
-                      "example": "application/json"
-                   }
-                }
-             ],
-             "responses": {
-                "204": {
-                   "description": "Update successful - No content",
-                   "headers": {}
-                },
-                "401": {
-                   "description": "Unauthorized",
-                   "headers": {}
-                },
-                "404": {
-                   "description": "Not found",
-                   "headers": {}
-                },
-                "500": {
-                   "description": "Internal server error",
-                   "headers": {}
-                }
-             },
-             "requestBody": {
-                "required": true,
-                "content": {
-                   "application/json": {
-                      "schema": {
-                         "required": [
-                            "type",
-                            "details"
-                         ],
-                         "properties": {
-                            "type": {
-                               "type": "string",
-                               "enum": [
-                                  "credit_card",
-                                  "cash_on_delivery",
-                                  "bank_transfer"
-                               ],
-                               "description": "Payment type"
-                            },
-                            "details": {
-                               "type": "object",
-                               "description": "Review documentation for the payment type JSON format"
-                            }
-                         }
-                      },
-                      "example": "{\n  \"type\": \"credit_card\",\n  \"details\": {\n      \"holder_name\": \"Ms. Ardella Lind II\",\n      \"number\": 77599,\n      \"ccv\": 27610,\n      \"expire_date\": {\n          \"date\": \"1997-04-16 07:30:02.000000\",\n          \"timezone_type\": 3,\n          \"timezone\": \"UTC\"\n      }\n  }\n}"
-                   }
-                }
-             },
-             "tags": [
-                "Payment"
-             ]
-          },
-          "delete": {
-             "summary": "Delete payment",
-             "operationId": "Deletepayment",
-             "parameters": [
-                {
-                   "in": "path",
-                   "name": "uuid",
-                   "schema": {
-                      "type": "string"
-                   },
-                   "required": true,
-                   "description": "UUID of the payment to delete"
-                },
-                {
-                   "name": "Content-Type",
-                   "in": "header",
-                   "required": true,
-                   "style": "simple",
-                   "schema": {
-                      "type": "string",
-                      "example": "application/json"
-                   }
-                }
-             ],
-             "responses": {
-                "204": {
-                   "description": "Delete successful - No content",
-                   "headers": {}
-                },
-                "401": {
-                   "description": "Unauthorized",
-                   "headers": {}
-                },
-                "404": {
-                   "description": "Not found",
-                   "headers": {}
-                },
-                "500": {
-                   "description": "Internal server error",
-                   "headers": {}
-                }
-             },
-             "tags": [
-                "Payment"
-             ]
-          }
-       },
-       "/api/v1/payment/create": {
-          "post": {
-             "summary": "Create payment",
-             "operationId": "Createpayment",
-             "parameters": [
-                {
-                   "name": "Content-Type",
-                   "in": "header",
-                   "required": true,
-                   "style": "simple",
-                   "schema": {
-                      "type": "string",
-                      "example": "application/json"
-                   }
-                }
-             ],
-             "responses": {
-                "201": {
-                   "description": "Ok",
-                   "headers": {}
-                },
-                "401": {
-                   "description": "Unauthorized",
-                   "headers": {}
-                },
-                "500": {
-                   "description": "Internal server error",
-                   "headers": {}
-                }
-             },
-             "requestBody": {
-                "required": true,
-                "content": {
-                   "application/json": {
-                      "schema": {
-                         "type": "object",
-                         "required": [
-                            "type",
-                            "details"
-                         ],
-                         "properties": {
-                            "type": {
-                               "type": "string",
-                               "enum": [
-                                  "credit_card",
-                                  "cash_on_delivery",
-                                  "bank_transfer"
-                               ],
-                               "description": "Payment type"
-                            },
-                            "details": {
-                               "type": "object",
-                               "description": "Review documentation for the payment type JSON format"
-                            }
-                         }
-                      },
-                      "example": "{\n  \"type\": \"cash_on_delivery\",\n  \"details\": {\n    \"first_name\": \"Alex\",\n    \"last_name\": \"Arnold\",\n    \"address\": \"Lv., st# 18\"\n  }\n}"
-                   }
-                }
-             },
-             "tags": [
-                "Payment"
-             ]
-          }
-       },
-       "/api/v1/order-statuses": {
-          "get": {
-             "summary": "List order statuses",
-             "operationId": "Listorderstatuses",
-             "parameters": [
-                {
-                   "$ref": "#/components/parameters/sortBy"
-                },
-                {
-                   "$ref": "#/components/parameters/page"
-                },
-                {
-                   "$ref": "#/components/parameters/limit"
-                },
-                {
-                   "$ref": "#/components/parameters/desc"
-                }
-             ],
-             "responses": {
-                "200": {
-                   "description": "",
-                   "headers": {},
-                   "content": {
-                      "application/json": {
-                         "example": "[\n    {\n        \"id\": 1,\n        \"uuid\": \"75745eb9-6b78-4640-a369-7809a172891d\",\n        \"title\": \"open\",\n        \"created_at\": null,\n        \"updated_at\": null\n    },\n    {\n        \"id\": 2,\n        \"uuid\": \"6f4924ae-77f1-4ccb-884b-5707c59a6469\",\n        \"title\": \"pending payment\",\n        \"created_at\": null,\n        \"updated_at\": null\n    },\n    {\n        \"id\": 3,\n        \"uuid\": \"dab0c332-c46b-4c56-bd1f-5700962a8151\",\n        \"title\": \"paid\",\n        \"created_at\": null,\n        \"updated_at\": null\n    },\n    {\n        \"id\": 4,\n        \"uuid\": \"004b3e20-d468-49eb-9948-d3fdca4e6edd\",\n        \"title\": \"shipped\",\n        \"created_at\": null,\n        \"updated_at\": null\n    },\n    {\n        \"id\": 5,\n        \"uuid\": \"ffdc5a55-c586-442a-9575-c90096efd707\",\n        \"title\": \"cancelled\",\n        \"created_at\": null,\n        \"updated_at\": null\n    }\n]"
-                      }
-                   }
-                },
-                "401": {
-                   "description": "Unauthorized",
-                   "headers": {}
-                },
-                "500": {
-                   "description": "Internal server error",
-                   "headers": {}
-                }
-             },
-             "tags": [
-                "Order Status"
-             ]
-          }
-       },
-       "/api/v1/order-status/create": {
-          "post": {
-             "summary": "Create order status",
-             "operationId": "Createorderstatus",
-             "parameters": [
-                {
-                   "name": "Content-Type",
-                   "in": "header",
-                   "required": true,
-                   "style": "simple",
-                   "schema": {
-                      "type": "string",
-                      "example": "application/json"
-                   }
-                }
-             ],
-             "responses": {
-                "201": {
-                   "description": "Created - no content",
-                   "headers": {}
-                },
-                "401": {
-                   "description": "Unauthorized",
-                   "headers": {}
-                },
-                "500": {
-                   "description": "Internal server error",
-                   "headers": {}
-                }
-             },
-             "requestBody": {
-                "required": true,
-                "content": {
-                   "application/json": {
-                      "schema": {
-                         "required": [
-                            "title"
-                         ],
-                         "properties": {
-                            "title": {
-                               "type": "string",
-                               "description": "Order status title"
-                            }
-                         },
-                         "type": "object"
-                      },
-                      "example": "{\n  \"title\": \"ordered\"\n}"
-                   }
-                }
-             },
-             "tags": [
-                "Order Status"
-             ]
-          }
-       },
-       "/api/v1/order-status/{uuid}": {
-          "get": {
-             "summary": "View order status",
-             "operationId": "Vieworderstatus",
-             "parameters": [
-                {
-                   "in": "path",
-                   "name": "uuid",
-                   "schema": {
-                      "type": "string"
-                   },
-                   "required": true,
-                   "description": "UUID of the order status to get"
-                }
-             ],
-             "responses": {
-                "200": {
-                   "description": "",
-                   "headers": {},
-                   "content": {
-                      "application/json": {
-                         "example": "{\n    \"id\": 2,\n    \"uuid\": \"6f4924ae-77f1-4ccb-884b-5707c59a6469\",\n    \"title\": \"pending payment\",\n    \"created_at\": null,\n    \"updated_at\": null\n}"
-                      }
-                   }
-                },
-                "401": {
-                   "description": "Unauthorized",
-                   "headers": {}
-                },
-                "404": {
-                   "description": "Not found",
-                   "headers": {}
-                },
-                "500": {
-                   "description": "Internal server error",
-                   "headers": {}
-                }
-             },
-             "tags": [
-                "Order Status"
-             ]
-          },
-          "put": {
-             "summary": "Edit order status",
-             "operationId": "Editorderstatus",
-             "parameters": [
-                {
-                   "name": "Content-Type",
-                   "in": "header",
-                   "required": true,
-                   "style": "simple",
-                   "schema": {
-                      "type": "string",
-                      "example": "application/json"
-                   }
-                }
-             ],
-             "responses": {
-                "204": {
-                   "description": "Update successful - no content",
-                   "headers": {}
-                },
-                "401": {
-                   "description": "Unauthorized",
-                   "headers": {}
-                },
-                "404": {
-                   "description": "Not found",
-                   "headers": {}
-                },
-                "500": {
-                   "description": "Internal server error",
-                   "headers": {}
-                }
-             },
-             "requestBody": {
-                "required": true,
-                "content": {
-                   "application/json": {
-                      "schema": {
-                         "required": [
-                            "title"
-                         ],
-                         "properties": {
-                            "title": {
-                               "type": "string",
-                               "description": "Order status title"
-                            }
-                         },
-                         "type": "object"
-                      },
-                      "example": "{\n  \"title\": \"due\"\n}"
-                   }
-                }
-             },
-             "tags": [
-                "Order Status"
-             ]
-          },
-          "delete": {
-             "summary": "Delete order status",
-             "operationId": "Deleteorderstatus",
-             "parameters": [
-                {
-                   "in": "path",
-                   "name": "uuid",
-                   "schema": {
-                      "type": "string"
-                   },
-                   "required": true,
-                   "description": "UUID of the order status to delete"
-                }
-             ],
-             "responses": {
-                "204": {
-                   "description": "Delete successful - no content",
-                   "headers": {}
-                },
-                "401": {
-                   "description": "Unauthorized",
-                   "headers": {}
-                },
-                "404": {
-                   "description": "Not found",
-                   "headers": {}
-                },
-                "500": {
-                   "description": "Internal server error",
-                   "headers": {}
-                }
-             },
-             "tags": [
-                "Order Status"
-             ]
-          }
-       },
-       "/api/v1/orders": {
-          "get": {
-             "summary": "List all orders",
-             "operationId": "Listallorders",
-             "parameters": [
-                {
-                   "$ref": "#/components/parameters/sortBy"
-                },
-                {
-                   "$ref": "#/components/parameters/page"
-                },
-                {
-                   "$ref": "#/components/parameters/limit"
-                },
-                {
-                   "$ref": "#/components/parameters/desc"
-                }
-             ],
-             "responses": {
-                "200": {
-                   "description": "",
-                   "headers": {},
-                   "content": {
-                      "application/json": {
-                         "example": "[\n    {\n        \"id\": 9,\n        \"user_id\": 2,\n        \"order_status_id\": 3,\n        \"payment_id\": 2,\n        \"uuid\": \"eca465db-2f96-376f-aefd-fcb1f1d2ca8c\",\n        \"products\": [\n            {\n                \"product\": \"da59d7ba-ad14-3bf5-ba86-a5dd8a8577a9\",\n                \"quantity\": 54\n            }\n        ],\n        \"address\": {\n            \"billing\": \"Inventore.\",\n            \"shipping\": \"Qui nisi.\"\n        },\n        \"delivery_fee\": 5002,\n        \"amount\": 81187,\n        \"created_at\": \"2022-03-02T11:00:41.000000Z\",\n        \"updated_at\": \"2022-03-02T11:00:41.000000Z\",\n        \"shipped_at\": null\n    },\n    {\n        \"id\": 10,\n        \"user_id\": 2,\n        \"order_status_id\": 1,\n        \"payment_id\": null,\n        \"uuid\": \"c7692df4-aca6-3524-a067-7a90f5182f56\",\n        \"products\": [\n            {\n                \"product\": \"3a016b79-6794-396e-8019-fdfd44c90f75\",\n                \"quantity\": 29\n            }\n        ],\n        \"address\": {\n            \"billing\": \"Ut.\",\n            \"shipping\": \"Quaerat.\"\n        },\n        \"delivery_fee\": 4028,\n        \"amount\": 77635,\n        \"created_at\": \"2022-03-02T11:00:41.000000Z\",\n        \"updated_at\": \"2022-03-02T11:00:41.000000Z\",\n        \"shipped_at\": null\n    },\n    {\n        \"id\": 11,\n        \"user_id\": 2,\n        \"order_status_id\": 4,\n        \"payment_id\": 3,\n        \"uuid\": \"8b7add45-bd39-307e-b04e-fcad078e8ced\",\n        \"products\": [\n            {\n                \"product\": \"91c70d35-e283-30af-b4c9-4c5daf9dfea4\",\n                \"quantity\": 67\n            }\n        ],\n        \"address\": {\n            \"billing\": \"Earum.\",\n            \"shipping\": \"Corporis.\"\n        },\n        \"delivery_fee\": 6109,\n        \"amount\": 28816,\n        \"created_at\": \"2022-03-02T11:00:41.000000Z\",\n        \"updated_at\": \"2022-03-02T11:00:41.000000Z\",\n        \"shipped_at\": null\n    }\n]"
-                      }
-                   }
-                },
-                "401": {
-                   "description": "Unauthorized",
-                   "headers": {}
-                },
-                "500": {
-                   "description": "Internal server error",
-                   "headers": {}
-                }
-             },
-             "tags": [
-                "Order"
-             ]
-          }
-       },
-       "/api/v1/order/create": {
-          "post": {
-             "summary": "Create order",
-             "operationId": "Createorder",
-             "parameters": [
-                {
-                   "name": "Content-Type",
-                   "in": "header",
-                   "required": true,
-                   "style": "simple",
-                   "schema": {
-                      "type": "string",
-                      "example": "application/json"
-                   }
-                }
-             ],
-             "responses": {
-                "201": {
-                   "description": "Created",
-                   "headers": {}
-                },
-                "401": {
-                   "description": "Unauthorized",
-                   "headers": {}
-                },
-                "500": {
-                   "description": "Internal server error",
-                   "headers": {}
-                }
-             },
-             "requestBody": {
-                "required": true,
-                "content": {
-                   "application/json": {
-                      "schema": {
-                         "required": [
-                            "order_status_uuid",
-                            "payment_uuid",
-                            "products",
-                            "address"
-                         ],
-                         "properties": {
-                            "order_status_uuid": {
-                               "type": "string",
-                               "description": "Order status UUID"
-                            },
-                            "payment_uuid": {
-                               "type": "string",
-                               "description": "Payment UUID"
-                            },
-                            "products": {
-                               "type": "array",
-                               "items": {
-                                  "type": "object",
-                                  "properties": {
-                                     "uuid": {
-                                        "type": "string",
-                                        "description": "Product UUID"
-                                     },
-                                     "quantity": {
-                                        "type": "integer",
-                                        "description": "Product quantity"
-                                     }
-                                  }
-                               },
-                               "description": "Array of objects with product uuid and quantity"
-                            },
-                            "address": {
-                               "type": "object",
-                               "properties": {
-                                  "billing": {
-                                     "type": "string"
-                                  },
-                                  "shipping": {
-                                     "type": "string"
-                                  }
-                               },
-                               "description": "Billing and Shipping address"
-                            }
-                         }
-                      },
-                      "example": "{\n    \"order_status_uuid\": \"ec8d29cf-1602-4a5e-a633-e0e63e3c9ab4\",\n    \"payment_uuid\": \"f40cd6d5-ff17-4d80-a3c5-5a1ab90c3c65\",\n    \"products\": [\n        {\n            \"product\": \"sfssffs\",\n            \"quantity\": 15\n        }\n    ],\n    \"address\": {\n        \"billing\": \"76 5th Ave., Mountain View, LA\",\n        \"shipping\": \"76 5th Ave., Mountain View, LA\"\n    },\n    \"delivery_fee\": 900,\n    \"amount\": 10,\n    \"shipped_at\": null\n}"
-                   }
-                }
-             },
-             "tags": [
-                "Order"
-             ]
-          }
-       },
-       "/api/v1/order/{uuid}": {
-          "get": {
-             "summary": "View order",
-             "operationId": "Vieworder",
-             "parameters": [
-                {
-                   "in": "path",
-                   "name": "uuid",
-                   "schema": {
-                      "type": "string"
-                   },
-                   "required": true,
-                   "description": "UUID of the order to get"
-                },
-                {
-                   "name": "Content-Type",
-                   "in": "header",
-                   "required": true,
-                   "style": "simple",
-                   "schema": {
-                      "type": "string",
-                      "example": "application/json"
-                   }
-                }
-             ],
-             "responses": {
-                "200": {
-                   "description": "",
-                   "headers": {},
-                   "content": {
-                      "application/json": {
-                         "example": "{\n    \"id\": 15,\n    \"user_id\": 2,\n    \"order_status_id\": 5,\n    \"payment_id\": null,\n    \"uuid\": \"3458b6ad-97d9-309a-aaab-bccfcd4b74fa\",\n    \"products\": [\n        {\n            \"product\": \"6b66f611-1bae-3896-849f-b6c17d6b20bb\",\n            \"quantity\": 68\n        }\n    ],\n    \"address\": {\n        \"billing\": \"Voluptas.\",\n        \"shipping\": \"Ipsum.\"\n    },\n    \"delivery_fee\": 1742,\n    \"amount\": 64242,\n    \"created_at\": \"2022-03-02T11:00:41.000000Z\",\n    \"updated_at\": \"2022-03-02T11:00:41.000000Z\",\n    \"shipped_at\": null\n}"
-                      }
-                   }
-                },
-                "401": {
-                   "description": "Unauthorized",
-                   "headers": {}
-                },
-                "404": {
-                   "description": "Not found",
-                   "headers": {}
-                },
-                "500": {
-                   "description": "Internal server error",
-                   "headers": {}
-                }
-             },
-             "tags": [
-                "Order"
-             ]
-          },
-          "delete": {
-             "summary": "Delete order",
-             "operationId": "Deleteorder",
-             "parameters": [
-                {
-                   "name": "Content-Type",
-                   "in": "header",
-                   "required": true,
-                   "style": "simple",
-                   "schema": {
-                      "type": "string",
-                      "example": "application/json"
-                   }
-                }
-             ],
-             "responses": {
-                "204": {
-                   "description": "Delete successful - no content",
-                   "headers": {}
-                },
-                "401": {
-                   "description": "Unauthorized",
-                   "headers": {}
-                },
-                "404": {
-                   "description": "Not found",
-                   "headers": {}
-                },
-                "500": {
-                   "description": "Internal server error",
-                   "headers": {}
-                }
-             },
-             "tags": [
-                "Order"
-             ]
-          },
-          "put": {
-             "summary": "Edit order",
-             "operationId": "Editorder",
-             "parameters": [
-                {
-                   "in": "path",
-                   "name": "uuid",
-                   "schema": {
-                      "type": "string"
-                   },
-                   "required": true,
-                   "description": "UUID of the order to edit"
-                },
-                {
-                   "name": "Content-Type",
-                   "in": "header",
-                   "required": true,
-                   "style": "simple",
-                   "schema": {
-                      "type": "string",
-                      "example": "application/json"
-                   }
-                }
-             ],
-             "responses": {
-                "204": {
-                   "description": "Update successful - no content",
-                   "headers": {}
-                },
-                "401": {
-                   "description": "Unauthorized",
-                   "headers": {}
-                },
-                "404": {
-                   "description": "Not found",
-                   "headers": {}
-                },
-                "500": {
-                   "description": "Internal server error",
-                   "headers": {}
-                }
-             },
-             "requestBody": {
-                "required": true,
-                "content": {
-                   "application/json": {
-                      "schema": {
-                         "required": [
-                            "order_status_uuid",
-                            "payment_uuid",
-                            "products",
-                            "address"
-                         ],
-                         "properties": {
-                            "order_status_uuid": {
-                               "type": "string",
-                               "description": "Order status UUID"
-                            },
-                            "payment_uuid": {
-                               "type": "string",
-                               "description": "Payment UUID"
-                            },
-                            "products": {
-                               "type": "array",
-                               "items": {
-                                  "type": "object",
-                                  "properties": {
-                                     "uuid": {
-                                        "type": "string",
-                                        "description": "Product UUID"
-                                     },
-                                     "quantity": {
-                                        "type": "integer",
-                                        "description": "Product quantity"
-                                     }
-                                  }
-                               },
-                               "description": "Array of objects with product uuid and quantity"
-                            },
-                            "address": {
-                               "type": "object",
-                               "properties": {
-                                  "billing": {
-                                     "type": "string"
-                                  },
-                                  "shipping": {
-                                     "type": "string"
-                                  }
-                               },
-                               "description": "Billing and Shipping address"
-                            }
-                         }
-                      },
-                      "example": "{\n    \"order_status_uuid\": \"ec8d29cf-1602-4a5e-a633-e0e63e3c9ab4\",\n    \"payment_uuid\": \"f40cd6d5-ff17-4d80-a3c5-5a1ab90c3c65\",\n    \"products\": [\n        {\n            \"product\": \"c81ec5ff-6010-30ca-9040-ddab94f61ca6\",\n            \"quantity\": 365\n        }\n    ],\n    \"address\": {\n        \"billing\": \"Voluptas.\",\n        \"shipping\": \"Lorem ipsum.\"\n    },\n    \"delivery_fee\": 1200,\n    \"amount\": 130,\n    \"shipped_at\": null\n}"
-                   }
-                }
-             },
-             "tags": [
-                "Order"
-             ]
-          }
-       }
-    },
-    "components": {
-       "schemas": {
-          "User": {
-             "type": "object",
-             "properties": {
-                "id": {
-                   "type": "integer"
-                },
-                "uuid": {
-                   "type": "string"
-                },
-                "first_name": {
-                   "type": "string"
-                },
-                "avatar": {
-                   "type": "string"
-                },
-                "last_name": {
-                   "type": "string"
-                },
-                "email": {
-                   "type": "string"
-                },
-                "phone_number": {
-                   "type": "string"
-                },
-                "address": {
-                   "type": "string"
-                },
-                "is_admin": {
-                   "type": "boolean"
-                },
-                "is_marketing": {
-                   "type": "boolean"
-                },
-                "email_verified_at": {
-                   "type": "string",
-                   "format": "date-time"
-                },
-                "last_login_at": {
-                   "type": "string",
-                   "format": "date-time"
-                },
-                "created_at": {
-                   "type": "string",
-                   "format": "date-time"
-                },
-                "updated_at": {
-                   "type": "string",
-                   "format": "date-time"
-                }
-             }
-          },
-          "Payment": {
-             "type": "object",
-             "properties": {
-                "id": {
-                   "type": "integer"
-                },
-                "uuid": {
-                   "type": "string"
-                },
-                "type": {
-                   "type": "string",
-                   "enum": [
-                      "credit_card",
-                      "cash_on_delivery",
-                      "bank_transfer"
-                   ]
-                },
-                "details": {
-                   "type": "object"
-                },
-                "created_at": {
-                   "type": "string",
-                   "format": "date-time"
-                },
-                "updated_at": {
-                   "type": "string",
-                   "format": "date-time"
-                }
-             }
-          },
-          "OrderStatus": {
-             "type": "object",
-             "properties": {
-                "id": {
-                   "type": "integer"
-                },
-                "uuid": {
-                   "type": "string"
-                },
-                "title": {
-                   "type": "string"
-                },
-                "created_at": {
-                   "type": "string",
-                   "format": "date-time"
-                },
-                "updated_at": {
-                   "type": "string",
-                   "format": "date-time"
-                }
-             }
-          },
-          "Order": {
-             "type": "object",
-             "properties": {
-                "id": {
-                   "type": "integer"
-                },
-                "uuid": {
-                   "type": "string"
-                },
-                "user_id": {
-                   "type": "integer"
-                },
-                "payment_id": {
-                   "type": "integer"
-                },
-                "order_status_id": {
-                   "type": "integer"
-                },
-                "products": {
-                   "type": "object"
-                },
-                "address": {
-                   "type": "object"
-                },
-                "delivery_fee": {
-                   "type": "integer"
-                },
-                "amount": {
-                   "type": "integer"
-                },
-                "shipped_at": {
-                   "type": "string",
-                   "format": "date-time"
-                },
-                "created_at": {
-                   "type": "string",
-                   "format": "date-time"
-                },
-                "updated_at": {
-                   "type": "string",
-                   "format": "date-time"
-                }
-             }
-          }
-       },
-       "securitySchemes": {
-          "bearer": {
-             "type": "http",
-             "scheme": "bearer"
-          }
-       },
-       "parameters": {
-          "sortBy": {
-             "name": "sortBy",
-             "in": "query",
-             "required": false,
-             "style": "form",
-             "schema": {
-                "type": "string",
-                "example": "uuid"
-             }
-          },
-          "page": {
-             "name": "page",
-             "required": false,
-             "in": "query",
-             "schema": {
-                "type": "integer",
-                "example": 2
-             }
-          },
-          "limit": {
-             "name": "limit",
-             "required": false,
-             "in": "query",
-             "schema": {
-                "type": "integer"
-             }
-          },
-          "desc": {
-             "name": "desc",
-             "required": false,
-             "in": "query",
-             "schema": {
-                "type": "boolean"
-             }
-          },
-          "Content-Type": {
-             "name": "Content-Type",
-             "in": "header",
-             "required": true,
-             "style": "simple",
-             "schema": {
-                "type": "string",
-                "example": "application/json"
-             }
-          },
-          "Authorization": {
-             "name": "Authorization",
-             "in": "header",
-             "required": true,
-             "style": "simple",
-             "schema": {
-                "type": "string",
-                "example": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0IiwiZXhwIjoxNjQ2MDYxNjYxLjYwMjg4NSwidXNlcl91dWlkIjoiODI3NGVjMjUtMTkwNC00ZTk3LTlmYzMtNTA4N2QwMzhhNDM2In0.ZAIRfR2hkP7cjpAjK-XCMhc6OycagUrATojz0oQ4qI8"
-             }
-          }
-       }
-    },
-    "security": [
-       {
-          "bearer": []
-       },
-       {
-          "bearer": []
-       },
-       {
-          "bearer": []
-       },
-       {
-          "bearer": []
-       },
-       {
-          "bearer": []
-       },
-       {
-          "bearer": []
-       },
-       {
-          "bearer": []
-       },
-       {
-          "bearer": []
-       },
-       {
-          "bearer": []
-       },
-       {
-          "bearer": []
-       },
-       {
-          "bearer": []
-       },
-       {
-          "bearer": []
-       },
-       {
-          "bearer": []
-       },
-       {
-          "bearer": []
-       },
-       {
-          "bearer": []
-       },
-       {
-          "bearer": []
-       },
-       {
-          "bearer": []
-       }
-    ],
-    "tags": [],
-    "externalDocs": {
-       "url": "",
-       "description": ""
-    },
-    "warnings": [],
-    "definitions": {
-       "order": {
-          "type": "object",
-          "properties": {
-             "id": {
-                "type": "integer"
-             },
-             "uuid": {
-                "type": "string"
-             },
-             "user_id": {
-                "type": "integer"
-             },
-             "payment_id": {
-                "type": "integer"
-             },
-             "order_status_id": {
-                "type": "integer"
-             },
-             "products": {
-                "type": "object"
-             },
-             "address": {
-                "type": "object"
-             },
-             "delivery_fee": {
-                "type": "integer"
-             },
-             "amount": {
-                "type": "integer"
-             },
-             "shipped_at": {
-                "type": "string",
-                "format": "date-time"
-             },
-             "created_at": {
-                "type": "string",
-                "format": "date-time"
-             },
-             "updated_at": {
-                "type": "string",
-                "format": "date-time"
-             }
-          }
-       },
-       "payment": {
-          "type": "object",
-          "properties": {
-             "id": {
-                "type": "integer"
-             },
-             "uuid": {
-                "type": "string"
-             },
-             "type": {
-                "type": "string",
-                "enum": [
-                   "credit_card",
-                   "cash_on_delivery",
-                   "bank_transfer"
-                ]
-             },
-             "details": {
-                "type": "object"
-             },
-             "created_at": {
-                "type": "string",
-                "format": "date-time"
-             },
-             "updated_at": {
-                "type": "string",
-                "format": "date-time"
-             }
-          }
-       }
-    }
- }
+   "openapi": "3.0.0",
+   "servers": [
+      {
+         "url": "http://localhost:8001",
+         "description": "",
+         "variables": {}
+      }
+   ],
+   "info": {
+      "version": "1.0.0",
+      "title": "Petshop (Buckhill test)",
+      "description": "",
+      "termsOfService": "",
+      "contact": {},
+      "license": {
+         "name": ""
+      }
+   },
+   "paths": {
+      "/api/v1/user/create": {
+         "post": {
+            "summary": "Create user",
+            "operationId": "Createuser",
+            "parameters": [
+               {
+                  "name": "Content-Type",
+                  "in": "header",
+                  "required": true,
+                  "style": "simple",
+                  "schema": {
+                     "type": "string",
+                     "example": "application/json"
+                  }
+               }
+            ],
+            "responses": {
+               "201": {
+                  "description": "Created",
+                  "headers": {}
+               },
+               "409": {
+                  "description": "Conflict - email already taken",
+                  "headers": {}
+               },
+               "422": {
+                  "description": "Unprocessable entity",
+                  "headers": {}
+               },
+               "500": {
+                  "description": "Internal server error",
+                  "headers": {}
+               }
+            },
+            "requestBody": {
+               "required": true,
+               "content": {
+                  "application/x-www-form-urlencoded": {
+                     "schema": {
+                        "type": "object",
+                        "required": [
+                           "first_name",
+                           "last_name",
+                           "email",
+                           "password",
+                           "confirm_password",
+                           "address",
+                           "phone_number"
+                        ],
+                        "properties": {
+                           "first_name": {
+                              "type": "string",
+                              "description": "User firstname"
+                           },
+                           "last_name": {
+                              "type": "string",
+                              "description": "User lastname"
+                           },
+                           "email": {
+                              "type": "string",
+                              "description": "User email"
+                           },
+                           "password": {
+                              "type": "string",
+                              "description": "User password"
+                           },
+                           "confirm_password": {
+                              "type": "string",
+                              "description": "User password"
+                           },
+                           "avatar": {
+                              "type": "string",
+                              "description": "Avatar image UUID"
+                           },
+                           "address": {
+                              "type": "string",
+                              "description": "User main address"
+                           },
+                           "phone_number": {
+                              "type": "string",
+                              "description": "User main phone number"
+                           },
+                           "is_marketing": {
+                              "type": "string",
+                              "description": "User marketing preferences"
+                           }
+                        },
+                        "example": {
+                           "first_name": "Ali",
+                           "last_name": "Sissoko",
+                           "avatar": "...",
+                           "phone_number": "+93784057250",
+                           "address": "KP3",
+                           "is_marketing": false,
+                           "email": "baktash93@gmail.com",
+                           "password": "12345",
+                           "confirm_password": "12345"
+                        }
+                     },
+                     "example": "{\n  \"first_name\": \"Ali\",\n  \"last_name\": \"Sissoko\",\n  \"avatar\": \"...\",\n  \"phone_number\": \"+93784057250\",\n  \"address\": \"KP3\",\n  \"is_marketing\": false,\n  \"email\": \"baktash93@gmail.com\",\n  \"password\": \"12345\",\n  \"confirm_password\": \"12345\"\n}"
+                  }
+               }
+            },
+            "security": [],
+            "tags": [
+               "User"
+            ]
+         }
+      },
+      "/api/v1/user/login": {
+         "post": {
+            "summary": "Login",
+            "operationId": "Login",
+            "parameters": [
+               {
+                  "name": "Content-Type",
+                  "in": "header",
+                  "required": true,
+                  "style": "simple",
+                  "schema": {
+                     "type": "string",
+                     "example": "application/json"
+                  }
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "Ok",
+                  "headers": {},
+                  "content": {
+                     "text/plain": {
+                        "schema": {
+                           "type": "string",
+                           "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0IiwiZXhwIjoxNjQ2MzQ1OTc0LjQ2MjMwMywidXNlcl91dWlkIjoiZjNkZTQzNWYtY2Q5OS0zNDYyLWFhYTUtNjQwZTgyZTUyZjc3In0.LoeQ3Vst68QzPE4ux2mN0MTRjdX_Ma75r0ds19yjnUk"
+                        }
+                     }
+                  }
+               },
+               "401": {
+                  "description": "Unauthorized",
+                  "headers": {}
+               },
+               "404": {
+                  "description": "Not found",
+                  "headers": {}
+               },
+               "500": {
+                  "description": "Internal server error",
+                  "headers": {}
+               }
+            },
+            "requestBody": {
+               "required": true,
+               "content": {
+                  "application/x-www-form-urlencoded": {
+                     "schema": {
+                        "type": "object",
+                        "example": {
+                           "email": "nlowe@example.org",
+                           "password": "12345"
+                        },
+                        "required": [
+                           "email",
+                           "password"
+                        ],
+                        "properties": {
+                           "email": {
+                              "type": "string",
+                              "description": "User email"
+                           },
+                           "password": {
+                              "type": "string",
+                              "description": "User password"
+                           }
+                        }
+                     },
+                     "example": "{\n  \"email\": \"nlowe@example.org\",\n  \"password\": \"12345\"\n}"
+                  }
+               }
+            },
+            "security": [],
+            "tags": [
+               "User"
+            ]
+         }
+      },
+      "/api/v1/user/": {
+         "get": {
+            "summary": "View (self) user",
+            "operationId": "Viewuser",
+            "responses": {
+               "200": {
+                  "description": "Ok",
+                  "headers": {},
+                  "content": {
+                     "application/json": {
+                        "example": "{\n    \"id\": 2,\n    \"uuid\": \"f3de435f-cd99-3462-aaa5-640e82e52f77\",\n    \"first_name\": \"Enola\",\n    \"last_name\": \"Kassulke\",\n    \"is_admin\": 0,\n    \"email\": \"zion.lind@example.net\",\n    \"email_verified_at\": \"2022-03-02T11:00:40.000000Z\",\n    \"avatar\": null,\n    \"address\": \"Et officia dolores et quia molestiae.\",\n    \"phone_number\": \"202.755.9362\",\n    \"is_marketing\": 0,\n    \"last_login_at\": \"2022-03-04 07:57:50\",\n    \"created_at\": \"2022-03-02T11:00:41.000000Z\",\n    \"updated_at\": \"2022-03-04T07:57:50.000000Z\"\n}"
+                     }
+                  }
+               },
+               "500": {
+                  "description": "Internal server error",
+                  "headers": {}
+               }
+            },
+            "tags": [
+               "User"
+            ]
+         }
+      },
+      "/api/v1/user/orders": {
+         "get": {
+            "summary": "List user orders",
+            "operationId": "Listuserorders",
+            "parameters": [
+               {
+                  "$ref": "#/components/parameters/sortBy"
+               },
+               {
+                  "$ref": "#/components/parameters/page"
+               },
+               {
+                  "$ref": "#/components/parameters/limit"
+               },
+               {
+                  "$ref": "#/components/parameters/desc"
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "",
+                  "headers": {},
+                  "content": {
+                     "application/json": {
+                        "example": "[\n  {\n      \"id\": 9,\n      \"user_id\": 2,\n      \"order_status_id\": 3,\n      \"payment_id\": 2,\n      \"uuid\": \"eca465db-2f96-376f-aefd-fcb1f1d2ca8c\",\n      \"products\": [\n          {\n              \"product\": \"da59d7ba-ad14-3bf5-ba86-a5dd8a8577a9\",\n              \"quantity\": 54\n          }\n      ],\n      \"address\": {\n          \"billing\": \"Inventore.\",\n          \"shipping\": \"Qui nisi.\"\n      },\n      \"delivery_fee\": 5002,\n      \"amount\": 81187,\n      \"created_at\": \"2022-03-02T11:00:41.000000Z\",\n      \"updated_at\": \"2022-03-02T11:00:41.000000Z\",\n      \"shipped_at\": null\n  },\n  {\n      \"id\": 10,\n      \"user_id\": 2,\n      \"order_status_id\": 1,\n      \"payment_id\": null,\n      \"uuid\": \"c7692df4-aca6-3524-a067-7a90f5182f56\",\n      \"products\": [\n          {\n              \"product\": \"3a016b79-6794-396e-8019-fdfd44c90f75\",\n              \"quantity\": 29\n          }\n      ],\n      \"address\": {\n          \"billing\": \"Ut.\",\n          \"shipping\": \"Quaerat.\"\n      },\n      \"delivery_fee\": 4028,\n      \"amount\": 77635,\n      \"created_at\": \"2022-03-02T11:00:41.000000Z\",\n      \"updated_at\": \"2022-03-02T11:00:41.000000Z\",\n      \"shipped_at\": null\n  }\n]"
+                     }
+                  }
+               },
+               "401": {
+                  "description": "Unauthorized",
+                  "headers": {}
+               },
+               "500": {
+                  "description": "Internal server error",
+                  "headers": {}
+               }
+            },
+            "tags": [
+               "User"
+            ]
+         }
+      },
+      "/api/v1/user": {
+         "delete": {
+            "summary": "Delete (self) user",
+            "operationId": "Deleteuser",
+            "parameters": [],
+            "responses": {
+               "204": {
+                  "description": "Delete successful - No content",
+                  "headers": {}
+               },
+               "404": {
+                  "description": "Not found",
+                  "headers": {}
+               },
+               "500": {
+                  "description": "Internal server error",
+                  "headers": {}
+               }
+            },
+            "tags": [
+               "User"
+            ]
+         }
+      },
+      "/api/v1/payments": {
+         "get": {
+            "summary": "List payments",
+            "operationId": "Listpayments",
+            "parameters": [
+               {
+                  "$ref": "#/components/parameters/sortBy"
+               },
+               {
+                  "$ref": "#/components/parameters/page"
+               },
+               {
+                  "$ref": "#/components/parameters/limit"
+               },
+               {
+                  "$ref": "#/components/parameters/desc"
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "Ok",
+                  "headers": {},
+                  "content": {
+                     "application/json": {
+                        "example": "[\n    {\n        \"id\": 4,\n        \"uuid\": \"1123be8a-2134-3cc6-97a2-e93119169d86\",\n        \"type\": \"bank_transfer\",\n        \"details\": {\n            \"first_name\": \"Rogers\",\n            \"last_name\": \"Hoppe\",\n            \"address\": \"Blanditiis sapiente cum veniam tenetur et.\"\n        },\n        \"created_at\": \"2022-03-02T11:00:41.000000Z\",\n        \"updated_at\": \"2022-03-02T11:00:41.000000Z\"\n    },\n    {\n        \"id\": 5,\n        \"uuid\": \"450bcffc-0d6a-39b3-84dc-0a5aa70d57e0\",\n        \"type\": \"cash_on_delivery\",\n        \"details\": {\n            \"holder_name\": \"Ike Monahan\",\n            \"number\": 99400,\n            \"ccv\": 70230,\n            \"expire_date\": {\n                \"date\": \"1988-02-07 05:47:44.000000\",\n                \"timezone_type\": 3,\n                \"timezone\": \"UTC\"\n            }\n        },\n        \"created_at\": \"2022-03-02T11:00:41.000000Z\",\n        \"updated_at\": \"2022-03-02T11:00:41.000000Z\"\n    }\n]"
+                     }
+                  }
+               },
+               "401": {
+                  "description": "Unauthorized",
+                  "headers": {}
+               },
+               "404": {
+                  "description": "Not found",
+                  "headers": {}
+               },
+               "500": {
+                  "description": "Internal server error",
+                  "headers": {}
+               }
+            },
+            "tags": [
+               "Payment"
+            ]
+         }
+      },
+      "/api/v1/payment/{uuid}": {
+         "get": {
+            "summary": "View payment",
+            "operationId": "Viewpayment",
+            "parameters": [
+               {
+                  "in": "path",
+                  "name": "uuid",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "required": true,
+                  "description": "UUID of the payment to get"
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "Requested payment details",
+                  "headers": {},
+                  "content": {
+                     "application/json": {
+                        "example": "{\n    \"id\": 31,\n    \"uuid\": \"77601e83-cee1-37e6-be6f-765d9f10fbe5\",\n    \"type\": \"cash_on_delivery\",\n    \"details\": {\n        \"holder_name\": \"Ms. Ardella Lind II\",\n        \"number\": 77599,\n        \"ccv\": 27610,\n        \"expire_date\": {\n            \"date\": \"1997-04-16 07:30:02.000000\",\n            \"timezone_type\": 3,\n            \"timezone\": \"UTC\"\n        }\n    },\n    \"created_at\": \"2022-03-02T11:00:42.000000Z\",\n    \"updated_at\": \"2022-03-02T11:00:42.000000Z\"\n}"
+                     }
+                  }
+               },
+               "401": {
+                  "description": "Unauthorized",
+                  "headers": {}
+               },
+               "404": {
+                  "description": "Not found",
+                  "headers": {}
+               },
+               "500": {
+                  "description": "Internal server error",
+                  "headers": {}
+               }
+            },
+            "tags": [
+               "Payment"
+            ]
+         },
+         "put": {
+            "summary": "Edit payment",
+            "operationId": "Editpayment",
+            "parameters": [
+               {
+                  "in": "path",
+                  "name": "uuid",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "required": true,
+                  "description": "UUID of the payment to edit"
+               },
+               {
+                  "name": "Content-Type",
+                  "in": "header",
+                  "required": true,
+                  "style": "simple",
+                  "schema": {
+                     "type": "string",
+                     "example": "application/json"
+                  }
+               }
+            ],
+            "responses": {
+               "204": {
+                  "description": "Update successful - No content",
+                  "headers": {}
+               },
+               "401": {
+                  "description": "Unauthorized",
+                  "headers": {}
+               },
+               "404": {
+                  "description": "Not found",
+                  "headers": {}
+               },
+               "500": {
+                  "description": "Internal server error",
+                  "headers": {}
+               }
+            },
+            "requestBody": {
+               "required": true,
+               "content": {
+                  "application/x-www-form-urlencoded": {
+                     "schema": {
+                        "required": [
+                           "type",
+                           "details"
+                        ],
+                        "properties": {
+                           "type": {
+                              "type": "string",
+                              "enum": [
+                                 "credit_card",
+                                 "cash_on_delivery",
+                                 "bank_transfer"
+                              ],
+                              "description": "Payment type"
+                           },
+                           "details": {
+                              "type": "object",
+                              "description": "Review documentation for the payment type JSON format"
+                           }
+                        }
+                     },
+                     "example": "{\n  \"type\": \"credit_card\",\n  \"details\": {\n      \"holder_name\": \"Ms. Ardella Lind II\",\n      \"number\": 77599,\n      \"ccv\": 27610,\n      \"expire_date\": {\n          \"date\": \"1997-04-16 07:30:02.000000\",\n          \"timezone_type\": 3,\n          \"timezone\": \"UTC\"\n      }\n  }\n}"
+                  }
+               }
+            },
+            "tags": [
+               "Payment"
+            ]
+         },
+         "delete": {
+            "summary": "Delete payment",
+            "operationId": "Deletepayment",
+            "parameters": [
+               {
+                  "in": "path",
+                  "name": "uuid",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "required": true,
+                  "description": "UUID of the payment to delete"
+               },
+               {
+                  "name": "Content-Type",
+                  "in": "header",
+                  "required": true,
+                  "style": "simple",
+                  "schema": {
+                     "type": "string",
+                     "example": "application/json"
+                  }
+               }
+            ],
+            "responses": {
+               "204": {
+                  "description": "Delete successful - No content",
+                  "headers": {}
+               },
+               "401": {
+                  "description": "Unauthorized",
+                  "headers": {}
+               },
+               "404": {
+                  "description": "Not found",
+                  "headers": {}
+               },
+               "500": {
+                  "description": "Internal server error",
+                  "headers": {}
+               }
+            },
+            "tags": [
+               "Payment"
+            ]
+         }
+      },
+      "/api/v1/payment/create": {
+         "post": {
+            "summary": "Create payment",
+            "operationId": "Createpayment",
+            "parameters": [
+               {
+                  "name": "Content-Type",
+                  "in": "header",
+                  "required": true,
+                  "style": "simple",
+                  "schema": {
+                     "type": "string",
+                     "example": "application/json"
+                  }
+               }
+            ],
+            "responses": {
+               "201": {
+                  "description": "Ok",
+                  "headers": {}
+               },
+               "401": {
+                  "description": "Unauthorized",
+                  "headers": {}
+               },
+               "500": {
+                  "description": "Internal server error",
+                  "headers": {}
+               }
+            },
+            "requestBody": {
+               "required": true,
+               "content": {
+                  "application/x-www-form-urlencoded": {
+                     "schema": {
+                        "type": "object",
+                        "required": [
+                           "type",
+                           "details"
+                        ],
+                        "properties": {
+                           "type": {
+                              "type": "string",
+                              "enum": [
+                                 "credit_card",
+                                 "cash_on_delivery",
+                                 "bank_transfer"
+                              ],
+                              "description": "Payment type"
+                           },
+                           "details": {
+                              "type": "object",
+                              "description": "Review documentation for the payment type JSON format"
+                           }
+                        }
+                     },
+                     "example": "{\n  \"type\": \"cash_on_delivery\",\n  \"details\": {\n    \"first_name\": \"Alex\",\n    \"last_name\": \"Arnold\",\n    \"address\": \"Lv., st# 18\"\n  }\n}"
+                  }
+               }
+            },
+            "tags": [
+               "Payment"
+            ]
+         }
+      },
+      "/api/v1/order-statuses": {
+         "get": {
+            "summary": "List order statuses",
+            "operationId": "Listorderstatuses",
+            "parameters": [
+               {
+                  "$ref": "#/components/parameters/sortBy"
+               },
+               {
+                  "$ref": "#/components/parameters/page"
+               },
+               {
+                  "$ref": "#/components/parameters/limit"
+               },
+               {
+                  "$ref": "#/components/parameters/desc"
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "",
+                  "headers": {},
+                  "content": {
+                     "application/json": {
+                        "example": "[\n    {\n        \"id\": 1,\n        \"uuid\": \"75745eb9-6b78-4640-a369-7809a172891d\",\n        \"title\": \"open\",\n        \"created_at\": null,\n        \"updated_at\": null\n    },\n    {\n        \"id\": 2,\n        \"uuid\": \"6f4924ae-77f1-4ccb-884b-5707c59a6469\",\n        \"title\": \"pending payment\",\n        \"created_at\": null,\n        \"updated_at\": null\n    },\n    {\n        \"id\": 3,\n        \"uuid\": \"dab0c332-c46b-4c56-bd1f-5700962a8151\",\n        \"title\": \"paid\",\n        \"created_at\": null,\n        \"updated_at\": null\n    },\n    {\n        \"id\": 4,\n        \"uuid\": \"004b3e20-d468-49eb-9948-d3fdca4e6edd\",\n        \"title\": \"shipped\",\n        \"created_at\": null,\n        \"updated_at\": null\n    },\n    {\n        \"id\": 5,\n        \"uuid\": \"ffdc5a55-c586-442a-9575-c90096efd707\",\n        \"title\": \"cancelled\",\n        \"created_at\": null,\n        \"updated_at\": null\n    }\n]"
+                     }
+                  }
+               },
+               "401": {
+                  "description": "Unauthorized",
+                  "headers": {}
+               },
+               "500": {
+                  "description": "Internal server error",
+                  "headers": {}
+               }
+            },
+            "tags": [
+               "Order Status"
+            ]
+         }
+      },
+      "/api/v1/order-status/create": {
+         "post": {
+            "summary": "Create order status",
+            "operationId": "Createorderstatus",
+            "parameters": [
+               {
+                  "name": "Content-Type",
+                  "in": "header",
+                  "required": true,
+                  "style": "simple",
+                  "schema": {
+                     "type": "string",
+                     "example": "application/json"
+                  }
+               }
+            ],
+            "responses": {
+               "201": {
+                  "description": "Created - no content",
+                  "headers": {}
+               },
+               "401": {
+                  "description": "Unauthorized",
+                  "headers": {}
+               },
+               "500": {
+                  "description": "Internal server error",
+                  "headers": {}
+               }
+            },
+            "requestBody": {
+               "required": true,
+               "content": {
+                  "application/x-www-form-urlencoded": {
+                     "schema": {
+                        "required": [
+                           "title"
+                        ],
+                        "properties": {
+                           "title": {
+                              "type": "string",
+                              "description": "Order status title"
+                           }
+                        },
+                        "type": "object"
+                     },
+                     "example": "{\n  \"title\": \"ordered\"\n}"
+                  }
+               }
+            },
+            "tags": [
+               "Order Status"
+            ]
+         }
+      },
+      "/api/v1/order-status/{uuid}": {
+         "get": {
+            "summary": "View order status",
+            "operationId": "Vieworderstatus",
+            "parameters": [
+               {
+                  "in": "path",
+                  "name": "uuid",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "required": true,
+                  "description": "UUID of the order status to get"
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "",
+                  "headers": {},
+                  "content": {
+                     "application/json": {
+                        "example": "{\n    \"id\": 2,\n    \"uuid\": \"6f4924ae-77f1-4ccb-884b-5707c59a6469\",\n    \"title\": \"pending payment\",\n    \"created_at\": null,\n    \"updated_at\": null\n}"
+                     }
+                  }
+               },
+               "401": {
+                  "description": "Unauthorized",
+                  "headers": {}
+               },
+               "404": {
+                  "description": "Not found",
+                  "headers": {}
+               },
+               "500": {
+                  "description": "Internal server error",
+                  "headers": {}
+               }
+            },
+            "tags": [
+               "Order Status"
+            ]
+         },
+         "put": {
+            "summary": "Edit order status",
+            "operationId": "Editorderstatus",
+            "parameters": [
+               {
+                  "name": "Content-Type",
+                  "in": "header",
+                  "required": true,
+                  "style": "simple",
+                  "schema": {
+                     "type": "string",
+                     "example": "application/json"
+                  }
+               },
+               {
+                  "in": "path",
+                  "name": "uuid",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "required": true,
+                  "description": "UUID of the order status to edit"
+               }
+            ],
+            "responses": {
+               "204": {
+                  "description": "Update successful - no content",
+                  "headers": {}
+               },
+               "401": {
+                  "description": "Unauthorized",
+                  "headers": {}
+               },
+               "404": {
+                  "description": "Not found",
+                  "headers": {}
+               },
+               "500": {
+                  "description": "Internal server error",
+                  "headers": {}
+               }
+            },
+            "requestBody": {
+               "required": true,
+               "content": {
+                  "application/x-www-form-urlencoded": {
+                     "schema": {
+                        "required": [
+                           "title"
+                        ],
+                        "properties": {
+                           "title": {
+                              "type": "string",
+                              "description": "Order status title"
+                           }
+                        },
+                        "type": "object"
+                     },
+                     "example": "{\n  \"title\": \"due\"\n}"
+                  }
+               }
+            },
+            "tags": [
+               "Order Status"
+            ]
+         },
+         "delete": {
+            "summary": "Delete order status",
+            "operationId": "Deleteorderstatus",
+            "parameters": [
+               {
+                  "in": "path",
+                  "name": "uuid",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "required": true,
+                  "description": "UUID of the order status to delete"
+               }
+            ],
+            "responses": {
+               "204": {
+                  "description": "Delete successful - no content",
+                  "headers": {}
+               },
+               "401": {
+                  "description": "Unauthorized",
+                  "headers": {}
+               },
+               "404": {
+                  "description": "Not found",
+                  "headers": {}
+               },
+               "500": {
+                  "description": "Internal server error",
+                  "headers": {}
+               }
+            },
+            "tags": [
+               "Order Status"
+            ]
+         }
+      },
+      "/api/v1/orders": {
+         "get": {
+            "summary": "List all orders",
+            "operationId": "Listallorders",
+            "parameters": [
+               {
+                  "$ref": "#/components/parameters/sortBy"
+               },
+               {
+                  "$ref": "#/components/parameters/page"
+               },
+               {
+                  "$ref": "#/components/parameters/limit"
+               },
+               {
+                  "$ref": "#/components/parameters/desc"
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "",
+                  "headers": {},
+                  "content": {
+                     "application/json": {
+                        "example": "[\n    {\n        \"id\": 9,\n        \"user_id\": 2,\n        \"order_status_id\": 3,\n        \"payment_id\": 2,\n        \"uuid\": \"eca465db-2f96-376f-aefd-fcb1f1d2ca8c\",\n        \"products\": [\n            {\n                \"product\": \"da59d7ba-ad14-3bf5-ba86-a5dd8a8577a9\",\n                \"quantity\": 54\n            }\n        ],\n        \"address\": {\n            \"billing\": \"Inventore.\",\n            \"shipping\": \"Qui nisi.\"\n        },\n        \"delivery_fee\": 5002,\n        \"amount\": 81187,\n        \"created_at\": \"2022-03-02T11:00:41.000000Z\",\n        \"updated_at\": \"2022-03-02T11:00:41.000000Z\",\n        \"shipped_at\": null\n    },\n    {\n        \"id\": 10,\n        \"user_id\": 2,\n        \"order_status_id\": 1,\n        \"payment_id\": null,\n        \"uuid\": \"c7692df4-aca6-3524-a067-7a90f5182f56\",\n        \"products\": [\n            {\n                \"product\": \"3a016b79-6794-396e-8019-fdfd44c90f75\",\n                \"quantity\": 29\n            }\n        ],\n        \"address\": {\n            \"billing\": \"Ut.\",\n            \"shipping\": \"Quaerat.\"\n        },\n        \"delivery_fee\": 4028,\n        \"amount\": 77635,\n        \"created_at\": \"2022-03-02T11:00:41.000000Z\",\n        \"updated_at\": \"2022-03-02T11:00:41.000000Z\",\n        \"shipped_at\": null\n    },\n    {\n        \"id\": 11,\n        \"user_id\": 2,\n        \"order_status_id\": 4,\n        \"payment_id\": 3,\n        \"uuid\": \"8b7add45-bd39-307e-b04e-fcad078e8ced\",\n        \"products\": [\n            {\n                \"product\": \"91c70d35-e283-30af-b4c9-4c5daf9dfea4\",\n                \"quantity\": 67\n            }\n        ],\n        \"address\": {\n            \"billing\": \"Earum.\",\n            \"shipping\": \"Corporis.\"\n        },\n        \"delivery_fee\": 6109,\n        \"amount\": 28816,\n        \"created_at\": \"2022-03-02T11:00:41.000000Z\",\n        \"updated_at\": \"2022-03-02T11:00:41.000000Z\",\n        \"shipped_at\": null\n    }\n]"
+                     }
+                  }
+               },
+               "401": {
+                  "description": "Unauthorized",
+                  "headers": {}
+               },
+               "500": {
+                  "description": "Internal server error",
+                  "headers": {}
+               }
+            },
+            "tags": [
+               "Order"
+            ]
+         }
+      },
+      "/api/v1/order/create": {
+         "post": {
+            "summary": "Create order",
+            "operationId": "Createorder",
+            "parameters": [
+               {
+                  "name": "Content-Type",
+                  "in": "header",
+                  "required": true,
+                  "style": "simple",
+                  "schema": {
+                     "type": "string",
+                     "example": "application/json"
+                  }
+               }
+            ],
+            "responses": {
+               "201": {
+                  "description": "Created",
+                  "headers": {}
+               },
+               "401": {
+                  "description": "Unauthorized",
+                  "headers": {}
+               },
+               "500": {
+                  "description": "Internal server error",
+                  "headers": {}
+               }
+            },
+            "requestBody": {
+               "required": true,
+               "content": {
+                  "application/x-www-form-urlencoded": {
+                     "schema": {
+                        "required": [
+                           "order_status_uuid",
+                           "payment_uuid",
+                           "products",
+                           "address"
+                        ],
+                        "properties": {
+                           "order_status_uuid": {
+                              "type": "string",
+                              "description": "Order status UUID"
+                           },
+                           "payment_uuid": {
+                              "type": "string",
+                              "description": "Payment UUID"
+                           },
+                           "products": {
+                              "type": "array",
+                              "items": {
+                                 "type": "object",
+                                 "properties": {
+                                    "uuid": {
+                                       "type": "string",
+                                       "description": "Product UUID"
+                                    },
+                                    "quantity": {
+                                       "type": "integer",
+                                       "description": "Product quantity"
+                                    }
+                                 }
+                              },
+                              "description": "Array of objects with product uuid and quantity"
+                           },
+                           "address": {
+                              "type": "object",
+                              "properties": {
+                                 "billing": {
+                                    "type": "string"
+                                 },
+                                 "shipping": {
+                                    "type": "string"
+                                 }
+                              },
+                              "description": "Billing and Shipping address"
+                           }
+                        },
+                        "type": "object"
+                     },
+                     "example": "{\n    \"order_status_uuid\": \"ec8d29cf-1602-4a5e-a633-e0e63e3c9ab4\",\n    \"payment_uuid\": \"f40cd6d5-ff17-4d80-a3c5-5a1ab90c3c65\",\n    \"products\": [\n        {\n            \"product\": \"sfssffs\",\n            \"quantity\": 15\n        }\n    ],\n    \"address\": {\n        \"billing\": \"76 5th Ave., Mountain View, LA\",\n        \"shipping\": \"76 5th Ave., Mountain View, LA\"\n    },\n    \"delivery_fee\": 900,\n    \"amount\": 10,\n    \"shipped_at\": null\n}"
+                  }
+               }
+            },
+            "tags": [
+               "Order"
+            ]
+         }
+      },
+      "/api/v1/order/{uuid}": {
+         "get": {
+            "summary": "View order",
+            "operationId": "Vieworder",
+            "parameters": [
+               {
+                  "in": "path",
+                  "name": "uuid",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "required": true,
+                  "description": "UUID of the order to get"
+               },
+               {
+                  "name": "Content-Type",
+                  "in": "header",
+                  "required": true,
+                  "style": "simple",
+                  "schema": {
+                     "type": "string",
+                     "example": "application/json"
+                  }
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "",
+                  "headers": {},
+                  "content": {
+                     "application/json": {
+                        "example": "{\n    \"id\": 15,\n    \"user_id\": 2,\n    \"order_status_id\": 5,\n    \"payment_id\": null,\n    \"uuid\": \"3458b6ad-97d9-309a-aaab-bccfcd4b74fa\",\n    \"products\": [\n        {\n            \"product\": \"6b66f611-1bae-3896-849f-b6c17d6b20bb\",\n            \"quantity\": 68\n        }\n    ],\n    \"address\": {\n        \"billing\": \"Voluptas.\",\n        \"shipping\": \"Ipsum.\"\n    },\n    \"delivery_fee\": 1742,\n    \"amount\": 64242,\n    \"created_at\": \"2022-03-02T11:00:41.000000Z\",\n    \"updated_at\": \"2022-03-02T11:00:41.000000Z\",\n    \"shipped_at\": null\n}"
+                     }
+                  }
+               },
+               "401": {
+                  "description": "Unauthorized",
+                  "headers": {}
+               },
+               "404": {
+                  "description": "Not found",
+                  "headers": {}
+               },
+               "500": {
+                  "description": "Internal server error",
+                  "headers": {}
+               }
+            },
+            "tags": [
+               "Order"
+            ]
+         },
+         "delete": {
+            "summary": "Delete order",
+            "operationId": "Deleteorder",
+            "parameters": [
+               {
+                  "name": "Content-Type",
+                  "in": "header",
+                  "required": true,
+                  "style": "simple",
+                  "schema": {
+                     "type": "string",
+                     "example": "application/json"
+                  }
+               }
+            ],
+            "responses": {
+               "204": {
+                  "description": "Delete successful - no content",
+                  "headers": {}
+               },
+               "401": {
+                  "description": "Unauthorized",
+                  "headers": {}
+               },
+               "404": {
+                  "description": "Not found",
+                  "headers": {}
+               },
+               "500": {
+                  "description": "Internal server error",
+                  "headers": {}
+               }
+            },
+            "tags": [
+               "Order"
+            ]
+         },
+         "put": {
+            "summary": "Edit order",
+            "operationId": "Editorder",
+            "parameters": [
+               {
+                  "in": "path",
+                  "name": "uuid",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "required": true,
+                  "description": "UUID of the order to edit"
+               },
+               {
+                  "name": "Content-Type",
+                  "in": "header",
+                  "required": true,
+                  "style": "simple",
+                  "schema": {
+                     "type": "string",
+                     "example": "application/json"
+                  }
+               }
+            ],
+            "responses": {
+               "204": {
+                  "description": "Update successful - no content",
+                  "headers": {}
+               },
+               "401": {
+                  "description": "Unauthorized",
+                  "headers": {}
+               },
+               "404": {
+                  "description": "Not found",
+                  "headers": {}
+               },
+               "500": {
+                  "description": "Internal server error",
+                  "headers": {}
+               }
+            },
+            "requestBody": {
+               "required": true,
+               "content": {
+                  "application/x-www-form-urlencoded": {
+                     "schema": {
+                        "required": [
+                           "order_status_uuid",
+                           "payment_uuid",
+                           "products",
+                           "address"
+                        ],
+                        "properties": {
+                           "order_status_uuid": {
+                              "type": "string",
+                              "description": "Order status UUID"
+                           },
+                           "payment_uuid": {
+                              "type": "string",
+                              "description": "Payment UUID"
+                           },
+                           "products": {
+                              "type": "array",
+                              "items": {
+                                 "type": "object",
+                                 "properties": {
+                                    "uuid": {
+                                       "type": "string",
+                                       "description": "Product UUID"
+                                    },
+                                    "quantity": {
+                                       "type": "integer",
+                                       "description": "Product quantity"
+                                    }
+                                 }
+                              },
+                              "description": "Array of objects with product uuid and quantity"
+                           },
+                           "address": {
+                              "type": "object",
+                              "properties": {
+                                 "billing": {
+                                    "type": "string"
+                                 },
+                                 "shipping": {
+                                    "type": "string"
+                                 }
+                              },
+                              "description": "Billing and Shipping address"
+                           }
+                        },
+                        "type": "object"
+                     },
+                     "example": "{\n    \"order_status_uuid\": \"ec8d29cf-1602-4a5e-a633-e0e63e3c9ab4\",\n    \"payment_uuid\": \"f40cd6d5-ff17-4d80-a3c5-5a1ab90c3c65\",\n    \"products\": [\n        {\n            \"product\": \"c81ec5ff-6010-30ca-9040-ddab94f61ca6\",\n            \"quantity\": 365\n        }\n    ],\n    \"address\": {\n        \"billing\": \"Voluptas.\",\n        \"shipping\": \"Lorem ipsum.\"\n    },\n    \"delivery_fee\": 1200,\n    \"amount\": 130,\n    \"shipped_at\": null\n}"
+                  }
+               }
+            },
+            "tags": [
+               "Order"
+            ]
+         }
+      }
+   },
+   "components": {
+      "schemas": {
+         "User": {
+            "type": "object",
+            "properties": {
+               "id": {
+                  "type": "integer"
+               },
+               "uuid": {
+                  "type": "string"
+               },
+               "first_name": {
+                  "type": "string"
+               },
+               "avatar": {
+                  "type": "string"
+               },
+               "last_name": {
+                  "type": "string"
+               },
+               "email": {
+                  "type": "string"
+               },
+               "phone_number": {
+                  "type": "string"
+               },
+               "address": {
+                  "type": "string"
+               },
+               "is_admin": {
+                  "type": "boolean"
+               },
+               "is_marketing": {
+                  "type": "boolean"
+               },
+               "email_verified_at": {
+                  "type": "string",
+                  "format": "date-time"
+               },
+               "last_login_at": {
+                  "type": "string",
+                  "format": "date-time"
+               },
+               "created_at": {
+                  "type": "string",
+                  "format": "date-time"
+               },
+               "updated_at": {
+                  "type": "string",
+                  "format": "date-time"
+               }
+            }
+         },
+         "Payment": {
+            "type": "object",
+            "properties": {
+               "id": {
+                  "type": "integer"
+               },
+               "uuid": {
+                  "type": "string"
+               },
+               "type": {
+                  "type": "string",
+                  "enum": [
+                     "credit_card",
+                     "cash_on_delivery",
+                     "bank_transfer"
+                  ]
+               },
+               "details": {
+                  "type": "object"
+               },
+               "created_at": {
+                  "type": "string",
+                  "format": "date-time"
+               },
+               "updated_at": {
+                  "type": "string",
+                  "format": "date-time"
+               }
+            }
+         },
+         "OrderStatus": {
+            "type": "object",
+            "properties": {
+               "id": {
+                  "type": "integer"
+               },
+               "uuid": {
+                  "type": "string"
+               },
+               "title": {
+                  "type": "string"
+               },
+               "created_at": {
+                  "type": "string",
+                  "format": "date-time"
+               },
+               "updated_at": {
+                  "type": "string",
+                  "format": "date-time"
+               }
+            }
+         },
+         "Order": {
+            "type": "object",
+            "properties": {
+               "id": {
+                  "type": "integer"
+               },
+               "uuid": {
+                  "type": "string"
+               },
+               "user_id": {
+                  "type": "integer"
+               },
+               "payment_id": {
+                  "type": "integer"
+               },
+               "order_status_id": {
+                  "type": "integer"
+               },
+               "products": {
+                  "type": "object"
+               },
+               "address": {
+                  "type": "object"
+               },
+               "delivery_fee": {
+                  "type": "integer"
+               },
+               "amount": {
+                  "type": "integer"
+               },
+               "shipped_at": {
+                  "type": "string",
+                  "format": "date-time"
+               },
+               "created_at": {
+                  "type": "string",
+                  "format": "date-time"
+               },
+               "updated_at": {
+                  "type": "string",
+                  "format": "date-time"
+               }
+            }
+         }
+      },
+      "securitySchemes": {
+         "bearer": {
+            "type": "http",
+            "scheme": "bearer"
+         }
+      },
+      "parameters": {
+         "sortBy": {
+            "name": "sortBy",
+            "in": "query",
+            "required": false,
+            "style": "form",
+            "schema": {
+               "type": "string",
+               "example": "uuid"
+            }
+         },
+         "page": {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": {
+               "type": "integer",
+               "example": 2
+            }
+         },
+         "limit": {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "schema": {
+               "type": "integer"
+            }
+         },
+         "desc": {
+            "name": "desc",
+            "required": false,
+            "in": "query",
+            "schema": {
+               "type": "boolean"
+            }
+         },
+         "Content-Type": {
+            "name": "Content-Type",
+            "in": "header",
+            "required": true,
+            "style": "simple",
+            "schema": {
+               "type": "string",
+               "example": "application/json"
+            }
+         },
+         "Authorization": {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "style": "simple",
+            "schema": {
+               "type": "string",
+               "example": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0IiwiZXhwIjoxNjQ2MDYxNjYxLjYwMjg4NSwidXNlcl91dWlkIjoiODI3NGVjMjUtMTkwNC00ZTk3LTlmYzMtNTA4N2QwMzhhNDM2In0.ZAIRfR2hkP7cjpAjK-XCMhc6OycagUrATojz0oQ4qI8"
+            }
+         }
+      }
+   },
+   "security": [
+      {
+         "bearer": []
+      },
+      {
+         "bearer": []
+      },
+      {
+         "bearer": []
+      },
+      {
+         "bearer": []
+      },
+      {
+         "bearer": []
+      },
+      {
+         "bearer": []
+      },
+      {
+         "bearer": []
+      },
+      {
+         "bearer": []
+      },
+      {
+         "bearer": []
+      },
+      {
+         "bearer": []
+      },
+      {
+         "bearer": []
+      },
+      {
+         "bearer": []
+      },
+      {
+         "bearer": []
+      },
+      {
+         "bearer": []
+      },
+      {
+         "bearer": []
+      },
+      {
+         "bearer": []
+      },
+      {
+         "bearer": []
+      }
+   ],
+   "tags": [],
+   "externalDocs": {
+      "url": "",
+      "description": ""
+   },
+   "warnings": [],
+   "definitions": {
+      "order": {
+         "type": "object",
+         "properties": {
+            "id": {
+               "type": "integer"
+            },
+            "uuid": {
+               "type": "string"
+            },
+            "user_id": {
+               "type": "integer"
+            },
+            "payment_id": {
+               "type": "integer"
+            },
+            "order_status_id": {
+               "type": "integer"
+            },
+            "products": {
+               "type": "object"
+            },
+            "address": {
+               "type": "object"
+            },
+            "delivery_fee": {
+               "type": "integer"
+            },
+            "amount": {
+               "type": "integer"
+            },
+            "shipped_at": {
+               "type": "string",
+               "format": "date-time"
+            },
+            "created_at": {
+               "type": "string",
+               "format": "date-time"
+            },
+            "updated_at": {
+               "type": "string",
+               "format": "date-time"
+            }
+         }
+      },
+      "payment": {
+         "type": "object",
+         "properties": {
+            "id": {
+               "type": "integer"
+            },
+            "uuid": {
+               "type": "string"
+            },
+            "type": {
+               "type": "string",
+               "enum": [
+                  "credit_card",
+                  "cash_on_delivery",
+                  "bank_transfer"
+               ]
+            },
+            "details": {
+               "type": "object"
+            },
+            "created_at": {
+               "type": "string",
+               "format": "date-time"
+            },
+            "updated_at": {
+               "type": "string",
+               "format": "date-time"
+            }
+         }
+      }
+   }
+}
