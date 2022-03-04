@@ -74,30 +74,7 @@
                    }
                 }
              },
-             "tags": [
-                "User"
-             ]
-          }
-       },
-       "/api/v1/user": {
-          "delete": {
-             "summary": "Delete user",
-             "operationId": "Deleteuser",
-             "parameters": [],
-             "responses": {
-                "204": {
-                   "description": "No content",
-                   "headers": {}
-                },
-                "404": {
-                   "description": "Not found",
-                   "headers": {}
-                },
-                "500": {
-                   "description": "Internal server error",
-                   "headers": {}
-                }
-             },
+             "security": [],
              "tags": [
                 "User"
              ]
@@ -160,6 +137,31 @@
                    }
                 }
              },
+             "security": [],
+             "tags": [
+                "User"
+             ]
+          }
+       },
+       "/api/v1/user/": {
+          "get": {
+             "summary": "View (self) user",
+             "operationId": "Viewuser",
+             "responses": {
+                "200": {
+                   "description": "Ok",
+                   "headers": {},
+                   "content": {
+                      "application/json": {
+                         "example": "{\n    \"id\": 2,\n    \"uuid\": \"f3de435f-cd99-3462-aaa5-640e82e52f77\",\n    \"first_name\": \"Enola\",\n    \"last_name\": \"Kassulke\",\n    \"is_admin\": 0,\n    \"email\": \"zion.lind@example.net\",\n    \"email_verified_at\": \"2022-03-02T11:00:40.000000Z\",\n    \"avatar\": null,\n    \"address\": \"Et officia dolores et quia molestiae.\",\n    \"phone_number\": \"202.755.9362\",\n    \"is_marketing\": 0,\n    \"last_login_at\": \"2022-03-04 07:57:50\",\n    \"created_at\": \"2022-03-02T11:00:41.000000Z\",\n    \"updated_at\": \"2022-03-04T07:57:50.000000Z\"\n}"
+                      }
+                   }
+                },
+                "500": {
+                   "description": "Internal server error",
+                   "headers": {}
+                }
+             },
              "tags": [
                 "User"
              ]
@@ -195,6 +197,30 @@
                 },
                 "401": {
                    "description": "Unauthorized",
+                   "headers": {}
+                },
+                "500": {
+                   "description": "Internal server error",
+                   "headers": {}
+                }
+             },
+             "tags": [
+                "User"
+             ]
+          }
+       },
+       "/api/v1/user": {
+          "delete": {
+             "summary": "Delete (self) user",
+             "operationId": "Deleteuser",
+             "parameters": [],
+             "responses": {
+                "204": {
+                   "description": "No content",
+                   "headers": {}
+                },
+                "404": {
+                   "description": "Not found",
                    "headers": {}
                 },
                 "500": {
