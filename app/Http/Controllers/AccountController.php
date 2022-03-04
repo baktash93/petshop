@@ -74,7 +74,7 @@ class AccountController extends Controller {
             );
             return response(null, 201);
         } catch (\Throwable $th) {
-            throw $th;
+            //throw $th;
             return response(null, 500);
         }
     }
