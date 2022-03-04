@@ -156,7 +156,7 @@
                             "password": "12345"
                          }
                       },
-                      "example": "{\n\t\"email\": \"nlowe@example.org\",\n\t\"password\": \"12345\"\n}"
+                      "example": "{\n  \"email\": \"nlowe@example.org\",\n  \"password\": \"12345\"\n}"
                    }
                 }
              },
@@ -422,10 +422,6 @@
                    "description": "Unauthorized",
                    "headers": {}
                 },
-                "404": {
-                   "description": "Not found",
-                   "headers": {}
-                },
                 "500": {
                    "description": "Internal server error",
                    "headers": {}
@@ -455,6 +451,23 @@
              "responses": {
                 "200": {
                    "description": "",
+                   "headers": {},
+                   "content": {
+                      "application/json": {
+                         "example": "[\n    {\n        \"id\": 1,\n        \"uuid\": \"75745eb9-6b78-4640-a369-7809a172891d\",\n        \"title\": \"open\",\n        \"created_at\": null,\n        \"updated_at\": null\n    },\n    {\n        \"id\": 2,\n        \"uuid\": \"6f4924ae-77f1-4ccb-884b-5707c59a6469\",\n        \"title\": \"pending payment\",\n        \"created_at\": null,\n        \"updated_at\": null\n    },\n    {\n        \"id\": 3,\n        \"uuid\": \"dab0c332-c46b-4c56-bd1f-5700962a8151\",\n        \"title\": \"paid\",\n        \"created_at\": null,\n        \"updated_at\": null\n    },\n    {\n        \"id\": 4,\n        \"uuid\": \"004b3e20-d468-49eb-9948-d3fdca4e6edd\",\n        \"title\": \"shipped\",\n        \"created_at\": null,\n        \"updated_at\": null\n    },\n    {\n        \"id\": 5,\n        \"uuid\": \"ffdc5a55-c586-442a-9575-c90096efd707\",\n        \"title\": \"cancelled\",\n        \"created_at\": null,\n        \"updated_at\": null\n    }\n]"
+                      }
+                   }
+                },
+                "401": {
+                   "description": "Unauthorized",
+                   "headers": {}
+                },
+                "404": {
+                   "description": "Not found",
+                   "headers": {}
+                },
+                "500": {
+                   "description": "Internal server error",
                    "headers": {}
                 }
              },
@@ -480,8 +493,16 @@
                 }
              ],
              "responses": {
-                "200": {
-                   "description": "",
+                "201": {
+                   "description": "Ok",
+                   "headers": {}
+                },
+                "401": {
+                   "description": "Unauthorized",
+                   "headers": {}
+                },
+                "500": {
+                   "description": "Internal server error",
                    "headers": {}
                 }
              },
@@ -490,12 +511,9 @@
                 "content": {
                    "application/json": {
                       "schema": {
-                         "type": "string",
-                         "example": {
-                            "title": "Ordered"
-                         }
+                         "type": "object"
                       },
-                      "example": "{\n\t\"title\": \"Ordered\"\n}"
+                      "example": "{\n  \"title\": \"ordered\"\n}"
                    }
                 }
              },
@@ -522,6 +540,23 @@
              "responses": {
                 "200": {
                    "description": "",
+                   "headers": {},
+                   "content": {
+                      "application/json": {
+                         "example": "{\n    \"id\": 2,\n    \"uuid\": \"6f4924ae-77f1-4ccb-884b-5707c59a6469\",\n    \"title\": \"pending payment\",\n    \"created_at\": null,\n    \"updated_at\": null\n}"
+                      }
+                   }
+                },
+                "401": {
+                   "description": "Unauthorized",
+                   "headers": {}
+                },
+                "404": {
+                   "description": "Not found",
+                   "headers": {}
+                },
+                "500": {
+                   "description": "Internal server error",
                    "headers": {}
                 }
              },
@@ -545,8 +580,20 @@
                 }
              ],
              "responses": {
-                "200": {
-                   "description": "",
+                "204": {
+                   "description": "Update successful - no content",
+                   "headers": {}
+                },
+                "401": {
+                   "description": "Unauthorized",
+                   "headers": {}
+                },
+                "404": {
+                   "description": "Not found",
+                   "headers": {}
+                },
+                "500": {
+                   "description": "Internal server error",
                    "headers": {}
                 }
              },
@@ -555,12 +602,9 @@
                 "content": {
                    "application/json": {
                       "schema": {
-                         "type": "string",
-                         "example": {
-                            "title": "Due"
-                         }
+                         "type": "object"
                       },
-                      "example": "{\n\t\"title\": \"Due\"\n}"
+                      "example": "{\n  \"title\": \"Due\"\n}"
                    }
                 }
              },
@@ -583,8 +627,20 @@
                 }
              ],
              "responses": {
-                "200": {
-                   "description": "",
+                "204": {
+                   "description": "Delete successful - no content",
+                   "headers": {}
+                },
+                "401": {
+                   "description": "Unauthorized",
+                   "headers": {}
+                },
+                "404": {
+                   "description": "Not found",
+                   "headers": {}
+                },
+                "500": {
+                   "description": "Internal server error",
                    "headers": {}
                 }
              },
@@ -601,6 +657,19 @@
              "responses": {
                 "200": {
                    "description": "",
+                   "headers": {},
+                   "content": {
+                      "application/json": {
+                         "example": "[\n    {\n        \"id\": 9,\n        \"user_id\": 2,\n        \"order_status_id\": 3,\n        \"payment_id\": 2,\n        \"uuid\": \"eca465db-2f96-376f-aefd-fcb1f1d2ca8c\",\n        \"products\": [\n            {\n                \"product\": \"da59d7ba-ad14-3bf5-ba86-a5dd8a8577a9\",\n                \"quantity\": 54\n            }\n        ],\n        \"address\": {\n            \"billing\": \"Inventore.\",\n            \"shipping\": \"Qui nisi.\"\n        },\n        \"delivery_fee\": 5002,\n        \"amount\": 81187,\n        \"created_at\": \"2022-03-02T11:00:41.000000Z\",\n        \"updated_at\": \"2022-03-02T11:00:41.000000Z\",\n        \"shipped_at\": null\n    },\n    {\n        \"id\": 10,\n        \"user_id\": 2,\n        \"order_status_id\": 1,\n        \"payment_id\": null,\n        \"uuid\": \"c7692df4-aca6-3524-a067-7a90f5182f56\",\n        \"products\": [\n            {\n                \"product\": \"3a016b79-6794-396e-8019-fdfd44c90f75\",\n                \"quantity\": 29\n            }\n        ],\n        \"address\": {\n            \"billing\": \"Ut.\",\n            \"shipping\": \"Quaerat.\"\n        },\n        \"delivery_fee\": 4028,\n        \"amount\": 77635,\n        \"created_at\": \"2022-03-02T11:00:41.000000Z\",\n        \"updated_at\": \"2022-03-02T11:00:41.000000Z\",\n        \"shipped_at\": null\n    },\n    {\n        \"id\": 11,\n        \"user_id\": 2,\n        \"order_status_id\": 4,\n        \"payment_id\": 3,\n        \"uuid\": \"8b7add45-bd39-307e-b04e-fcad078e8ced\",\n        \"products\": [\n            {\n                \"product\": \"91c70d35-e283-30af-b4c9-4c5daf9dfea4\",\n                \"quantity\": 67\n            }\n        ],\n        \"address\": {\n            \"billing\": \"Earum.\",\n            \"shipping\": \"Corporis.\"\n        },\n        \"delivery_fee\": 6109,\n        \"amount\": 28816,\n        \"created_at\": \"2022-03-02T11:00:41.000000Z\",\n        \"updated_at\": \"2022-03-02T11:00:41.000000Z\",\n        \"shipped_at\": null\n    }\n]"
+                      }
+                   }
+                },
+                "401": {
+                   "description": "Unauthorized",
+                   "headers": {}
+                },
+                "500": {
+                   "description": "Internal server error",
                    "headers": {}
                 }
              },
@@ -626,8 +695,16 @@
                 }
              ],
              "responses": {
-                "200": {
-                   "description": "",
+                "201": {
+                   "description": "Created",
+                   "headers": {}
+                },
+                "401": {
+                   "description": "Unauthorized",
+                   "headers": {}
+                },
+                "500": {
+                   "description": "Internal server error",
                    "headers": {}
                 }
              },
@@ -636,26 +713,26 @@
                 "content": {
                    "application/json": {
                       "schema": {
-                         "type": "string",
+                         "type": "object",
                          "example": {
-                            "order_status_uuid": "ec8d29cf-1602-4a5e-a633-e0e63e3c9ab4",
-                            "payment_uuid": "f40cd6d5-ff17-4d80-a3c5-5a1ab90c3c65",
+                            "order_status_uuid": "string",
+                            "payment_uuid": "string",
                             "products": [
                                {
-                                  "product": "sfssffs",
-                                  "quantity": 15
+                                  "product": "string",
+                                  "quantity": "integer"
                                }
                             ],
                             "address": {
-                               "billing": "para",
-                               "shipping": "que"
+                               "billing": "string",
+                               "shipping": "string"
                             },
-                            "delivery_fee": 900,
-                            "amount": 10,
-                            "shipped_at": null
+                            "delivery_fee": "integer",
+                            "amount": "integer",
+                            "shipped_at": "string"
                          }
                       },
-                      "example": "{\n    \"order_status_uuid\": \"ec8d29cf-1602-4a5e-a633-e0e63e3c9ab4\",\n    \"payment_uuid\": \"f40cd6d5-ff17-4d80-a3c5-5a1ab90c3c65\",\n    \"products\": [\n        {\n            \"product\": \"sfssffs\",\n            \"quantity\": 15\n        }\n    ],\n    \"address\": {\n        \"billing\": \"para\",\n        \"shipping\": \"que\"\n    },\n    \"delivery_fee\": 900,\n    \"amount\": 10,\n    \"shipped_at\": null\n}"
+                      "example": "{\n    \"order_status_uuid\": \"ec8d29cf-1602-4a5e-a633-e0e63e3c9ab4\",\n    \"payment_uuid\": \"f40cd6d5-ff17-4d80-a3c5-5a1ab90c3c65\",\n    \"products\": [\n        {\n            \"product\": \"sfssffs\",\n            \"quantity\": 15\n        }\n    ],\n    \"address\": {\n        \"billing\": \"76 5th Ave., Mountain View, LA\",\n        \"shipping\": \"76 5th Ave., Mountain View, LA\"\n    },\n    \"delivery_fee\": 900,\n    \"amount\": 10,\n    \"shipped_at\": null\n}"
                    }
                 }
              },
@@ -692,6 +769,23 @@
              "responses": {
                 "200": {
                    "description": "",
+                   "headers": {},
+                   "content": {
+                      "application/json": {
+                         "example": "{\n    \"id\": 15,\n    \"user_id\": 2,\n    \"order_status_id\": 5,\n    \"payment_id\": null,\n    \"uuid\": \"3458b6ad-97d9-309a-aaab-bccfcd4b74fa\",\n    \"products\": [\n        {\n            \"product\": \"6b66f611-1bae-3896-849f-b6c17d6b20bb\",\n            \"quantity\": 68\n        }\n    ],\n    \"address\": {\n        \"billing\": \"Voluptas.\",\n        \"shipping\": \"Ipsum.\"\n    },\n    \"delivery_fee\": 1742,\n    \"amount\": 64242,\n    \"created_at\": \"2022-03-02T11:00:41.000000Z\",\n    \"updated_at\": \"2022-03-02T11:00:41.000000Z\",\n    \"shipped_at\": null\n}"
+                      }
+                   }
+                },
+                "401": {
+                   "description": "Unauthorized",
+                   "headers": {}
+                },
+                "404": {
+                   "description": "Not found",
+                   "headers": {}
+                },
+                "500": {
+                   "description": "Internal server error",
                    "headers": {}
                 }
              },
@@ -715,8 +809,20 @@
                 }
              ],
              "responses": {
-                "200": {
-                   "description": "",
+                "204": {
+                   "description": "Delete successful - no content",
+                   "headers": {}
+                },
+                "401": {
+                   "description": "Unauthorized",
+                   "headers": {}
+                },
+                "404": {
+                   "description": "Not found",
+                   "headers": {}
+                },
+                "500": {
+                   "description": "Internal server error",
                    "headers": {}
                 }
              },
@@ -749,8 +855,20 @@
                 }
              ],
              "responses": {
-                "200": {
-                   "description": "",
+                "204": {
+                   "description": "Update successful - no content",
+                   "headers": {}
+                },
+                "401": {
+                   "description": "Unauthorized",
+                   "headers": {}
+                },
+                "404": {
+                   "description": "Not found",
+                   "headers": {}
+                },
+                "500": {
+                   "description": "Internal server error",
                    "headers": {}
                 }
              },
@@ -759,26 +877,26 @@
                 "content": {
                    "application/json": {
                       "schema": {
-                         "type": "string",
+                         "type": "object",
                          "example": {
-                            "order_status_uuid": "ec8d29cf-1602-4a5e-a633-e0e63e3c9ab4",
-                            "payment_uuid": "f40cd6d5-ff17-4d80-a3c5-5a1ab90c3c65",
+                            "order_status_uuid": "string",
+                            "payment_uuid": "string",
                             "products": [
                                {
-                                  "product": "hello world",
-                                  "quantity": 365
+                                  "product": "string",
+                                  "quantity": "integer"
                                }
                             ],
                             "address": {
-                               "billing": "para",
-                               "shipping": "que"
+                               "billing": "string",
+                               "shipping": "string"
                             },
-                            "delivery_fee": 1200,
-                            "amount": 130,
-                            "shipped_at": null
+                            "delivery_fee": "integer",
+                            "amount": "integer",
+                            "shipped_at": "string"
                          }
                       },
-                      "example": "{\n    \"order_status_uuid\": \"ec8d29cf-1602-4a5e-a633-e0e63e3c9ab4\",\n    \"payment_uuid\": \"f40cd6d5-ff17-4d80-a3c5-5a1ab90c3c65\",\n    \"products\": [\n        {\n            \"product\": \"hello world\",\n            \"quantity\": 365\n        }\n    ],\n    \"address\": {\n        \"billing\": \"para\",\n        \"shipping\": \"que\"\n    },\n    \"delivery_fee\": 1200,\n    \"amount\": 130,\n    \"shipped_at\": null\n}"
+                      "example": "{\n    \"order_status_uuid\": \"ec8d29cf-1602-4a5e-a633-e0e63e3c9ab4\",\n    \"payment_uuid\": \"f40cd6d5-ff17-4d80-a3c5-5a1ab90c3c65\",\n    \"products\": [\n        {\n            \"product\": \"c81ec5ff-6010-30ca-9040-ddab94f61ca6\",\n            \"quantity\": 365\n        }\n    ],\n    \"address\": {\n        \"billing\": \"Voluptas.\",\n        \"shipping\": \"Lorem ipsum.\"\n    },\n    \"delivery_fee\": 1200,\n    \"amount\": 130,\n    \"shipped_at\": null\n}"
                    }
                 }
              },
