@@ -34,7 +34,10 @@ class AccountController extends Controller {
     function create(Request $request) {
         try {
             if ($request->post('password') !== $request->post('confirm_password')) {
-                return response('', 422);
+                return response(null, 422);
+            }
+            if (User::where('email', $request->post('email'))->count() > 0) {
+                return response(null, 409);
             }
             $payload = $request->post();
             $payload['uuid'] = \Illuminate\Support\Str::uuid();
