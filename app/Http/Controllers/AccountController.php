@@ -10,7 +10,8 @@ use App\Interfaces\ITokenStoreService;
 use Illuminate\Support\Arr;
 use Carbon\Carbon;
 
-class AccountController extends Controller {
+class AccountController extends Controller
+{
     function login(Request $request, IAuthTokenService $auth, ITokenStoreService $store) {
         try {
             if(User::where('email', $request->post('email'))->count() === 0) {

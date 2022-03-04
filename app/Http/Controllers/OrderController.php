@@ -10,7 +10,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 
-class OrderController extends Controller {
+class OrderController extends Controller
+{
     function index(Request $request) {
         try {
             $orders = Order::whereRaw('1=1')

@@ -8,7 +8,8 @@ use Illuminate\Support\Arr;
 use App\Models\Payment;
 use App\Models\User;
 
-class PaymentController extends Controller {
+class PaymentController extends Controller 
+{
     function index(Request $request) {
         try {
             $payments = Payment::whereHas('order', function ($query) use($request) {

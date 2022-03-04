@@ -7,7 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use App\Models\OrderStatus;
 
-class OrderStatusController extends Controller {
+class OrderStatusController extends Controller
+{
     function index(Request $request) {
         try {
             $statuses = OrderStatus::whereRaw('1=1')
