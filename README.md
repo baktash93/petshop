@@ -7,10 +7,17 @@
 This Laravel-based API backend was developed for the purpose of a test conducted by [Buckhill](https://www.buckhill.co.uk/) for the position of Laravel PHP developer.
 
 ## Configuration
-The following needs to be specified in the .env before properly running the API server (_please refer `.env.example` in the root of the project_):
+The following needs to be specified in the .env before properly running the API server
+
+### Environment variable
+_Please refer `.env.example` in the root of the project_:
 
 * `TIMEZONE` - Can be set to a proper timezone value (e.g. `Asia/Kabul`)
 * `SESSION_MAX_AGE` - This needs to be set to specify the defualt _age_ of a generated token for a user. It can be set to any value acceptable by `DateTimeImmutable` (`modify` method) such as `+1 day`, `+6 hour`, etc.
+
+### Migrations and seeds
+* `php artisan migrate`
+* `php artisan db:seed`
 
 After the values on the `.env` file have been updated, please run `php artisan config:cache` to update the config cache values for the server.
 
