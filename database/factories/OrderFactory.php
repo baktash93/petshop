@@ -34,7 +34,7 @@ class OrderFactory extends Factory
                 'billing' => $this->faker->text(10),
                 'shipping' => $this->faker->text(10)  
             ],
-            'delivery_fee' => $this->faker->randomNumber(4, true),
+            'delivery_fee' => $this->faker->randomNumber(2, true),
             'amount' => $this->faker->randomNumber(3, false)
         ];
     }
