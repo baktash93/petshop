@@ -171,14 +171,16 @@
              "operationId": "Listuserorders",
              "parameters": [
                 {
-                   "name": "Content-Type",
-                   "in": "header",
-                   "required": true,
-                   "style": "simple",
-                   "schema": {
-                      "type": "string",
-                      "example": "application/json"
-                   }
+                   "$ref": "#/components/parameters/sortBy"
+                },
+                {
+                   "$ref": "#/components/parameters/page"
+                },
+                {
+                   "$ref": "#/components/parameters/limit"
+                },
+                {
+                   "$ref": "#/components/parameters/desc"
                 }
              ],
              "responses": {
@@ -214,10 +216,13 @@
                    "$ref": "#/components/parameters/sortBy"
                 },
                 {
-                   "$ref": "#/components/parameters/Content-Type"
+                   "$ref": "#/components/parameters/page"
                 },
                 {
-                   "$ref": "#/components/parameters/Authorization"
+                   "$ref": "#/components/parameters/limit"
+                },
+                {
+                   "$ref": "#/components/parameters/desc"
                 }
              ],
              "responses": {
@@ -447,7 +452,20 @@
           "get": {
              "summary": "List order statuses",
              "operationId": "Listorderstatuses",
-             "parameters": [],
+             "parameters": [
+                {
+                   "$ref": "#/components/parameters/sortBy"
+                },
+                {
+                   "$ref": "#/components/parameters/page"
+                },
+                {
+                   "$ref": "#/components/parameters/limit"
+                },
+                {
+                   "$ref": "#/components/parameters/desc"
+                }
+             ],
              "responses": {
                 "200": {
                    "description": "",
@@ -494,7 +512,7 @@
              ],
              "responses": {
                 "201": {
-                   "description": "Ok",
+                   "description": "Created - no content",
                    "headers": {}
                 },
                 "401": {
@@ -653,7 +671,20 @@
           "get": {
              "summary": "List all orders",
              "operationId": "Listallorders",
-             "parameters": [],
+             "parameters": [
+                {
+                   "$ref": "#/components/parameters/sortBy"
+                },
+                {
+                   "$ref": "#/components/parameters/page"
+                },
+                {
+                   "$ref": "#/components/parameters/limit"
+                },
+                {
+                   "$ref": "#/components/parameters/desc"
+                }
+             ],
              "responses": {
                 "200": {
                    "description": "",
@@ -1066,11 +1097,36 @@
           "sortBy": {
              "name": "sortBy",
              "in": "query",
-             "required": true,
+             "required": false,
              "style": "form",
              "schema": {
                 "type": "string",
                 "example": "uuid"
+             }
+          },
+          "page": {
+             "name": "page",
+             "required": false,
+             "in": "query",
+             "schema": {
+                "type": "integer",
+                "example": 2
+             }
+          },
+          "limit": {
+             "name": "limit",
+             "required": false,
+             "in": "query",
+             "schema": {
+                "type": "integer"
+             }
+          },
+          "desc": {
+             "name": "desc",
+             "required": false,
+             "in": "query",
+             "schema": {
+                "type": "boolean"
              }
           },
           "Content-Type": {
