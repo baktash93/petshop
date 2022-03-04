@@ -96,9 +96,20 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'is_marketing' => 'boolean'
     ];
 
     public function orders() {
         return $this->hasMany(Order::class);
+    }
+
+    public static function boot() {
+        parent::boot();
+
+        User::saving(function ($model) {
+            if (empty($model->is_marketing)) {
+                $model->is_marketing = false;
+            }
+        });
     }
 }
