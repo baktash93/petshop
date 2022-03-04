@@ -88,7 +88,8 @@ class OrderController extends Controller {
             $payload = $request->post();
             $payload['user_id'] = User::where('uuid', $request->input('user_uuid'))->value('id');
             $payload['order_status_id'] = OrderStatus::where('uuid', $payload['order_status_uuid'])->value('id');
-            $payload['payment_id'] = Payment::where('uuid', $payload['payment_uuid'])->value('id');
+            $payload['payment_id'] = !empty($payload['payment_uuid']) ? 
+                Payment::where('uuid', $payload['payment_uuid'])->value('id') : null;
             $order
                 ->update(
                     Arr::only($request->post(), [
