@@ -32,7 +32,7 @@ class AccountController extends Controller {
             }
             return response(null, 401);
         } catch (\Throwable $th) {
-            throw $th;
+            //throw $th;
             response(null, 500);
         }
     }
@@ -58,7 +58,7 @@ class AccountController extends Controller {
                 return response(null, 409);
             }
             $payload = $request->post();
-            $payload['uuid'] = \Illuminate\Support\Str::uuid();
+            $payload['uuid'] = \Illuminate\Support\Str::uuid()->toString();
             $payload['password'] = bcrypt($request->post('password'));
             User::create(Arr::only($payload, [
                     'uuid',
@@ -74,6 +74,7 @@ class AccountController extends Controller {
             );
             return response(null, 201);
         } catch (\Throwable $th) {
+            throw $th;
             return response(null, 500);
         }
     }

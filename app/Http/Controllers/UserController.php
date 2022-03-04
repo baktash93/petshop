@@ -17,7 +17,7 @@ class UserController extends Controller {
                     User::where('uuid', $request->input('user_uuid'))->value('id')
                 )->orderBy(
                     empty($request->query('sortBy')) ? 'id' : $request->query('sortBy'),
-                    !empty($request->query('desc')) ? 'desc' : 'asc'
+                    !empty($request->query('desc')) && $request->query('desc') == 'true' ? 'desc' : 'asc'
                 );
             
             if (!empty($request->query('page'))) {

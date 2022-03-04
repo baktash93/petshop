@@ -13,7 +13,7 @@ class OrderStatusController extends Controller {
             $statuses = OrderStatus::whereRaw('1=1')
                 ->orderBy(
                     empty($request->query('sortBy')) ? 'id' : $request->query('sortBy'),
-                    !empty($request->query('desc')) ? 'desc' : 'asc'
+                    !empty($request->query('desc')) && $request->query('desc') == 'true' ? 'desc' : 'asc'
                 );
             
             if (!empty($request->query('page'))) {
