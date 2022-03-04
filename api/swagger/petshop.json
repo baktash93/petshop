@@ -35,8 +35,20 @@
                 }
              ],
              "responses": {
-                "200": {
-                   "description": "",
+                "201": {
+                   "description": "Created",
+                   "headers": {}
+                },
+                "409": {
+                   "description": "Conflict - email already taken",
+                   "headers": {}
+                },
+                "422": {
+                   "description": "Unprocessable entity",
+                   "headers": {}
+                },
+                "500": {
+                   "description": "Internal server error",
                    "headers": {}
                 }
              },
@@ -45,7 +57,7 @@
                 "content": {
                    "application/json": {
                       "schema": {
-                         "type": "string",
+                         "type": "object",
                          "example": {
                             "first_name": "Ali",
                             "last_name": "Sissoko",
@@ -58,7 +70,7 @@
                             "confirm_password": "12345"
                          }
                       },
-                      "example": "{\n    \"first_name\": \"Ali\",\n    \"last_name\": \"Sissoko\",\n    \"avatar\": \"...\",\n    \"phone_number\": \"+93784057250\",\n    \"address\": \"KP3\",\n    \"is_marketing\": false,\n    \"email\": \"baktash93@gmail.com\",\n    \"password\": \"12345\",\n    \"confirm_password\": \"12345\"\n}"
+                      "example": "{\n  \"first_name\": \"Ali\",\n  \"last_name\": \"Sissoko\",\n  \"avatar\": \"...\",\n  \"phone_number\": \"+93784057250\",\n  \"address\": \"KP3\",\n  \"is_marketing\": false,\n  \"email\": \"baktash93@gmail.com\",\n  \"password\": \"12345\",\n  \"confirm_password\": \"12345\"\n}"
                    }
                 }
              },
@@ -73,8 +85,16 @@
              "operationId": "Deleteuser",
              "parameters": [],
              "responses": {
-                "200": {
-                   "description": "",
+                "204": {
+                   "description": "No content",
+                   "headers": {}
+                },
+                "404": {
+                   "description": "Not found",
+                   "headers": {}
+                },
+                "500": {
+                   "description": "Internal server error",
                    "headers": {}
                 }
              },
@@ -101,7 +121,27 @@
              ],
              "responses": {
                 "200": {
-                   "description": "",
+                   "description": "Ok",
+                   "headers": {},
+                   "content": {
+                      "text/plain": {
+                         "schema": {
+                            "type": "string",
+                            "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0IiwiZXhwIjoxNjQ2MzQ1OTc0LjQ2MjMwMywidXNlcl91dWlkIjoiZjNkZTQzNWYtY2Q5OS0zNDYyLWFhYTUtNjQwZTgyZTUyZjc3In0.LoeQ3Vst68QzPE4ux2mN0MTRjdX_Ma75r0ds19yjnUk"
+                         }
+                      }
+                   }
+                },
+                "401": {
+                   "description": "Unauthorized",
+                   "headers": {}
+                },
+                "404": {
+                   "description": "Not found",
+                   "headers": {}
+                },
+                "500": {
+                   "description": "Internal server error",
                    "headers": {}
                 }
              },
@@ -110,7 +150,7 @@
                 "content": {
                    "application/json": {
                       "schema": {
-                         "type": "string",
+                         "type": "object",
                          "example": {
                             "email": "nlowe@example.org",
                             "password": "12345"
@@ -144,14 +184,69 @@
              "responses": {
                 "200": {
                    "description": "",
+                   "headers": {},
+                   "content": {
+                      "application/json": {
+                         "example": "[\n  {\n      \"id\": 9,\n      \"user_id\": 2,\n      \"order_status_id\": 3,\n      \"payment_id\": 2,\n      \"uuid\": \"eca465db-2f96-376f-aefd-fcb1f1d2ca8c\",\n      \"products\": [\n          {\n              \"product\": \"da59d7ba-ad14-3bf5-ba86-a5dd8a8577a9\",\n              \"quantity\": 54\n          }\n      ],\n      \"address\": {\n          \"billing\": \"Inventore.\",\n          \"shipping\": \"Qui nisi.\"\n      },\n      \"delivery_fee\": 5002,\n      \"amount\": 81187,\n      \"created_at\": \"2022-03-02T11:00:41.000000Z\",\n      \"updated_at\": \"2022-03-02T11:00:41.000000Z\",\n      \"shipped_at\": null\n  },\n  {\n      \"id\": 10,\n      \"user_id\": 2,\n      \"order_status_id\": 1,\n      \"payment_id\": null,\n      \"uuid\": \"c7692df4-aca6-3524-a067-7a90f5182f56\",\n      \"products\": [\n          {\n              \"product\": \"3a016b79-6794-396e-8019-fdfd44c90f75\",\n              \"quantity\": 29\n          }\n      ],\n      \"address\": {\n          \"billing\": \"Ut.\",\n          \"shipping\": \"Quaerat.\"\n      },\n      \"delivery_fee\": 4028,\n      \"amount\": 77635,\n      \"created_at\": \"2022-03-02T11:00:41.000000Z\",\n      \"updated_at\": \"2022-03-02T11:00:41.000000Z\",\n      \"shipped_at\": null\n  }\n]"
+                      }
+                   }
+                },
+                "401": {
+                   "description": "Unauthorized",
+                   "headers": {}
+                },
+                "500": {
+                   "description": "Internal server error",
                    "headers": {}
                 }
              },
              "tags": [
                 "User"
              ]
-          },
-          "/api/v1/payments": null
+          }
+       },
+       "/api/v1/payments": {
+          "get": {
+             "summary": "List payments",
+             "operationId": "Listpayments",
+             "parameters": [
+                {
+                   "$ref": "#/components/parameters/sortBy"
+                },
+                {
+                   "$ref": "#/components/parameters/Content-Type"
+                },
+                {
+                   "$ref": "#/components/parameters/Authorization"
+                }
+             ],
+             "responses": {
+                "200": {
+                   "description": "Ok",
+                   "headers": {},
+                   "content": {
+                      "application/json": {
+                         "example": "[\n    {\n        \"id\": 4,\n        \"uuid\": \"1123be8a-2134-3cc6-97a2-e93119169d86\",\n        \"type\": \"bank_transfer\",\n        \"details\": {\n            \"first_name\": \"Rogers\",\n            \"last_name\": \"Hoppe\",\n            \"address\": \"Blanditiis sapiente cum veniam tenetur et.\"\n        },\n        \"created_at\": \"2022-03-02T11:00:41.000000Z\",\n        \"updated_at\": \"2022-03-02T11:00:41.000000Z\"\n    },\n    {\n        \"id\": 5,\n        \"uuid\": \"450bcffc-0d6a-39b3-84dc-0a5aa70d57e0\",\n        \"type\": \"cash_on_delivery\",\n        \"details\": {\n            \"holder_name\": \"Ike Monahan\",\n            \"number\": 99400,\n            \"ccv\": 70230,\n            \"expire_date\": {\n                \"date\": \"1988-02-07 05:47:44.000000\",\n                \"timezone_type\": 3,\n                \"timezone\": \"UTC\"\n            }\n        },\n        \"created_at\": \"2022-03-02T11:00:41.000000Z\",\n        \"updated_at\": \"2022-03-02T11:00:41.000000Z\"\n    }\n]"
+                      }
+                   }
+                },
+                "401": {
+                   "description": "Unauthorized",
+                   "headers": {}
+                },
+                "404": {
+                   "description": "Not found",
+                   "headers": {}
+                },
+                "500": {
+                   "description": "Internal server error",
+                   "headers": {}
+                }
+             },
+             "tags": [
+                "Payment"
+             ]
+          }
        },
        "/api/v1/payment/{uuid}": {
           "get": {
@@ -170,7 +265,24 @@
              ],
              "responses": {
                 "200": {
-                   "description": "",
+                   "description": "Requested payment details",
+                   "headers": {},
+                   "content": {
+                      "application/json": {
+                         "example": "{\n    \"id\": 31,\n    \"uuid\": \"77601e83-cee1-37e6-be6f-765d9f10fbe5\",\n    \"type\": \"cash_on_delivery\",\n    \"details\": {\n        \"holder_name\": \"Ms. Ardella Lind II\",\n        \"number\": 77599,\n        \"ccv\": 27610,\n        \"expire_date\": {\n            \"date\": \"1997-04-16 07:30:02.000000\",\n            \"timezone_type\": 3,\n            \"timezone\": \"UTC\"\n        }\n    },\n    \"created_at\": \"2022-03-02T11:00:42.000000Z\",\n    \"updated_at\": \"2022-03-02T11:00:42.000000Z\"\n}"
+                      }
+                   }
+                },
+                "401": {
+                   "description": "Unauthorized",
+                   "headers": {}
+                },
+                "404": {
+                   "description": "Not found",
+                   "headers": {}
+                },
+                "500": {
+                   "description": "Internal server error",
                    "headers": {}
                 }
              },
@@ -203,8 +315,20 @@
                 }
              ],
              "responses": {
-                "200": {
-                   "description": "",
+                "204": {
+                   "description": "Update successful - No content",
+                   "headers": {}
+                },
+                "401": {
+                   "description": "Unauthorized",
+                   "headers": {}
+                },
+                "404": {
+                   "description": "Not found",
+                   "headers": {}
+                },
+                "500": {
+                   "description": "Internal server error",
                    "headers": {}
                 }
              },
@@ -213,12 +337,12 @@
                 "content": {
                    "application/json": {
                       "schema": {
-                         "type": "string",
+                         "type": "object",
                          "example": {
-                            "type": "bank_transfer"
+                            "type": "object"
                          }
                       },
-                      "example": "{\n\t\"type\": \"bank_transfer\"\n}"
+                      "example": "{\n  \"type\": \"credit_card\"\n}"
                    }
                 }
              },
@@ -251,8 +375,20 @@
                 }
              ],
              "responses": {
-                "200": {
-                   "description": "",
+                "204": {
+                   "description": "Delete successful - No content",
+                   "headers": {}
+                },
+                "401": {
+                   "description": "Unauthorized",
+                   "headers": {}
+                },
+                "404": {
+                   "description": "Not found",
+                   "headers": {}
+                },
+                "500": {
+                   "description": "Internal server error",
                    "headers": {}
                 }
              },
@@ -275,21 +411,23 @@
                       "type": "string",
                       "example": "application/json"
                    }
-                },
-                {
-                   "name": "Authorization",
-                   "in": "header",
-                   "required": true,
-                   "style": "simple",
-                   "schema": {
-                      "type": "string",
-                      "example": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0IiwiZXhwIjoxNjQ2MDYxNjYxLjYwMjg4NSwidXNlcl91dWlkIjoiODI3NGVjMjUtMTkwNC00ZTk3LTlmYzMtNTA4N2QwMzhhNDM2In0.ZAIRfR2hkP7cjpAjK-XCMhc6OycagUrATojz0oQ4qI8"
-                   }
                 }
              ],
              "responses": {
-                "200": {
-                   "description": "",
+                "201": {
+                   "description": "Ok",
+                   "headers": {}
+                },
+                "401": {
+                   "description": "Unauthorized",
+                   "headers": {}
+                },
+                "404": {
+                   "description": "Not found",
+                   "headers": {}
+                },
+                "500": {
+                   "description": "Internal server error",
                    "headers": {}
                 }
              },
@@ -298,17 +436,9 @@
                 "content": {
                    "application/json": {
                       "schema": {
-                         "type": "string",
-                         "example": {
-                            "type": "cash_on_delivery",
-                            "details": {
-                               "first_name": "Alex",
-                               "last_name": "Arnold",
-                               "address": "Lv., st# 18"
-                            }
-                         }
+                         "type": "object"
                       },
-                      "example": "{\n\t\"type\": \"cash_on_delivery\",\n\t\"details\": {\n\t  \"first_name\": \"Alex\",\n\t  \"last_name\": \"Arnold\",\n\t  \"address\": \"Lv., st# 18\"\n\t}\n}"
+                      "example": "{\n  \"type\": \"cash_on_delivery\",\n  \"details\": {\n    \"first_name\": \"Alex\",\n    \"last_name\": \"Arnold\",\n    \"address\": \"Lv., st# 18\"\n  }\n}"
                    }
                 }
              },
@@ -905,5 +1035,81 @@
        "url": "",
        "description": ""
     },
-    "warnings": []
+    "warnings": [],
+    "definitions": {
+       "order": {
+          "type": "object",
+          "properties": {
+             "id": {
+                "type": "integer"
+             },
+             "uuid": {
+                "type": "string"
+             },
+             "user_id": {
+                "type": "integer"
+             },
+             "payment_id": {
+                "type": "integer"
+             },
+             "order_status_id": {
+                "type": "integer"
+             },
+             "products": {
+                "type": "object"
+             },
+             "address": {
+                "type": "object"
+             },
+             "delivery_fee": {
+                "type": "integer"
+             },
+             "amount": {
+                "type": "integer"
+             },
+             "shipped_at": {
+                "type": "string",
+                "format": "date-time"
+             },
+             "created_at": {
+                "type": "string",
+                "format": "date-time"
+             },
+             "updated_at": {
+                "type": "string",
+                "format": "date-time"
+             }
+          }
+       },
+       "payment": {
+          "type": "object",
+          "properties": {
+             "id": {
+                "type": "integer"
+             },
+             "uuid": {
+                "type": "string"
+             },
+             "type": {
+                "type": "string",
+                "enum": [
+                   "credit_card",
+                   "cash_on_delivery",
+                   "bank_transfer"
+                ]
+             },
+             "details": {
+                "type": "object"
+             },
+             "created_at": {
+                "type": "string",
+                "format": "date-time"
+             },
+             "updated_at": {
+                "type": "string",
+                "format": "date-time"
+             }
+          }
+       }
+    }
  }
