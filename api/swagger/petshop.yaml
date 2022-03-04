@@ -1,26 +1,1320 @@
-openapi: 3.0.0
-info:
-  title: Sample API
-  description: Optional multiline or single-line description in [CommonMark](http://commonmark.org/help/) or HTML.
-  version: 0.1.9
-
-servers:
-  - url: http://api.example.com/v1
-    description: Optional server description, e.g. Main (production) server
-  - url: http://staging-api.example.com
-    description: Optional server description, e.g. Internal staging server for testing
-
-paths:
-  /users:
-    get:
-      summary: Returns a list of users.
-      description: Optional extended description in CommonMark or HTML.
-      responses:
-        '200':    # status code
-          description: A JSON array of user names
-          content:
-            application/json:
-              schema: 
-                type: array
-                items: 
-                  type: string
+    openapi: 3.0.0
+    servers:
+      - url: http://localhost:8001
+        description: ''
+        variables: {}
+    info:
+      version: "1.0.0"
+      title: Petshop (Buckhill test)
+      description: ''
+      termsOfService: ''
+      contact: {}
+      license:
+        name: ''
+    paths:
+      /api/v1/user/create:
+        post:
+          summary: Create user
+          operationId: Createuser
+          parameters:
+            - name: Content-Type
+              in: header
+              required: true
+              style: simple
+              schema:
+                type: string
+                example: application/json
+          responses:
+            '201':
+              description: 'Created'
+              headers: {}
+            '409':
+              description: 'Conflict - email already taken'
+              headers: {}
+            '422':
+              description: 'Unprocessable entity'
+              headers: {}
+            '500':
+              description: 'Internal server error'
+              headers: {}
+          requestBody:
+            required: true
+            content:
+              application/json:
+                schema:
+                  type: object
+                  required:
+                    - first_name
+                    - last_name
+                    - email
+                    - password
+                    - confirm_password
+                    - address
+                    - phone_number
+                  properties:
+                    first_name:
+                      type: string
+                      description: User firstname
+                    last_name:
+                      type: string
+                      description: User lastname
+                    email:
+                      type: string
+                      description: User email
+                    password:
+                      type: string
+                      description: User password
+                    confirm_password:
+                      type: string
+                      description: User password
+                    avatar:
+                      type: string
+                      description: Avatar image UUID
+                    address:
+                      type: string
+                      description: User main address
+                    phone_number:
+                      type: string
+                      description: User main phone number
+                    is_marketing:
+                      type: string
+                      description: User marketing preferences
+                  example:
+                    first_name: Ali
+                    last_name: Sissoko
+                    avatar: ...
+                    phone_number: '+93784057250'
+                    address: KP3
+                    is_marketing: false
+                    email: baktash93@gmail.com
+                    password: '12345'
+                    confirm_password: '12345'
+                example: |-
+                  {
+                    "first_name": "Ali",
+                    "last_name": "Sissoko",
+                    "avatar": "...",
+                    "phone_number": "+93784057250",
+                    "address": "KP3",
+                    "is_marketing": false,
+                    "email": "baktash93@gmail.com",
+                    "password": "12345",
+                    "confirm_password": "12345"
+                  }
+          security: []
+          tags:
+            - User
+      /api/v1/user/login:
+        post:
+          summary: Login
+          operationId: Login
+          parameters:
+            - name: Content-Type
+              in: header
+              required: true
+              style: simple
+              schema:
+                type: string
+                example: application/json
+          responses:
+            '200':
+              description: 'Ok'
+              headers: {}
+              content:
+                text/plain:
+                  schema:
+                    type: string
+                    example: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0IiwiZXhwIjoxNjQ2MzQ1OTc0LjQ2MjMwMywidXNlcl91dWlkIjoiZjNkZTQzNWYtY2Q5OS0zNDYyLWFhYTUtNjQwZTgyZTUyZjc3In0.LoeQ3Vst68QzPE4ux2mN0MTRjdX_Ma75r0ds19yjnUk
+            '401':
+              description: 'Unauthorized'
+              headers: {}
+            '404':
+              description: 'Not found'
+              headers: {}
+            '500':
+              description: 'Internal server error'
+              headers: {}
+          requestBody:
+            required: true
+            content:
+              application/json:
+                schema:
+                  type: object
+                  example:
+                    email: nlowe@example.org
+                    password: '12345'
+                  required:
+                    - email
+                    - password
+                  properties:
+                    email:
+                      type: string
+                      description: User email
+                    password:
+                      type: string
+                      description: User password
+                example: |-
+                  {
+                    "email": "nlowe@example.org",
+                    "password": "12345"
+                  }
+          security: []
+          tags:
+            - User
+      /api/v1/user/:
+        get:
+          summary: View (self) user
+          operationId: Viewuser
+          responses:
+            '200':
+              description: 'Ok'
+              headers: {}
+              content:
+                application/json:
+                  example: |-
+                    {
+                        "id": 2,
+                        "uuid": "f3de435f-cd99-3462-aaa5-640e82e52f77",
+                        "first_name": "Enola",
+                        "last_name": "Kassulke",
+                        "is_admin": 0,
+                        "email": "zion.lind@example.net",
+                        "email_verified_at": "2022-03-02T11:00:40.000000Z",
+                        "avatar": null,
+                        "address": "Et officia dolores et quia molestiae.",
+                        "phone_number": "202.755.9362",
+                        "is_marketing": 0,
+                        "last_login_at": "2022-03-04 07:57:50",
+                        "created_at": "2022-03-02T11:00:41.000000Z",
+                        "updated_at": "2022-03-04T07:57:50.000000Z"
+                    }
+            '500':
+              description: 'Internal server error'
+              headers: {}
+          tags:
+            - User
+      /api/v1/user/orders:
+        get:
+          summary: List user orders
+          operationId: Listuserorders
+          parameters:
+            - $ref: '#/components/parameters/sortBy'
+            - $ref: '#/components/parameters/page'
+            - $ref: '#/components/parameters/limit'
+            - $ref: '#/components/parameters/desc'
+          responses:
+            '200':
+              description: ''
+              headers: {}
+              content:
+                application/json:
+                  example: |-
+                    [
+                      {
+                          "id": 9,
+                          "user_id": 2,
+                          "order_status_id": 3,
+                          "payment_id": 2,
+                          "uuid": "eca465db-2f96-376f-aefd-fcb1f1d2ca8c",
+                          "products": [
+                              {
+                                  "product": "da59d7ba-ad14-3bf5-ba86-a5dd8a8577a9",
+                                  "quantity": 54
+                              }
+                          ],
+                          "address": {
+                              "billing": "Inventore.",
+                              "shipping": "Qui nisi."
+                          },
+                          "delivery_fee": 5002,
+                          "amount": 81187,
+                          "created_at": "2022-03-02T11:00:41.000000Z",
+                          "updated_at": "2022-03-02T11:00:41.000000Z",
+                          "shipped_at": null
+                      },
+                      {
+                          "id": 10,
+                          "user_id": 2,
+                          "order_status_id": 1,
+                          "payment_id": null,
+                          "uuid": "c7692df4-aca6-3524-a067-7a90f5182f56",
+                          "products": [
+                              {
+                                  "product": "3a016b79-6794-396e-8019-fdfd44c90f75",
+                                  "quantity": 29
+                              }
+                          ],
+                          "address": {
+                              "billing": "Ut.",
+                              "shipping": "Quaerat."
+                          },
+                          "delivery_fee": 4028,
+                          "amount": 77635,
+                          "created_at": "2022-03-02T11:00:41.000000Z",
+                          "updated_at": "2022-03-02T11:00:41.000000Z",
+                          "shipped_at": null
+                      }
+                    ]
+            '401':
+              description: 'Unauthorized'
+              headers: {}
+            '500':
+              description: 'Internal server error'
+              headers: {}
+          tags:
+            - User
+      /api/v1/user:
+        delete:
+          summary: Delete (self) user
+          operationId: Deleteuser
+          parameters: []
+          responses:
+            '204':
+              description: 'Delete successful - No content'
+              headers: {}
+            '404':
+              description: 'Not found'
+              headers: {}
+            '500':
+              description: 'Internal server error'
+              headers: {}
+          tags:
+            - User
+      /api/v1/payments:
+        get:
+          summary: List payments
+          operationId: Listpayments
+          parameters:
+            - $ref: '#/components/parameters/sortBy'
+            - $ref: '#/components/parameters/page'
+            - $ref: '#/components/parameters/limit'
+            - $ref: '#/components/parameters/desc'
+          responses:
+            '200':
+              description: 'Ok'
+              headers: {}
+              content:
+                application/json:
+                  example: |-
+                    [
+                        {
+                            "id": 4,
+                            "uuid": "1123be8a-2134-3cc6-97a2-e93119169d86",
+                            "type": "bank_transfer",
+                            "details": {
+                                "first_name": "Rogers",
+                                "last_name": "Hoppe",
+                                "address": "Blanditiis sapiente cum veniam tenetur et."
+                            },
+                            "created_at": "2022-03-02T11:00:41.000000Z",
+                            "updated_at": "2022-03-02T11:00:41.000000Z"
+                        },
+                        {
+                            "id": 5,
+                            "uuid": "450bcffc-0d6a-39b3-84dc-0a5aa70d57e0",
+                            "type": "cash_on_delivery",
+                            "details": {
+                                "holder_name": "Ike Monahan",
+                                "number": 99400,
+                                "ccv": 70230,
+                                "expire_date": {
+                                    "date": "1988-02-07 05:47:44.000000",
+                                    "timezone_type": 3,
+                                    "timezone": "UTC"
+                                }
+                            },
+                            "created_at": "2022-03-02T11:00:41.000000Z",
+                            "updated_at": "2022-03-02T11:00:41.000000Z"
+                        }
+                    ]
+            '401':
+              description: 'Unauthorized'
+              headers: {}
+            '404':
+              description: 'Not found'
+              headers: {}
+            '500':
+              description: 'Internal server error'
+              headers: {}
+          tags:
+            - Payment
+      /api/v1/payment/{uuid}:
+        get:
+          summary: View payment
+          operationId: Viewpayment
+          parameters:
+            - in: path
+              name: uuid
+              schema:
+                type: string
+              required: true
+              description: UUID of the payment to get
+          responses:
+            '200':
+              description: 'Requested payment details'
+              headers: {}
+              content:
+                application/json:
+                  example: |-
+                    {
+                        "id": 31,
+                        "uuid": "77601e83-cee1-37e6-be6f-765d9f10fbe5",
+                        "type": "cash_on_delivery",
+                        "details": {
+                            "holder_name": "Ms. Ardella Lind II",
+                            "number": 77599,
+                            "ccv": 27610,
+                            "expire_date": {
+                                "date": "1997-04-16 07:30:02.000000",
+                                "timezone_type": 3,
+                                "timezone": "UTC"
+                            }
+                        },
+                        "created_at": "2022-03-02T11:00:42.000000Z",
+                        "updated_at": "2022-03-02T11:00:42.000000Z"
+                    }
+            '401':
+              description: 'Unauthorized'
+              headers: {}
+            '404':
+              description: 'Not found'
+              headers: {}
+            '500':
+              description: 'Internal server error'
+              headers: {}
+          tags:
+            - Payment
+        put:
+          summary: Edit payment
+          operationId: Editpayment
+          parameters:
+            - in: path
+              name: uuid
+              schema:
+                type: string
+              required: true
+              description: UUID of the payment to edit
+            - name: Content-Type
+              in: header
+              required: true
+              style: simple
+              schema:
+                type: string
+                example: application/json
+          responses:
+            '204':
+              description: 'Update successful - No content'
+              headers: {}
+            '401':
+              description: 'Unauthorized'
+              headers: {}
+            '404':
+              description: 'Not found'
+              headers: {}
+            '500':
+              description: 'Internal server error'
+              headers: {}
+          requestBody:
+            required: true
+            content:
+              application/json:
+                schema:
+                  required:
+                    - type
+                    - details
+                  properties:
+                    type:
+                      type: string
+                      enum:
+                        - credit_card
+                        - cash_on_delivery
+                        - bank_transfer
+                      description: Payment type
+                    details:
+                      type: object
+                      description: Review documentation for the payment type JSON format
+                example: |-
+                  {
+                    "type": "credit_card",
+                    "details": {
+                        "holder_name": "Ms. Ardella Lind II",
+                        "number": 77599,
+                        "ccv": 27610,
+                        "expire_date": {
+                            "date": "1997-04-16 07:30:02.000000",
+                            "timezone_type": 3,
+                            "timezone": "UTC"
+                        }
+                    }
+                  }
+          tags:
+            - Payment
+        delete:
+          summary: Delete payment
+          operationId: Deletepayment
+          parameters:
+            - in: path
+              name: uuid
+              schema:
+                type: string
+              required: true
+              description: UUID of the payment to delete
+            - name: Content-Type
+              in: header
+              required: true
+              style: simple
+              schema:
+                type: string
+                example: application/json
+          responses:
+            '204':
+              description: 'Delete successful - No content'
+              headers: {}
+            '401':
+              description: 'Unauthorized'
+              headers: {}
+            '404':
+              description: 'Not found'
+              headers: {}
+            '500':
+              description: 'Internal server error'
+              headers: {}
+          tags:
+            - Payment
+      /api/v1/payment/create:
+        post:
+          summary: Create payment
+          operationId: Createpayment
+          parameters:
+            - name: Content-Type
+              in: header
+              required: true
+              style: simple
+              schema:
+                type: string
+                example: application/json
+          responses:
+            '201':
+              description: 'Ok'
+              headers: {}
+            '401':
+              description: 'Unauthorized'
+              headers: {}
+            '500':
+              description: 'Internal server error'
+              headers: {}
+          requestBody:
+            required: true
+            content:
+              application/json:
+                schema:
+                  type: object
+                  required:
+                    - type
+                    - details
+                  properties:
+                    type:
+                      type: string
+                      enum:
+                        - credit_card
+                        - cash_on_delivery
+                        - bank_transfer
+                      description: Payment type
+                    details:
+                      type: object
+                      description: Review documentation for the payment type JSON format
+                example: |-
+                  {
+                    "type": "cash_on_delivery",
+                    "details": {
+                      "first_name": "Alex",
+                      "last_name": "Arnold",
+                      "address": "Lv., st# 18"
+                    }
+                  }
+          tags:
+            - Payment
+      /api/v1/order-statuses:
+        get:
+          summary: List order statuses
+          operationId: Listorderstatuses
+          parameters:
+            - $ref: '#/components/parameters/sortBy'
+            - $ref: '#/components/parameters/page'
+            - $ref: '#/components/parameters/limit'
+            - $ref: '#/components/parameters/desc'
+          responses:
+            '200':
+              description: ''
+              headers: {}
+              content:
+                application/json:
+                  example: |-
+                    [
+                        {
+                            "id": 1,
+                            "uuid": "75745eb9-6b78-4640-a369-7809a172891d",
+                            "title": "open",
+                            "created_at": null,
+                            "updated_at": null
+                        },
+                        {
+                            "id": 2,
+                            "uuid": "6f4924ae-77f1-4ccb-884b-5707c59a6469",
+                            "title": "pending payment",
+                            "created_at": null,
+                            "updated_at": null
+                        },
+                        {
+                            "id": 3,
+                            "uuid": "dab0c332-c46b-4c56-bd1f-5700962a8151",
+                            "title": "paid",
+                            "created_at": null,
+                            "updated_at": null
+                        },
+                        {
+                            "id": 4,
+                            "uuid": "004b3e20-d468-49eb-9948-d3fdca4e6edd",
+                            "title": "shipped",
+                            "created_at": null,
+                            "updated_at": null
+                        },
+                        {
+                            "id": 5,
+                            "uuid": "ffdc5a55-c586-442a-9575-c90096efd707",
+                            "title": "cancelled",
+                            "created_at": null,
+                            "updated_at": null
+                        }
+                    ]
+            '401':
+              description: 'Unauthorized'
+              headers: {}
+            '500':
+              description: 'Internal server error'
+              headers: {}
+          tags:
+            - Order Status
+      /api/v1/order-status/create:
+        post:
+          summary: Create order status
+          operationId: Createorderstatus
+          parameters:
+            - name: Content-Type
+              in: header
+              required: true
+              style: simple
+              schema:
+                type: string
+                example: application/json
+          responses:
+            '201':
+              description: 'Created - no content'
+              headers: {}
+            '401':
+              description: 'Unauthorized'
+              headers: {}
+            '500':
+              description: 'Internal server error'
+              headers: {}
+          requestBody:
+            required: true
+            content:
+              application/json:
+                schema:
+                  required:
+                    - title
+                  properties:
+                    title:
+                      type: string
+                      description: Order status title
+                  type: object
+                example: |-
+                  {
+                    "title": "ordered"
+                  }
+          tags:
+            - Order Status
+      /api/v1/order-status/{uuid}:
+        get:
+          summary: View order status
+          operationId: Vieworderstatus
+          parameters:
+            - in: path
+              name: uuid
+              schema:
+                type: string
+              required: true
+              description: UUID of the order status to get
+          responses:
+            '200':
+              description: ''
+              headers: {}
+              content:
+                application/json:
+                  example: |-
+                    {
+                        "id": 2,
+                        "uuid": "6f4924ae-77f1-4ccb-884b-5707c59a6469",
+                        "title": "pending payment",
+                        "created_at": null,
+                        "updated_at": null
+                    }
+            '401':
+              description: 'Unauthorized'
+              headers: {}
+            '404':
+              description: 'Not found'
+              headers: {}
+            '500':
+              description: 'Internal server error'
+              headers: {}
+          tags:
+            - Order Status
+        put:
+          summary: Edit order status
+          operationId: Editorderstatus
+          parameters:
+            - name: Content-Type
+              in: header
+              required: true
+              style: simple
+              schema:
+                type: string
+                example: application/json
+          responses:
+            '204':
+              description: 'Update successful - no content'
+              headers: {}
+            '401':
+              description: 'Unauthorized'
+              headers: {}
+            '404':
+              description: 'Not found'
+              headers: {}
+            '500':
+              description: 'Internal server error'
+              headers: {}
+          requestBody:
+            required: true
+            content:
+              application/json:
+                schema:
+                  required:
+                    - title
+                  properties:
+                    title:
+                      type: string
+                      description: Order status title
+                  type: object
+                example: |-
+                  {
+                    "title": "due"
+                  }
+          tags:
+            - Order Status
+        delete:
+          summary: Delete order status
+          operationId: Deleteorderstatus
+          parameters:
+            - in: path
+              name: uuid
+              schema:
+                type: string
+              required: true
+              description: UUID of the order status to delete
+          responses:
+            '204':
+              description: 'Delete successful - no content'
+              headers: {}
+            '401':
+              description: 'Unauthorized'
+              headers: {}
+            '404':
+              description: 'Not found'
+              headers: {}
+            '500':
+              description: 'Internal server error'
+              headers: {}
+          tags:
+            - Order Status
+      /api/v1/orders:
+        get:
+          summary: List all orders
+          operationId: Listallorders
+          parameters:
+            - $ref: '#/components/parameters/sortBy'
+            - $ref: '#/components/parameters/page'
+            - $ref: '#/components/parameters/limit'
+            - $ref: '#/components/parameters/desc'
+          responses:
+            '200':
+              description: ''
+              headers: {}
+              content:
+                application/json:
+                  example: |-
+                    [
+                        {
+                            "id": 9,
+                            "user_id": 2,
+                            "order_status_id": 3,
+                            "payment_id": 2,
+                            "uuid": "eca465db-2f96-376f-aefd-fcb1f1d2ca8c",
+                            "products": [
+                                {
+                                    "product": "da59d7ba-ad14-3bf5-ba86-a5dd8a8577a9",
+                                    "quantity": 54
+                                }
+                            ],
+                            "address": {
+                                "billing": "Inventore.",
+                                "shipping": "Qui nisi."
+                            },
+                            "delivery_fee": 5002,
+                            "amount": 81187,
+                            "created_at": "2022-03-02T11:00:41.000000Z",
+                            "updated_at": "2022-03-02T11:00:41.000000Z",
+                            "shipped_at": null
+                        },
+                        {
+                            "id": 10,
+                            "user_id": 2,
+                            "order_status_id": 1,
+                            "payment_id": null,
+                            "uuid": "c7692df4-aca6-3524-a067-7a90f5182f56",
+                            "products": [
+                                {
+                                    "product": "3a016b79-6794-396e-8019-fdfd44c90f75",
+                                    "quantity": 29
+                                }
+                            ],
+                            "address": {
+                                "billing": "Ut.",
+                                "shipping": "Quaerat."
+                            },
+                            "delivery_fee": 4028,
+                            "amount": 77635,
+                            "created_at": "2022-03-02T11:00:41.000000Z",
+                            "updated_at": "2022-03-02T11:00:41.000000Z",
+                            "shipped_at": null
+                        },
+                        {
+                            "id": 11,
+                            "user_id": 2,
+                            "order_status_id": 4,
+                            "payment_id": 3,
+                            "uuid": "8b7add45-bd39-307e-b04e-fcad078e8ced",
+                            "products": [
+                                {
+                                    "product": "91c70d35-e283-30af-b4c9-4c5daf9dfea4",
+                                    "quantity": 67
+                                }
+                            ],
+                            "address": {
+                                "billing": "Earum.",
+                                "shipping": "Corporis."
+                            },
+                            "delivery_fee": 6109,
+                            "amount": 28816,
+                            "created_at": "2022-03-02T11:00:41.000000Z",
+                            "updated_at": "2022-03-02T11:00:41.000000Z",
+                            "shipped_at": null
+                        }
+                    ]
+            '401':
+              description: 'Unauthorized'
+              headers: {}
+            '500':
+              description: 'Internal server error'
+              headers: {}      
+          tags:
+            - Order
+      /api/v1/order/create:
+        post:
+          summary: Create order
+          operationId: Createorder
+          parameters:
+            - name: Content-Type
+              in: header
+              required: true
+              style: simple
+              schema:
+                type: string
+                example: application/json
+          responses:
+            '201':
+              description: 'Created'
+              headers: {}
+            '401':
+              description: 'Unauthorized'
+              headers: {}
+            '500':
+              description: 'Internal server error'
+              headers: {}
+          requestBody:
+            required: true
+            content:
+              application/json:
+                schema:
+                  required:
+                    - order_status_uuid
+                    - payment_uuid
+                    - products
+                    - address
+                  properties:
+                    order_status_uuid:
+                      type: string
+                      description: Order status UUID
+                    payment_uuid:
+                      type: string
+                      description: Payment UUID
+                    products:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          uuid:
+                            type: string
+                            description: Product UUID
+                          quantity:
+                            type: integer
+                            description: Product quantity
+                      description: Array of objects with product uuid and quantity
+                    address:
+                      type: object
+                      properties:
+                        billing:
+                          type: string
+                        shipping:
+                          type: string
+                      description: Billing and Shipping address
+                example: |-
+                  {
+                      "order_status_uuid": "ec8d29cf-1602-4a5e-a633-e0e63e3c9ab4",
+                      "payment_uuid": "f40cd6d5-ff17-4d80-a3c5-5a1ab90c3c65",
+                      "products": [
+                          {
+                              "product": "sfssffs",
+                              "quantity": 15
+                          }
+                      ],
+                      "address": {
+                          "billing": "76 5th Ave., Mountain View, LA",
+                          "shipping": "76 5th Ave., Mountain View, LA"
+                      },
+                      "delivery_fee": 900,
+                      "amount": 10,
+                      "shipped_at": null
+                  }
+          tags:
+            - Order
+      /api/v1/order/{uuid}:
+        get:
+          summary: View order
+          operationId: Vieworder
+          parameters:
+            - in: path
+              name: uuid
+              schema:
+                type: string
+              required: true
+              description: UUID of the order to get
+            - name: Content-Type
+              in: header
+              required: true
+              style: simple
+              schema:
+                type: string
+                example: application/json
+          responses:
+            '200':
+              description: ''
+              headers: {}
+              content:
+                application/json:
+                  example: |-
+                    {
+                        "id": 15,
+                        "user_id": 2,
+                        "order_status_id": 5,
+                        "payment_id": null,
+                        "uuid": "3458b6ad-97d9-309a-aaab-bccfcd4b74fa",
+                        "products": [
+                            {
+                                "product": "6b66f611-1bae-3896-849f-b6c17d6b20bb",
+                                "quantity": 68
+                            }
+                        ],
+                        "address": {
+                            "billing": "Voluptas.",
+                            "shipping": "Ipsum."
+                        },
+                        "delivery_fee": 1742,
+                        "amount": 64242,
+                        "created_at": "2022-03-02T11:00:41.000000Z",
+                        "updated_at": "2022-03-02T11:00:41.000000Z",
+                        "shipped_at": null
+                    }
+            '401':
+              description: 'Unauthorized'
+              headers: {}
+            '404':
+              description: 'Not found'
+              headers: {}
+            '500':
+              description: 'Internal server error'
+              headers: {}
+          tags:
+            - Order
+        delete:
+          summary: Delete order
+          operationId: Deleteorder
+          parameters:
+            - name: Content-Type
+              in: header
+              required: true
+              style: simple
+              schema:
+                type: string
+                example: application/json
+          responses:
+            '204':
+              description: 'Delete successful - no content'
+              headers: {}
+            '401':
+              description: 'Unauthorized'
+              headers: {}
+            '404':
+              description: 'Not found'
+              headers: {}
+            '500':
+              description: 'Internal server error'
+              headers: {}
+          tags:
+            - Order
+        put:
+          summary: Edit order
+          operationId: Editorder
+          parameters:
+            - in: path
+              name: uuid
+              schema:
+                type: string
+              required: true
+              description: UUID of the order to edit
+            - name: Content-Type
+              in: header
+              required: true
+              style: simple
+              schema:
+                type: string
+                example: application/json
+          responses:
+            '204':
+              description: 'Update successful - no content'
+              headers: {}
+            '401':
+              description: 'Unauthorized'
+              headers: {}
+            '404':
+              description: 'Not found'
+              headers: {}
+            '500':
+              description: 'Internal server error'
+              headers: {}
+          requestBody:
+            required: true
+            content:
+              application/json:
+                schema:
+                  required:
+                    - order_status_uuid
+                    - payment_uuid
+                    - products
+                    - address
+                  properties:
+                    order_status_uuid:
+                      type: string
+                      description: Order status UUID
+                    payment_uuid:
+                      type: string
+                      description: Payment UUID
+                    products:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          uuid:
+                            type: string
+                            description: Product UUID
+                          quantity:
+                            type: integer
+                            description: Product quantity
+                      description: Array of objects with product uuid and quantity
+                    address:
+                      type: object
+                      properties:
+                        billing:
+                          type: string
+                        shipping:
+                          type: string
+                      description: Billing and Shipping address
+                example: |-
+                  {
+                      "order_status_uuid": "ec8d29cf-1602-4a5e-a633-e0e63e3c9ab4",
+                      "payment_uuid": "f40cd6d5-ff17-4d80-a3c5-5a1ab90c3c65",
+                      "products": [
+                          {
+                              "product": "c81ec5ff-6010-30ca-9040-ddab94f61ca6",
+                              "quantity": 365
+                          }
+                      ],
+                      "address": {
+                          "billing": "Voluptas.",
+                          "shipping": "Lorem ipsum."
+                      },
+                      "delivery_fee": 1200,
+                      "amount": 130,
+                      "shipped_at": null
+                  }
+          tags:
+            - Order
+    components:
+      schemas:
+        User:
+          type: object
+          properties:
+            id:
+              type: integer
+            uuid:
+              type: string
+            first_name:
+              type: string
+            avatar:
+              type: string
+            last_name:
+              type: string
+            email:
+              type: string
+            phone_number:
+              type: string
+            address:
+              type: string
+            is_admin:
+              type: boolean
+            is_marketing:
+              type: boolean
+            email_verified_at:
+              type: string
+              format: date-time
+            last_login_at:
+              type: string
+              format: date-time
+            created_at:
+              type: string
+              format: date-time
+            updated_at:
+              type: string
+              format: date-time
+        Payment:
+          type: object
+          properties:
+            id:
+              type: integer
+            uuid:
+              type: string
+            type:
+              type: string
+              enum: ['credit_card', 'cash_on_delivery', 'bank_transfer']
+            details:
+              type: object
+            created_at:
+              type: string
+              format: date-time
+            updated_at:
+              type: string
+              format: date-time
+        OrderStatus:
+          type: object
+          properties:
+            id:
+              type: integer
+            uuid:
+              type: string
+            title:
+              type: string
+            created_at:
+              type: string
+              format: date-time
+            updated_at:
+              type: string
+              format: date-time
+        Order:
+          type: object
+          properties:
+            id:
+              type: integer
+            uuid:
+              type: string
+            user_id:
+              type: integer
+            payment_id:
+              type: integer
+            order_status_id:
+              type: integer
+            products:
+              type: object
+            address:
+              type: object
+            delivery_fee:
+              type: integer
+            amount:
+              type: integer
+            shipped_at:
+              type: string
+              format: date-time
+            created_at:
+              type: string
+              format: date-time
+            updated_at:
+              type: string
+              format: date-time
+      securitySchemes:
+        bearer:
+          type: http
+          scheme: bearer
+      parameters:
+        sortBy:
+          name: sortBy
+          in: query
+          required: false
+          style: form
+          schema:
+            type: string
+            example: uuid
+        page:
+          name: page
+          required: false
+          in: query
+          schema:
+            type: integer
+            example: 2
+        limit:
+          name: limit
+          required: false
+          in: query
+          schema:
+            type: integer
+        desc:
+          name: desc
+          required: false
+          in: query
+          schema:
+            type: boolean
+        
+        Content-Type:
+          name: Content-Type
+          in: header
+          required: true
+          style: simple
+          schema:
+            type: string
+            example: application/json
+        Authorization:
+          name: Authorization
+          in: header
+          required: true
+          style: simple
+          schema:
+            type: string
+            example: >-
+              Bearer
+              eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0IiwiZXhwIjoxNjQ2MDYxNjYxLjYwMjg4NSwidXNlcl91dWlkIjoiODI3NGVjMjUtMTkwNC00ZTk3LTlmYzMtNTA4N2QwMzhhNDM2In0.ZAIRfR2hkP7cjpAjK-XCMhc6OycagUrATojz0oQ4qI8
+    security:
+      - bearer: []
+      - bearer: []
+      - bearer: []
+      - bearer: []
+      - bearer: []
+      - bearer: []
+      - bearer: []
+      - bearer: []
+      - bearer: []
+      - bearer: []
+      - bearer: []
+      - bearer: []
+      - bearer: []
+      - bearer: []
+      - bearer: []
+      - bearer: []
+      - bearer: []
+    tags: []
+    externalDocs:
+      url: ''
+      description: ''
+    warnings: []
+    definitions:
+      order:
+        type: object
+        properties:
+          id:
+            type: integer
+          uuid:
+            type: string
+          user_id:
+            type: integer
+          payment_id:
+            type: integer
+          order_status_id:
+            type: integer
+          products:
+            type: object
+          address:
+            type: object
+          delivery_fee:
+            type: integer
+          amount:
+            type: integer
+          shipped_at:
+            type: string
+            format: date-time
+          created_at:
+            type: string
+            format: date-time
+          updated_at:
+            type: string
+            format: date-time
+      payment:
+        type: object
+        properties:
+          id:
+            type: integer
+          uuid:
+            type: string
+          type:
+            type: string
+            enum: ['credit_card', 'cash_on_delivery', 'bank_transfer']
+          details:
+            type: object
+          created_at:
+            type: string
+            format: date-time
+          updated_at:
+            type: string
+            format: date-time
+    tags:
+      - name: User
+        description: User API endpoint
+      - name: Categories
+        description: Categories API endpoint
+      - name: Brands
+        description: Brands API endpoint
+      - name: Orders
+        description: Orders API endpoint
+      - name: Order Statuses
+        description: Order statuses API endpoint
+      - name: Payments
+        description: Payments API endpoint
+      - name: Products
+        description: Products API endpoint
